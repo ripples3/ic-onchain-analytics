@@ -72,8 +72,8 @@ VALUES
 ('base',     0x32BB8FF692A2F14C05Fe7a5ae78271741bD392fC, 'uXRP2x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base', null,       FALSE),
 ('base',     0x5c600527d2835f3021734504e53181e54fa48f73, 'uXRP3x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base', null,       FALSE),
 ('base',     0xCF4AC08635c12226659c7E10B1C1ad3d1bDc3C58, 'iETH1x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE),
-('base',     0xe18f4002fB4855022332Cfab2393a22649bb86B9, 'iETH2x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE),
-('base',     0x563c4f95D1D4372fA64803E9B367f14a7Ff28b1a, 'iBTC1x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE),
+('base',     0xe18f4002fB4855022332Cfab2393a22649bb86B9, 'iBTC1x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE),
+('base',     0x563c4f95D1D4372fA64803E9B367f14a7Ff28b1a, 'iETH2x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE),
 ('base',     0x3b73475EDE04891AE8262680D66A4f5A66572EB0, 'iBTC2x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE)
 )
 
