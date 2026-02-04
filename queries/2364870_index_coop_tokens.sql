@@ -6,9 +6,9 @@
 --
 -- Columns: address, blockchain, category, composite, end_date, is_bridged, leverage, product_segment, symbol
 
-WITH
+with
 
-token(blockchain, address, symbol, product_segment, composite, leverage, category, end_date, is_bridged) AS (
+token(blockchain, address, symbol, product_segment, composite, leverage, category, end_date, is_bridged) as (
 --category setprotocol_v2,  indexprotocol
 VALUES
 -- ethereum
@@ -77,7 +77,7 @@ VALUES
 ('base',     0x3b73475EDE04891AE8262680D66A4f5A66572EB0, 'iBTC2x-BASE',   'leverage',   FALSE,    TRUE,    'indexprotocol_base',  null,       FALSE)
 )
 
-SELECT 
+select
 blockchain, address, symbol, product_segment, composite, leverage, category, cast(end_date as date) as end_date, is_bridged
-FROM token
+from token
 

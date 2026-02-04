@@ -5,9 +5,9 @@
 -- Parameters: none
 --
 -- Columns: blockchain, category, composite, contract_address, decimals, end_date, is_bridged, leverage, product_segment, symbol
-WITH
+with
 
-token(blockchain, address, symbol, decimals, product_segment, composite, leverage, is_bridged, category, end_date) AS (
+token(blockchain, contract_address, symbol, decimals, product_segment, composite, leverage, is_bridged, category, end_date) as (
 --category setprotocol_v2,  indexprotocol
 VALUES
 -- ethereum
@@ -51,6 +51,7 @@ VALUES
 ('arbitrum', 0x8b5D1d8B3466eC21f8eE33cE63F319642c026142, 'hyETH',      18,  'earn',         FALSE,    FALSE,   TRUE,  'indexprotocol',   null),
 ('arbitrum', 0xaF0408C1Cc4b41cf878143423015937032878913, 'LINK2x',     18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',   null),
 ('arbitrum', 0x9ba1d6C651624977435bc6E2c98D4c7407112e15, 'AAVE2x',     18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',   null),
+('arbitrum', 0xFc01f273126B3d515e6ce6CaB9e53d5C6990D6CB, 'ARB2x',      18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',   null),
 ('arbitrum', 0x6a21af139B440f0944f9e03375544bB3E4E2135f, 'iETH2x',     18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',   null),
 ('arbitrum', 0x304F3eB3b77C025664a7b13c3f0eE2f97F9743fD, 'iBTC2x',     18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',   null),
 
@@ -74,16 +75,16 @@ VALUES
 ('base',     0x3b73475EDE04891AE8262680D66A4f5A66572EB0, 'iBTC2x',     18,  'trade',        FALSE,    TRUE,    FALSE, 'indexprotocol',  null)
 )
 
-select 
-    blockchain, 
-    address as contract_address, 
-    symbol, 
-    decimals,
-    product_segment, 
-    composite, 
-    leverage, 
-    is_bridged,
-    category, 
-    cast(end_date as date) as end_date
+select
+    blockchain
+    , contract_address
+    , symbol
+    , decimals
+    , product_segment
+    , composite
+    , leverage
+    , is_bridged
+    , category
+    , cast(end_date as date) as end_date
 from token
 
