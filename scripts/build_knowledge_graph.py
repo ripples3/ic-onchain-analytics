@@ -776,6 +776,14 @@ def run_layer(kg: KnowledgeGraph, layer: str, batch_size: int = 50):
     elif layer == 'osint':
         from osint_aggregator import process_single_address as process_osint
         processor = process_osint
+    elif layer == 'temporal':
+        # Temporal correlation is batch-only, not per-address
+        # Run on all addresses at once for efficiency
+        from temporal_correlation import process_addresses as process_temporal
+        process_temporal(kg, addresses)
+        for addr in addresses:
+            kg.update_queue_status(addr, layer, 'completed')
+        return
     else:
         print(f"Unknown layer: {layer}")
         return
@@ -806,6 +814,62 @@ def run_pattern_matching(kg: KnowledgeGraph):
     match_patterns(kg)
 
 
+def run_temporal_correlation(kg: KnowledgeGraph, batch_size: int = 100):
+    """Run temporal correlation analysis on all entities."""
+    print(f"\n{'='*60}")
+    print("Running TEMPORAL CORRELATION layer")
+    print(f"{'='*60}")
+
+    # Get all entities for temporal analysis
+    conn = kg.connect()
+    entities = conn.execute(
+        "SELECT address FROM entities ORDER BY confidence DESC LIMIT ?",
+        (batch_size,)
+    ).fetchall()
+
+    addresses = [e[0] for e in entities]
+
+    if len(addresses) < 2:
+        print("Need at least 2 addresses for temporal correlation")
+        return
+
+    from temporal_correlation import process_addresses as process_temporal
+    process_temporal(kg, addresses)
+
+
+def run_counterparty_graph(kg: KnowledgeGraph, batch_size: int = 50):
+    """Run counterparty graph analysis on all entities."""
+    print(f"\n{'='*60}")
+    print("Running COUNTERPARTY GRAPH layer")
+    print(f"{'='*60}")
+
+    # Get entities for counterparty analysis
+    conn = kg.connect()
+    entities = conn.execute(
+        "SELECT address FROM entities ORDER BY confidence DESC LIMIT ?",
+        (batch_size,)
+    ).fetchall()
+
+    addresses = [e[0] for e in entities]
+
+    if len(addresses) < 2:
+        print("Need at least 2 addresses for counterparty analysis")
+        return
+
+    from counterparty_graph import process_addresses as process_counterparty
+    process_counterparty(kg, addresses, min_overlap=0.25)
+
+
+def run_label_propagation(kg: KnowledgeGraph):
+    """Run label propagation to spread identities through the graph."""
+    print(f"\n{'='*60}")
+    print("Running LABEL PROPAGATION")
+    print(f"{'='*60}")
+
+    from label_propagation import run_full_propagation
+    run_full_propagation(kg, max_hops=4, min_confidence=0.3, verbose=True)
+
+
 def run_full_pipeline(kg: KnowledgeGraph, batch_size: int = 50):
     """Run the complete investigation pipeline."""
     print("\n" + "="*60)
@@ -816,8 +880,15 @@ def run_full_pipeline(kg: KnowledgeGraph, batch_size: int = 50):
     for layer in ['onchain', 'behavioral', 'osint']:
         run_layer(kg, layer, batch_size)
 
+    # Run advanced correlation layers (batch analysis across all addresses)
+    run_temporal_correlation(kg, batch_size=min(batch_size * 2, 100))
+    run_counterparty_graph(kg, batch_size=min(batch_size, 50))
+
     # Run pattern matching
     run_pattern_matching(kg)
+
+    # Run label propagation to spread identities through the graph
+    run_label_propagation(kg)
 
     # Print final stats
     print("\n" + "="*60)
@@ -1052,7 +1123,7 @@ def main():
 
     # run command
     run_parser = subparsers.add_parser('run', help='Run investigation pipeline')
-    run_parser.add_argument('--layer', choices=['onchain', 'behavioral', 'osint'],
+    run_parser.add_argument('--layer', choices=['onchain', 'behavioral', 'osint', 'temporal', 'counterparty', 'propagation'],
                            help='Run specific layer only')
     run_parser.add_argument('--batch-size', type=int, default=50,
                            help='Batch size for processing')
@@ -1100,7 +1171,17 @@ def main():
         elif args.command == 'run':
             kg.connect()
             if args.layer:
-                run_layer(kg, args.layer, args.batch_size)
+                if args.layer == 'temporal':
+                    # Temporal requires batch analysis, not per-address queue processing
+                    run_temporal_correlation(kg, args.batch_size)
+                elif args.layer == 'counterparty':
+                    # Counterparty requires batch analysis
+                    run_counterparty_graph(kg, args.batch_size)
+                elif args.layer == 'propagation':
+                    # Label propagation spreads identities through graph
+                    run_label_propagation(kg)
+                else:
+                    run_layer(kg, args.layer, args.batch_size)
             else:
                 run_full_pipeline(kg, args.batch_size)
 

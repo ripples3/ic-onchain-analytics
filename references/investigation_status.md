@@ -56,11 +56,51 @@ These are the largest unidentified borrowers by total borrowed amount.
 | `trace_funding.py` | Found: Coinbase, FTX, Binance funders |
 | `behavioral_fingerprint.py` | All have patterns but no identities |
 | `whale_tracker_aggregator.py` | 0 matches in known whale databases |
+| `temporal_correlation.py` | **NEW FINDING** - see below |
+
+## Temporal Correlation Finding (2026-02-13)
+
+**Discovery**: `0xee55...` ($6.8B) and `0x50fc...` (Paxos/Singapore) show temporal correlation.
+
+| Date | Whale Action | Paxos Action | Delta |
+|------|--------------|--------------|-------|
+| Jul 26, 2024 | Aave `supply()` | Curve `exchange()` | 24s |
+| Oct 18, 2024 | Aave `borrow()` | DEX `exchange()` | 36s |
+
+**Pattern**: Whale does Aave operation → Paxos wallet swaps within 24-36 seconds.
+
+**Confidence**: 75% same operator (verified DeFi correlations, spam tokens excluded)
+
+**Implication**: The $6.8B "USDC only" whale may be operationally linked to the Paxos/Singapore institutional wallet.
+
+## Counterparty Graph + Label Propagation Finding (2026-02-13)
+
+**Discovery**: Whales #3, #6, #7 share deposit addresses AND are now IDENTIFIED.
+
+| Whale | Borrowed | Identity | Confidence | Method |
+|-------|----------|----------|------------|--------|
+| #3 `0xf72d...` | $1.29B | **MEV Bot (Titan/MEV Builder)** | 85% | Manual (seed) |
+| #6 `0x5814...` | $854M | MEV Bot (propagated) | 57% | Label propagation |
+| #7 `0xc362...` | $830M | MEV Bot (propagated) | 57% | Label propagation |
+
+**Total cluster size**: $2.97B borrowed
+
+**How it was found**:
+1. Counterparty analysis found shared deposit addresses (75% confidence same entity)
+2. #3 was previously identified as MEV Bot (funded by Titan Builder)
+3. Label propagation spread the identity to #6 and #7 through the cluster relationship
+
+**Conclusion**: Professional MEV operation running multiple wallets. **NOT a BD target**.
+
+**This demonstrates the power of combined analysis**:
+- CIO found 0 connections (no funding links)
+- Counterparty found 3 connections (shared deposits)
+- Label propagation identified all 3 from a single seed identity
 
 ## Why Most Remain Unidentified
 
 1. **No governance footprint** — No DAO votes, no ENS names
-2. **No cross-wallet links** — CIO clustering found 0 connections
+2. **Some cross-wallet links** — CIO found 0, but temporal found 1, counterparty found 3!
 3. **All EOAs** — No multisig ownership to trace
 4. **Deliberately anonymous** — Large DeFi borrowers with zero public traces
 
@@ -99,6 +139,46 @@ These are the largest unidentified borrowers by total borrowed amount.
 - **Result**: 2 addresses linked to WLFI project
 - **Confidence**: 85%
 
+## Safe Multisig Investigation (2026-02-13)
+
+Investigated top Safe wallets by borrowed amount. Found shared signers revealing entity clusters.
+
+### Identified Safes
+
+| Entity | Borrowed | Confidence | Evidence |
+|--------|----------|------------|----------|
+| **Junyi Zheng** | $202M | 92% | Nansen + OnchainLens confirmed |
+| **few.com / Bitfinex** | $556M | 73% | Bitfinex-funded signers, Beacon Depositor |
+
+### Clustered Safes (Now Identified)
+
+| Cluster | Safes | Total Borrowed | Identity | Confidence | Evidence |
+|---------|-------|----------------|----------|------------|----------|
+| **Cluster A** | 3 | $709M | Tornado-funded Entity | 65% | Funding traced: Tornado.Cash → 5 hops → shared signer 0x67ef |
+| **Cluster B** | 2 | $476M | Coinbase Prime Custody Client | 75% | Funding traced: Coinbase Prime Custody → 0x523298 → signer |
+
+### Single Owner Safes
+
+| Address | Borrowed | Identity | Confidence | Evidence |
+|---------|----------|----------|------------|----------|
+| 0xa976ea... | $544M | OG DeFi Whale (2021) | 55% | Created May 2021 with 14,000+ ETH. Immediate Aave/Lido. Circular funding. |
+
+### Key Findings
+
+1. **Cluster A ($709M)**: Uses Tornado.Cash for anonymity - institutional-level privacy operations
+2. **Cluster B ($476M)**: Funded via Coinbase Prime - institutional custody client
+3. **$544M Safe**: OG DeFi whale from 2021 bull market, no CEX origin traceable
+4. **ohana.eth Safe ($238M)**: Linked to ENS cluster via knowledge graph
+
+### Funding Analysis Patterns
+
+| Pattern | Count | Interpretation |
+|---------|-------|----------------|
+| Tornado.Cash origin | 1 cluster | Deliberate anonymization |
+| Coinbase Prime origin | 1 cluster | US institutional client |
+| Circular (Safe funds signers) | 1 Safe | Pre-existing DeFi entity |
+| CEX unknown | 1 Safe | Ambiguous origin |
+
 ## Last Updated
 
-2026-02-12 — Completed all script runs on top 10, applied for Arkham API
+2026-02-13 — Safe multisig investigation completed, 3 clusters partially identified

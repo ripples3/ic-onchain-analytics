@@ -77,28 +77,12 @@ ENS_TEXT_KEYS = [
 
 def resolve_ens_reverse(address: str) -> Optional[str]:
     """
-    Resolve ENS name from address using reverse resolution.
+    Resolve ENS name from address using reverse resolution via ENS subgraph.
     """
     rate_limit()
 
     try:
-        # Build reverse lookup name: 0x1234...addr.reverse
-        addr_hex = address[2:].lower()
-        reverse_name = f"{addr_hex}.addr.reverse"
-
-        # Namehash calculation (simplified - use web3.py for production)
-        # For now, use Etherscan ENS lookup
-        params = {
-            "module": "account",
-            "action": "txlist",
-            "address": address,
-            "page": 1,
-            "offset": 1,
-            "apikey": ETHERSCAN_API_KEY,
-            "chainid": 1
-        }
-
-        # Alternative: use ENS subgraph
+        # Use ENS subgraph (The Graph decentralized network)
         ens_subgraph = "https://gateway.thegraph.com/api/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH"
         query = """
         query GetName($address: String!) {
@@ -132,24 +116,15 @@ def resolve_ens_reverse(address: str) -> Optional[str]:
 def get_ens_text_records(ens_name: str) -> Dict[str, str]:
     """
     Get text records from ENS name.
+    Note: ENS subgraph returns which text keys exist but not their values.
+    For actual values, would need web3.py with ENS resolver calls.
     """
     rate_limit()
 
     records = {}
 
     try:
-        # Use ENS metadata service
-        url = f"https://metadata.ens.domains/mainnet/avatar/{ens_name}/meta"
-        response = requests.get(url, timeout=10)
-
-        if response.status_code == 200:
-            # This gives us avatar info, but we need text records
-            pass
-
-        # Use RPC to query text records
-        # This is simplified - for production, use web3.py with ENS support
-
-        # Alternative: use ENS subgraph for text records
+        # Use ENS subgraph for text record keys
         ens_subgraph = "https://gateway.thegraph.com/api/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH"
         query = """
         query GetTextRecords($name: String!) {
