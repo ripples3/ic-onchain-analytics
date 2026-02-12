@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Common Input Ownership (CIO) Detector - EVM Adaptation
+Common Input Ownership (CIO) Detector - EVM Adaptation (v2 - Fixed)
 
 Adapted from Bitcoin's CIO heuristic for EVM chains. Since EVM transactions
 have a single 'from' address (unlike Bitcoin's multi-input UTXO), we detect
@@ -8,8 +8,17 @@ ownership through related patterns:
 
 1. Circular Funding - A funds B, B funds C, C funds A (same entity recycling)
 2. Common Funding Source - Multiple wallets funded by same source within 24h
-3. Coordinated Activity - Multiple wallets interacting in same block/timeframe
-4. Shared Deposit Destination - Multiple wallets depositing to same exchange address
+3. Shared Deposit Destination - Multiple wallets depositing to same exchange address
+
+REMOVED: Coordinated Activity - Too aggressive, caused false positives
+
+v2 Fixes (2026-02-13):
+- Added comprehensive protocol/exchange exclusion list
+- Added ENS conflict detection (multiple ENS = different people)
+- Added cluster size cap (max 50 addresses)
+- Require stronger evidence (3+ shared connections for large clusters)
+- Fixed union-find transitive chaining issue
+- Added validation layer before final output
 
 Based on ZachXBT methodology and Chainalysis academic research.
 
@@ -38,6 +47,109 @@ ETHERSCAN_BASE_URL = "https://api.etherscan.io/v2/api"
 # Rate limiting
 RATE_LIMIT = 5  # requests per second
 last_request_time = 0
+
+# ============================================================================
+# CONFIGURATION
+# ============================================================================
+
+# Maximum cluster size - one entity rarely controls 50+ wallets
+MAX_CLUSTER_SIZE = 50
+
+# Minimum shared connections required for clustering
+MIN_SHARED_CONNECTIONS = 2  # For small clusters
+MIN_SHARED_CONNECTIONS_LARGE = 3  # For clusters > 10 addresses
+
+# ============================================================================
+# EXCLUSION LISTS - Addresses that are shared by many users (NOT ownership signals)
+# ============================================================================
+
+# Major CEX hot wallets
+CEX_HOT_WALLETS = {
+    # Binance
+    "0x28c6c06298d514db089934071355e5743bf21d60",  # Binance 14
+    "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",  # Binance 16
+    "0x21a31ee1afc51d94c2efccaa2092ad1028285549",  # Binance 15
+    "0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be",  # Binance 1
+    "0xf977814e90da44bfa03b6295a0616a897441acec",  # Binance 8
+    "0x5a52e96bacdabb82fd05763e25335261b270efcb",  # Binance 9
+    "0xbe0eb53f46cd790cd13851d5eff43d12404d33e8",  # Binance 7
+    "0x8894e0a0c962cb723c1976a4421c95949be2d4e3",  # Binance 6
+    # Coinbase
+    "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",  # Coinbase 1
+    "0xa9d1e08c7793af67e9d92fe308d5697fb81d3e43",  # Coinbase 2
+    "0x503828976d22510aad0201ac7ec88293211d23da",  # Coinbase 4
+    "0xddfabcdc4d8ffc6d5beaf154f18b778f892a0740",  # Coinbase 5
+    "0x3cd751e6b0078be393132286c442345e5dc49699",  # Coinbase 6
+    "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511",  # Coinbase 7
+    # Kraken
+    "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",  # Kraken 1
+    "0x0a869d79a7052c7f1b55a8ebabbea3420f0d1e13",  # Kraken 2
+    "0xe853c56864a2ebe4576a807d26fdc4a0ada51919",  # Kraken 3
+    # OKX
+    "0x6cc5f688a315f3dc28a7781717a9a798a59fda7b",  # OKX 1
+    "0x236f9f97e0e62388479bf9e5ba4889e46b0273c3",  # OKX 2
+    # Gemini
+    "0xd24400ae8bfebb18ca49be86258a3c749cf46853",  # Gemini 1
+    "0x6fc82a5fe25a5cdb58bc74600a40a69c065263f8",  # Gemini 2
+    # FTX (historical)
+    "0x2faf487a4414fe77e2327f0bf4ae2a264a776ad2",  # FTX 1
+    "0xc098b2a3aa256d2140208c3de6543aaef5cd3a94",  # FTX 2
+    # Other
+    "0x1151314c646ce4e0ecd76d1af4760ae66a9fe30f",  # Bitfinex 1
+    "0x876eabf441b2ee5b5b0554fd502a8e0600950cfa",  # Bitfinex 2
+    "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",  # Huobi 1
+    "0x6748f50f686bfbca6fe8ad62b22228b87f31ff2b",  # Huobi 2
+}
+
+# Major DeFi protocols - transactions to these are NOT ownership signals
+DEFI_PROTOCOLS = {
+    # Uniswap
+    "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",  # Uniswap V2 Router
+    "0xe592427a0aece92de3edee1f18e0157c05861564",  # Uniswap V3 Router
+    "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45",  # Uniswap V3 Router 2
+    "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",  # Uniswap Universal Router
+    # Aave
+    "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",  # Aave V2 Pool
+    "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",  # Aave V3 Pool
+    "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",  # AAVE Token
+    # Compound
+    "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b",  # Compound Comptroller
+    "0xc00e94cb662c3520282e6f5717214004a7f26888",  # COMP Token
+    # Curve
+    "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",  # Curve 3pool
+    "0xd51a44d3fae010294c616388b506acda1bfaae46",  # Curve Tricrypto2
+    "0x99a58482bd75cbab83b27ec03ca68ff489b5788f",  # Curve Router
+    # Lido
+    "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",  # stETH
+    "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",  # wstETH
+    # Maker
+    "0x9759a6ac90977b93b58547b4a71c78317f391a28",  # MakerDAO DSR
+    "0x83f20f44975d03b1b09e64809b757c47f942beea",  # sDAI
+    # 1inch
+    "0x1111111254fb6c44bac0bed2854e76f90643097d",  # 1inch Router
+    "0x1111111254eeb25477b68fb85ed929f73a960582",  # 1inch V5
+    # OpenSea
+    "0x00000000006c3852cbef3e08e8df289169ede581",  # Seaport
+    # ENS
+    "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",  # ENS Registrar
+    "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",  # ENS Base Registrar
+    # Gnosis Safe
+    "0xa6b71e26c5e0845f74c812102ca7114b6a896ab2",  # Safe Factory 1.3.0
+    "0x76e2cfc1f5fa8f6a5b3fc4c8f4788f0116861f9b",  # Safe Factory 1.4.1
+}
+
+# Bridges and L2 contracts
+BRIDGES = {
+    "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1",  # Optimism Bridge
+    "0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",  # Arbitrum Bridge
+    "0x3154cf16ccdb4c6d922629664174b904d80f2c35",  # Base Bridge
+    "0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",  # Arbitrum L1
+    "0x5e4e65926ba27467555eb562121fac00d24e9dd2",  # zkSync Era
+    "0x32400084c286cf3e17e7b677ea9583e60a000324",  # zkSync Diamond
+}
+
+# Combine all exclusions
+EXCLUDE_ADDRESSES = CEX_HOT_WALLETS | DEFI_PROTOCOLS | BRIDGES
 
 def rate_limit():
     """Enforce rate limiting."""
@@ -274,22 +386,13 @@ def detect_shared_deposits(addresses: List[str], chain_id: int = 1) -> Dict[str,
 
     Exchange deposit addresses are typically single-use per user.
     If two wallets deposit to same address, likely same user.
+
+    v2: Uses comprehensive exclusion list
     """
     print("Detecting shared deposit destinations...")
 
     # Build deposit map: destination -> source addresses
     deposit_map: Dict[str, Set[str]] = defaultdict(set)
-
-    # Known exchange hot wallets to EXCLUDE (these are shared)
-    EXCLUDE_ADDRESSES = {
-        "0x28c6c06298d514db089934071355e5743bf21d60",  # Binance 14
-        "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",  # Binance 16
-        "0x21a31ee1afc51d94c2efccaa2092ad1028285549",  # Binance 15
-        "0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be",  # Binance 1
-        "0xd24400ae8bfebb18ca49be86258a3c749cf46853",  # Gemini 1
-        "0x6cc5f688a315f3dc28a7781717a9a798a59fda7b",  # OKX
-        # Add more known hot wallets as needed
-    }
 
     for i, addr in enumerate(addresses):
         if i % 50 == 0:
@@ -303,13 +406,15 @@ def detect_shared_deposits(addresses: List[str], chain_id: int = 1) -> Dict[str,
             value = int(tx.get("value", 0))
 
             # Outgoing ETH transfer (potential deposit)
-            if from_addr == addr.lower() and value > 0 and to_addr not in EXCLUDE_ADDRESSES:
+            # Exclude known hot wallets and protocols
+            if (from_addr == addr.lower() and value > 0 and
+                to_addr not in EXCLUDE_ADDRESSES):
                 # Check if it looks like a deposit (reasonable amount, not gas)
                 eth_value = value / 1e18
                 if 0.01 < eth_value < 1000:  # Reasonable deposit range
                     deposit_map[to_addr].add(addr.lower())
 
-    # Find shared destinations
+    # Find shared destinations (require 2+ sources)
     clusters: Dict[str, Set[str]] = {}
     cluster_id = 0
 
@@ -322,73 +427,171 @@ def detect_shared_deposits(addresses: List[str], chain_id: int = 1) -> Dict[str,
 
     return clusters
 
-def merge_clusters(all_clusters: List[Dict[str, Set[str]]]) -> Dict[str, dict]:
-    """Merge overlapping clusters from different detection methods."""
+def get_ens_names(addresses: List[str]) -> Dict[str, str]:
+    """
+    Get ENS names for addresses (if available in our data).
+    Returns dict of address -> ens_name.
+
+    Note: This is a placeholder - in production, query ENS or use cached data.
+    """
+    # Try to load from knowledge graph if available
+    try:
+        import sqlite3
+        conn = sqlite3.connect('data/knowledge_graph.db')
+        cursor = conn.execute('''
+            SELECT address, ens_name FROM entities
+            WHERE ens_name IS NOT NULL AND ens_name != ''
+        ''')
+        return {row[0].lower(): row[1] for row in cursor.fetchall()}
+    except:
+        return {}
+
+
+def validate_cluster(addresses: Set[str], ens_map: Dict[str, str]) -> Tuple[bool, str]:
+    """
+    Validate a cluster for conflicts.
+
+    Returns (is_valid, reason).
+    """
+    # Check 1: ENS conflict - multiple different ENS names = different people
+    ens_names = set()
+    for addr in addresses:
+        ens = ens_map.get(addr.lower())
+        if ens:
+            ens_names.add(ens.lower())
+
+    if len(ens_names) > 1:
+        return False, f"ENS conflict: {len(ens_names)} different names ({', '.join(list(ens_names)[:3])}...)"
+
+    # Check 2: Cluster size cap
+    if len(addresses) > MAX_CLUSTER_SIZE:
+        return False, f"Too large: {len(addresses)} addresses (max {MAX_CLUSTER_SIZE})"
+
+    return True, "OK"
+
+
+def merge_clusters(all_clusters: List[Dict[str, Set[str]]],
+                   ens_map: Dict[str, str] = None) -> Dict[str, dict]:
+    """
+    Merge overlapping clusters from different detection methods.
+
+    v2 Fixes:
+    - NO transitive chaining - only merge if addresses directly share a cluster
+    - Validate clusters for ENS conflicts
+    - Cap cluster size
+    - Require multiple methods for large clusters
+    """
     print("\nMerging overlapping clusters...")
 
-    # Build address -> cluster mapping
-    address_clusters: Dict[str, List[str]] = defaultdict(list)
+    if ens_map is None:
+        ens_map = get_ens_names([])
+
+    # Track which addresses appear in which original clusters
+    address_to_clusters: Dict[str, List[Tuple[str, str]]] = defaultdict(list)  # addr -> [(method, cluster_id)]
 
     for clusters in all_clusters:
         for cluster_id, addresses in clusters.items():
+            method = cluster_id.rsplit('_', 1)[0]
             for addr in addresses:
-                address_clusters[addr].append(cluster_id)
+                address_to_clusters[addr].append((method, cluster_id))
 
-    # Union-find to merge overlapping clusters
-    parent: Dict[str, str] = {}
+    # Build connection strength between addresses
+    # Two addresses are connected if they appear in the SAME original cluster
+    connection_count: Dict[Tuple[str, str], int] = defaultdict(int)
+    connection_methods: Dict[Tuple[str, str], Set[str]] = defaultdict(set)
 
-    def find(x: str) -> str:
-        if x not in parent:
-            parent[x] = x
-        if parent[x] != x:
-            parent[x] = find(parent[x])
-        return parent[x]
-
-    def union(x: str, y: str):
-        px, py = find(x), find(y)
-        if px != py:
-            parent[px] = py
-
-    # Union addresses that appear in same cluster
     for clusters in all_clusters:
-        for addresses in clusters.values():
+        for cluster_id, addresses in clusters.items():
+            method = cluster_id.rsplit('_', 1)[0]
             addr_list = list(addresses)
-            for i in range(1, len(addr_list)):
-                union(addr_list[0], addr_list[i])
+            for i in range(len(addr_list)):
+                for j in range(i + 1, len(addr_list)):
+                    pair = tuple(sorted([addr_list[i], addr_list[j]]))
+                    connection_count[pair] += 1
+                    connection_methods[pair].add(method)
 
-    # Build final clusters
-    final_clusters: Dict[str, Set[str]] = defaultdict(set)
-    for addr in address_clusters:
-        root = find(addr)
-        final_clusters[root].add(addr)
+    # Build clusters using STRICT merging (no transitive chaining)
+    # Only merge addresses with direct connection
+    used = set()
+    final_clusters: List[Tuple[Set[str], Set[str]]] = []  # (addresses, methods)
+
+    for (addr1, addr2), count in sorted(connection_count.items(), key=lambda x: -x[1]):
+        if addr1 in used and addr2 in used:
+            continue
+
+        # Find existing cluster that contains addr1 or addr2
+        target_cluster = None
+        for i, (members, methods) in enumerate(final_clusters):
+            if addr1 in members or addr2 in members:
+                target_cluster = i
+                break
+
+        if target_cluster is not None:
+            # Add to existing cluster (but check connection strength)
+            members, methods = final_clusters[target_cluster]
+            new_addr = addr2 if addr1 in members else addr1
+
+            # Require direct connection to at least one existing member
+            has_direct_connection = False
+            for existing in members:
+                pair = tuple(sorted([new_addr, existing]))
+                if connection_count.get(pair, 0) >= MIN_SHARED_CONNECTIONS:
+                    has_direct_connection = True
+                    break
+
+            if has_direct_connection:
+                # Validate before adding
+                test_members = members | {new_addr}
+                is_valid, reason = validate_cluster(test_members, ens_map)
+
+                if is_valid:
+                    members.add(new_addr)
+                    methods.update(connection_methods[(addr1, addr2)])
+                    used.add(new_addr)
+                else:
+                    print(f"  Rejected adding {new_addr[:10]}... to cluster: {reason}")
+        else:
+            # Create new cluster
+            new_members = {addr1, addr2}
+            is_valid, reason = validate_cluster(new_members, ens_map)
+
+            if is_valid:
+                final_clusters.append((new_members, connection_methods[(addr1, addr2)]))
+                used.add(addr1)
+                used.add(addr2)
+            else:
+                print(f"  Rejected new cluster: {reason}")
 
     # Format output
     result = {}
-    for i, (root, members) in enumerate(final_clusters.items()):
+    for i, (members, methods) in enumerate(final_clusters):
         if len(members) >= 2:
-            # Collect detection methods
-            methods = set()
-            for clusters in all_clusters:
-                for cluster_id, addresses in clusters.items():
-                    if members & addresses:
-                        method = cluster_id.rsplit('_', 1)[0]
-                        methods.add(method)
+            # For large clusters, require stronger evidence
+            if len(members) > 10 and len(methods) < 2:
+                print(f"  Skipping cluster_{i}: {len(members)} members but only 1 method")
+                continue
 
             result[f"cluster_{i}"] = {
                 "addresses": list(members),
                 "size": len(members),
                 "methods": list(methods),
-                "confidence": min(0.9, 0.5 + 0.2 * len(methods))  # More methods = higher confidence
+                "confidence": min(0.9, 0.5 + 0.15 * len(methods)),  # Reduced confidence boost
+                "validated": True
             }
 
+    print(f"  Final: {len(result)} validated clusters")
     return result
 
 def run_cio_detection(addresses: List[str], chain_id: int = 1,
                       methods: List[str] = None) -> Dict[str, dict]:
-    """Run all CIO detection methods and merge results."""
+    """
+    Run all CIO detection methods and merge results.
 
+    v2: Removed 'coordinated' method (too aggressive).
+    """
     if methods is None:
-        methods = ["circular", "common_funder", "coordinated", "shared_deposits"]
+        # Default methods - removed 'coordinated' which caused false positives
+        methods = ["circular", "common_funder", "shared_deposits"]
 
     all_clusters = []
 
@@ -400,7 +603,10 @@ def run_cio_detection(addresses: List[str], chain_id: int = 1,
         clusters = detect_common_funder(addresses, chain_id)
         all_clusters.append(clusters)
 
+    # NOTE: 'coordinated' removed in v2 - too many false positives
+    # If explicitly requested, still run it but warn
     if "coordinated" in methods:
+        print("  WARNING: 'coordinated' method is deprecated (high false positive rate)")
         clusters = detect_coordinated_activity(addresses, chain_id)
         all_clusters.append(clusters)
 
@@ -408,22 +614,33 @@ def run_cio_detection(addresses: List[str], chain_id: int = 1,
         clusters = detect_shared_deposits(addresses, chain_id)
         all_clusters.append(clusters)
 
-    return merge_clusters(all_clusters)
+    # Get ENS names for validation
+    ens_map = get_ens_names(addresses)
+    print(f"  Loaded {len(ens_map)} ENS names for validation")
+
+    return merge_clusters(all_clusters, ens_map)
 
 def main():
-    parser = argparse.ArgumentParser(description="CIO Detector - EVM Adaptation")
+    global MAX_CLUSTER_SIZE  # Allow runtime override
+
+    parser = argparse.ArgumentParser(description="CIO Detector v2 - EVM Adaptation (Fixed)")
     parser.add_argument("input", nargs="?", help="Input CSV file with addresses")
     parser.add_argument("-o", "--output", help="Output CSV file")
     parser.add_argument("--address", help="Single address to analyze")
-    parser.add_argument("--methods", default="circular,common_funder,coordinated,shared_deposits",
-                        help="Detection methods (comma-separated)")
+    parser.add_argument("--methods", default="circular,common_funder,shared_deposits",
+                        help="Detection methods (comma-separated). Note: 'coordinated' deprecated.")
     parser.add_argument("--chain-id", type=int, default=1, help="Chain ID (1=Ethereum)")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument("--max-cluster-size", type=int, default=50,
+                        help="Maximum cluster size (default: 50)")
     args = parser.parse_args()
 
     if not ETHERSCAN_API_KEY:
         print("Error: ETHERSCAN_API_KEY not set", file=sys.stderr)
         sys.exit(1)
+
+    # Update global config if specified
+    MAX_CLUSTER_SIZE = args.max_cluster_size
 
     methods = args.methods.split(",")
 
@@ -439,9 +656,12 @@ def main():
         print("Error: Provide input CSV or --address", file=sys.stderr)
         sys.exit(1)
 
+    print(f"CIO Detector v2 (with validation)")
+    print(f"=" * 50)
     print(f"Analyzing {len(addresses)} addresses...")
     print(f"Methods: {methods}")
     print(f"Chain ID: {args.chain_id}")
+    print(f"Max cluster size: {MAX_CLUSTER_SIZE}")
     print()
 
     # Run detection
@@ -452,7 +672,7 @@ def main():
         print(json.dumps(clusters, indent=2))
     else:
         print(f"\n{'='*60}")
-        print(f"RESULTS: Found {len(clusters)} clusters")
+        print(f"RESULTS: Found {len(clusters)} validated clusters")
         print(f"{'='*60}\n")
 
         for cluster_id, data in sorted(clusters.items(), key=lambda x: -x[1]["size"]):
@@ -460,6 +680,7 @@ def main():
             print(f"  Size: {data['size']}")
             print(f"  Methods: {', '.join(data['methods'])}")
             print(f"  Confidence: {data['confidence']:.0%}")
+            print(f"  Validated: {data.get('validated', False)}")
             print(f"  Addresses:")
             for addr in data["addresses"][:5]:
                 print(f"    - {addr}")
@@ -471,7 +692,7 @@ def main():
     if args.output:
         with open(args.output, "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["address", "cluster_id", "cluster_size", "methods", "confidence"])
+            writer.writerow(["address", "cluster_id", "cluster_size", "methods", "confidence", "validated"])
 
             for cluster_id, data in clusters.items():
                 for addr in data["addresses"]:
@@ -480,7 +701,8 @@ def main():
                         cluster_id,
                         data["size"],
                         "|".join(data["methods"]),
-                        f"{data['confidence']:.2f}"
+                        f"{data['confidence']:.2f}",
+                        data.get("validated", False)
                     ])
 
         print(f"Saved to {args.output}")

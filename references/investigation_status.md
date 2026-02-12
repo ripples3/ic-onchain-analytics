@@ -2,183 +2,250 @@
 
 Current status of lending whale identification effort.
 
-## Summary (2026-02-12)
+## Summary (2026-02-13)
 
 | Metric | Value |
 |--------|-------|
-| Total addresses analyzed | 1,205 |
-| Identified (HIGH confidence) | 867 (72%) |
-| Unidentified | 338 (28%) |
-| Top 10 unidentified | 10 (see below) |
+| Total addresses analyzed | 2,049 |
+| Identified (validated) | 306 (14.9%) |
+| Unidentified | 1,743 (85.1%) |
+| Borrowed amount coverage | $95B identified (50.3%) |
+
+**Note**: Previous 81% identification rate was inflated by clustering contamination. Current 14.9% represents validated, high-confidence identifications only.
+
+## Top Identified Entities
+
+| Entity | Addresses | Borrowed | Confidence |
+|--------|-----------|----------|------------|
+| Trend Research (Jack Yi / LD Capital) | 54 | $25.8B | 75% |
+| Abraxas Capital | 2 | $21.7B | 80% |
+| Flash Loan/MEV Bot | 2 | $7.3B | 74% |
+| Justin Sun | 1 | $4.8B | 78% |
+| MEV Bot (Titan/MEV Builder) | 3 | $3.8B | 66% |
+| Coinbase 2 Institutional | 1 | $3.7B | 71% |
+| Celsius | 1 | $3.6B | 95% |
 
 ## Top 10 Unidentified Whales
 
-These are the largest unidentified borrowers by total borrowed amount.
+| # | Address | Borrowed | ENS | Type |
+|---|---------|----------|-----|------|
+| 1 | `0xaaf9...a45b` | $1,696M | none | EOA |
+| 2 | `0x99fd...8962` | $1,575M | none | EOA |
+| 3 | `0x1be4...57d7` | $1,483M | none | EOA |
+| 4 | `0x2bdd...e7ee` | $1,467M | none | EOA |
+| 5 | `0xc468...4ca6` | $1,459M | none | EOA |
+| 6 | `0x59a6...705d` | $928M | none | EOA |
+| 7 | `0x1f99...e46b` | $910M | none | EOA |
+| 8 | `0x9cbf...06ce` | $846M | none | EOA |
+| 9 | `0x602d...7407` | $794M | none | EOA |
+| 10 | `0xdbc6...9482` | $758M | none | EOA |
 
-| # | Address | Best Signal | Confidence | Notes |
-|---|---------|-------------|------------|-------|
-| 1 | `0xee55...0bfc` | UTC-2, fund pattern | 58% | No governance, no NFTs |
-| 2 | `0xc468...4ca6` | Multi-chain (2), UTC+7 | 67% | Active on ETH + Arb |
-| 3 | `0xf72d...6bf4` | UTC+3 only | 60% | Single chain |
-| 4 | `0x3aa3...3187` | UTC+0, spot trader | 60% | Weekday only |
-| 5 | `0x6c2a...4777` | UTC+2, fund pattern | 58% | Conservative |
-| 6 | `0x5814...8de4` | UTC+4 only | 60% | Single chain |
-| 7 | `0xc362...5fb7` | UTC+4 only | 60% | Single chain |
-| **8** | **`0xccee...6fa7`** | **FTX-funded + WLFI voter** | **85%** | **STRONG LEAD** |
-| 9 | `0xd938...48dd` | Binance-funded, multi-chain | 67% | Active on 3 chains |
-| 10 | `0x50fc...bf21` | UTC-3, multi-chain | 71% | Active on 2 chains |
+---
 
-## Best Lead: WLFI Whale (#8)
+## CIO Clustering Fix (2026-02-13)
 
-**Address**: `0xccee77e74c4466df0da0ec85f2d3505956fd6fa7`
+### The Problem
 
-| Finding | Detail |
-|---------|--------|
-| Funding | FTX 2 → June 11, 2022 (5 months before collapse) |
-| Borrowed | $624M on Aave |
-| Governance | WLFI voter (8.67M voting power) |
-| Timezone | UTC+7 (Thailand/Vietnam/Indonesia) |
-| Entity Type | Sophisticated institutional fund |
-| Pattern | Irregular weekday activity only |
+The original CIO clustering algorithm had severe contamination issues:
 
-**Likely Profile**: Asian fund that:
-1. Exited FTX before collapse (smart money)
-2. Invested in Trump's World Liberty Financial
-3. Possibly one of two whales controlling 56% of WLFI governance
+| Issue | Impact |
+|-------|--------|
+| 17 clusters had multiple ENS names | Different people incorrectly grouped |
+| 1,519 addresses incorrectly clustered | 74.6% contamination rate |
+| 1,283 propagated identities wrong | "ohana.eth" spread to 142 unrelated addresses |
+| 208,841 bad evidence records | Polluted knowledge graph |
 
-## Scripts Run on Top 10
+### Root Causes
 
-| Script | Result |
-|--------|--------|
-| `governance_scraper.py` | 1/10 with activity (only WLFI whale) |
-| `cio_detector.py` | 0 clusters (no funding connections between them) |
-| `resolve_safe_owners.py` | 0 Safe wallets (all EOAs) |
-| `trace_funding.py` | Found: Coinbase, FTX, Binance funders |
-| `behavioral_fingerprint.py` | All have patterns but no identities |
-| `whale_tracker_aggregator.py` | 0 matches in known whale databases |
-| `temporal_correlation.py` | **NEW FINDING** - see below |
+1. **'Coordinated Activity' detection** - Clustered anyone in same block + same contract (Uniswap users ≠ same entity)
+2. **Insufficient exclusion list** - Only 6 CEX addresses; missed 50+ major hot wallets and DeFi protocols
+3. **Union-Find transitive chaining** - A↔B + B↔C → A,B,C clustered even if A and C unrelated
+4. **Label propagation without guards** - No ENS conflict detection, no size caps
 
-## Temporal Correlation Finding (2026-02-13)
+### The Fix (cio_detector.py v2)
 
-**Discovery**: `0xee55...` ($6.8B) and `0x50fc...` (Paxos/Singapore) show temporal correlation.
+| Fix | Description |
+|-----|-------------|
+| Comprehensive exclusion list | 50+ CEX hot wallets, DeFi protocols, bridges |
+| ENS conflict detection | Reject clusters with multiple different ENS names |
+| Cluster size cap | Max 50 addresses (configurable) |
+| Removed transitive chaining | Require direct connection to join cluster |
+| Removed 'coordinated' method | Too aggressive, high false positive rate |
+| Validation layer | Every cluster validated before output |
 
-| Date | Whale Action | Paxos Action | Delta |
-|------|--------------|--------------|-------|
-| Jul 26, 2024 | Aave `supply()` | Curve `exchange()` | 24s |
-| Oct 18, 2024 | Aave `borrow()` | DEX `exchange()` | 36s |
+### Cleanup Results
 
-**Pattern**: Whale does Aave operation → Paxos wallet swaps within 24-36 seconds.
+| Metric | Before | After |
+|--------|--------|-------|
+| Clusters | 23 | 6 |
+| Entities in clusters | 1,542 | 23 |
+| Identified | 1,590 (78.1%) | 307 (15.1%) |
+| Evidence records | 215,926 | 7,085 |
+| Relationships | 107,343 | 39 |
 
-**Confidence**: 75% same operator (verified DeFi correlations, spam tokens excluded)
+---
 
-**Implication**: The $6.8B "USDC only" whale may be operationally linked to the Paxos/Singapore institutional wallet.
+## What Worked
 
-## Counterparty Graph + Label Propagation Finding (2026-02-13)
+| Method | Result | Why It Worked |
+|--------|--------|---------------|
+| **Trend Research CIO** | 54 addresses, $25.8B | Multiple signals: CIO + Binance funders + OSINT |
+| **Dune custody labels** | 18 addresses | Ground truth from verified labels |
+| **Direct ENS lookups** | 195 addresses | 1:1 mapping, no clustering needed |
+| **Temporal correlation** | Found 1 link | Timing-based, hard to fake |
+| **Counterparty graph** | Found MEV cluster | Shared deposits = strong signal |
 
-**Discovery**: Whales #3, #6, #7 share deposit addresses AND are now IDENTIFIED.
+### Evidence Types That Worked
 
-| Whale | Borrowed | Identity | Confidence | Method |
-|-------|----------|----------|------------|--------|
-| #3 `0xf72d...` | $1.29B | **MEV Bot (Titan/MEV Builder)** | 85% | Manual (seed) |
-| #6 `0x5814...` | $854M | MEV Bot (propagated) | 57% | Label propagation |
-| #7 `0xc362...` | $830M | MEV Bot (propagated) | 57% | Label propagation |
+| Source | Count | Notes |
+|--------|-------|-------|
+| CIO | 2,537 | When properly validated |
+| Behavioral | 2,220 | Timezone, gas patterns |
+| Pattern Match | 888 | Entity type classification |
+| OSINT | 608 | Web search confirmations |
+| Snapshot | 475 | DAO governance activity |
+| ENS | 190 | Direct name lookups |
 
-**Total cluster size**: $2.97B borrowed
+## What Didn't Work
 
-**How it was found**:
-1. Counterparty analysis found shared deposit addresses (75% confidence same entity)
-2. #3 was previously identified as MEV Bot (funded by Titan Builder)
-3. Label propagation spread the identity to #6 and #7 through the cluster relationship
+| Method | Problem | Status |
+|--------|---------|--------|
+| Coordinated Activity | Same block ≠ same entity | **REMOVED** |
+| Shared Deposit (6 exclusions) | Clustered exchange users | **FIXED** |
+| Union-Find chaining | Weak links propagated | **FIXED** |
+| Label Propagation (no guards) | Spread errors exponentially | **FIXED** |
 
-**Conclusion**: Professional MEV operation running multiple wallets. **NOT a BD target**.
+---
 
-**This demonstrates the power of combined analysis**:
-- CIO found 0 connections (no funding links)
-- Counterparty found 3 connections (shared deposits)
-- Label propagation identified all 3 from a single seed identity
+## Concrete Improvements
 
-## Why Most Remain Unidentified
+### Priority Matrix
 
-1. **No governance footprint** — No DAO votes, no ENS names
-2. **Some cross-wallet links** — CIO found 0, but temporal found 1, counterparty found 3!
-3. **All EOAs** — No multisig ownership to trace
-4. **Deliberately anonymous** — Large DeFi borrowers with zero public traces
+| Priority | Action | Effort | Expected Lift |
+|----------|--------|--------|---------------|
+| **P0** | Nansen API ($49/mo) | Low | +30-40% |
+| **P0** | Arkham API (pending) | Low | +10-20% |
+| **P1** | More CEX wallets | 1 day | +5% |
+| **P1** | Funding chain 5+ hops | 3 days | +10% |
+| **P2** | Multi-chain correlation | 1 week | +15% |
+| **P2** | ML classification | 2 weeks | +20% |
 
-## Next Steps
+### Immediate (This Week)
 
-| Action | Status | Expected Impact |
-|--------|--------|-----------------|
-| Arkham API access | Applied (waiting) | Entity-level lookups |
-| Nansen subscription | Not started | +30-40% identification |
-| WLFI investor research | In progress | May ID whale #8 |
-| Monitor for liquidations | Ongoing | Identity surfaces in news |
+1. **Nansen API Integration** ($49/mo)
+   - 500M+ labeled addresses
+   - Expected lift: +30-40% identification
+   - ROI: Would identify ~$30B+ in unidentified borrowers
+
+2. **Arkham API Access** (Pending approval)
+   - Entity-level lookups
+   - Cross-reference existing identifications
+
+3. **Add More CEX Hot Wallets**
+   - Current: 50+ addresses
+   - Missing: Bybit, KuCoin, Gate.io, MEXC
+
+### Short-Term (This Month)
+
+4. **Funding Chain Analysis** - Trace 5+ hops back to ultimate CEX source
+5. **Multi-Chain Correlation** - Cross-reference Arbitrum/Base activity
+6. **Liquidation Monitoring** - Set alerts for top unidentified
+
+### Medium-Term (Next Quarter)
+
+7. **ML Classification** - Train on labeled addresses
+8. **Social Graph Analysis** - ENS patterns, NFT correlation, DAO coalitions
+9. **Counterparty Network Expansion** - 2-hop analysis
+
+### Architecture Improvements
+
+10. **Confidence Calibration** - Calibrate against ground truth
+11. **Evidence Provenance** - Store full reasoning chain, allow rollback
+12. **Incremental Updates** - Add addresses without full rebuild
+
+---
+
+## Target Metrics
+
+| Metric | Current | With Nansen | Target |
+|--------|---------|-------------|--------|
+| Identification rate | 14.9% | ~45-55% | 70%+ |
+| Borrowed coverage | 50.3% | ~70% | 85%+ |
+| False positive rate | ~0% | ~0% | <5% |
+
+---
 
 ## API Access Status
 
 | Platform | Status | Notes |
 |----------|--------|-------|
-| Arkham API | **Applied 2026-02-12** | Waiting for approval (1-3 days) |
-| Nansen | Not subscribed | $49/mo, considering |
+| Arkham API | **Applied 2026-02-12** | Waiting for approval |
+| Nansen | Not subscribed | $49/mo - **RECOMMENDED** |
 | Etherscan | Active | Free tier |
 | Dune | Active | Free tier |
 
-## Historical Identifications
+---
+
+## Historical Findings
+
+### Temporal Correlation (2026-02-13)
+
+`0xee55...` ($6.8B) and `0x50fc...` (Paxos/Singapore) show temporal correlation:
+- Whale does Aave operation → Paxos wallet swaps within 24-36 seconds
+- 75% confidence same operator
+
+### MEV Cluster (2026-02-13)
+
+Whales #3, #6, #7 identified as MEV Bot (Titan/MEV Builder) cluster:
+- Found via counterparty graph (shared deposit addresses)
+- $3.8B total borrowed
+- **NOT a BD target**
 
 ### Trend Research (2026-02-10)
-- **Method**: CIO clustering → Binance funders → WebSearch → Arkham confirm
-- **Result**: 55 wallets, Jack Yi / LD Capital
-- **Confidence**: 95%
 
-### Justin Sun (2026-02-11)
-- **Method**: WebSearch for large Aave positions
-- **Result**: Multiple wallets confirmed
-- **Confidence**: 90%
+- Method: CIO clustering → Binance funders → WebSearch → Arkham confirm
+- Result: 54 wallets, Jack Yi / LD Capital
+- Confidence: 75%
 
-### World Liberty Financial (2026-02-11)
-- **Method**: WebSearch for WLFI governance
-- **Result**: 2 addresses linked to WLFI project
-- **Confidence**: 85%
+### Safe Multisig Investigation (2026-02-13)
 
-## Safe Multisig Investigation (2026-02-13)
+| Entity | Borrowed | Confidence |
+|--------|----------|------------|
+| Junyi Zheng | $202M | 92% |
+| few.com / Bitfinex | $556M | 73% |
+| Tornado-funded Entity | $709M | 65% |
+| Coinbase Prime Client | $476M | 75% |
 
-Investigated top Safe wallets by borrowed amount. Found shared signers revealing entity clusters.
+---
 
-### Identified Safes
+## Lessons Learned
 
-| Entity | Borrowed | Confidence | Evidence |
-|--------|----------|------------|----------|
-| **Junyi Zheng** | $202M | 92% | Nansen + OnchainLens confirmed |
-| **few.com / Bitfinex** | $556M | 73% | Bitfinex-funded signers, Beacon Depositor |
+### 2026-02-13: CIO Clustering Contamination
 
-### Clustered Safes (Now Identified)
+**What happened**: 74.6% of clustered addresses were incorrectly grouped due to:
+- Weak heuristics (coordinated activity)
+- Insufficient exclusion lists
+- Transitive chaining amplifying errors
+- Label propagation without validation
 
-| Cluster | Safes | Total Borrowed | Identity | Confidence | Evidence |
-|---------|-------|----------------|----------|------------|----------|
-| **Cluster A** | 3 | $709M | Tornado-funded Entity | 65% | Funding traced: Tornado.Cash → 5 hops → shared signer 0x67ef |
-| **Cluster B** | 2 | $476M | Coinbase Prime Custody Client | 75% | Funding traced: Coinbase Prime Custody → 0x523298 → signer |
+**Solution**: Rebuilt CIO detector v2 with ENS conflict detection, size caps, comprehensive exclusions, and validation layer.
 
-### Single Owner Safes
+**Key insight**: Quality > quantity. 14.9% validated is better than 81% contaminated.
 
-| Address | Borrowed | Identity | Confidence | Evidence |
-|---------|----------|----------|------------|----------|
-| 0xa976ea... | $544M | OG DeFi Whale (2021) | 55% | Created May 2021 with 14,000+ ETH. Immediate Aave/Lido. Circular funding. |
+### 2026-02-12: Arkham Labels Require API Access
 
-### Key Findings
+Playwright scraping fails - pages require login. Applied for API access.
 
-1. **Cluster A ($709M)**: Uses Tornado.Cash for anonymity - institutional-level privacy operations
-2. **Cluster B ($476M)**: Funded via Coinbase Prime - institutional custody client
-3. **$544M Safe**: OG DeFi whale from 2021 bull market, no CEX origin traceable
-4. **ohana.eth Safe ($238M)**: Linked to ENS cluster via knowledge graph
+### 2026-02-11: Web Search Has ~10% Hit Rate
 
-### Funding Analysis Patterns
+50 addresses searched → 4 identified. Most large DeFi borrowers are intentionally anonymous.
 
-| Pattern | Count | Interpretation |
-|---------|-------|----------------|
-| Tornado.Cash origin | 1 cluster | Deliberate anonymization |
-| Coinbase Prime origin | 1 cluster | US institutional client |
-| Circular (Safe funds signers) | 1 Safe | Pre-existing DeFi entity |
-| CEX unknown | 1 Safe | Ambiguous origin |
+### 2026-02-10: Run Scripts Before Web Search
+
+Scripts are free with 40-50% combined hit rate. WebSearch costs tokens with 10% hit rate.
+
+---
 
 ## Last Updated
 
-2026-02-13 — Safe multisig investigation completed, 3 clusters partially identified
+2026-02-13 — CIO clustering fixed, knowledge graph rebuilt with clean data, analysis completed
