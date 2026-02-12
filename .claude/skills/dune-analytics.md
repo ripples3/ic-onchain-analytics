@@ -354,6 +354,136 @@ left join prices.day p
 | ERC20 Transfers | `erc20_ethereum.evt_Transfer` | `evt_block_time`, `from`, `to`, `value`, `contract_address` |
 | Staking Flows | `staking_ethereum.flows` | `block_time`, `amount_staked`, `amount_full_withdrawn`, `validator_index`, `entity` |
 
+## Unified Lending Tables (Spellbook)
+
+Dune's `lending.*` tables aggregate data across all major lending protocols. **Use these instead of protocol-specific tables** for cross-protocol analysis.
+
+### Table Overview
+
+| Table | Description | Key Use Case |
+|-------|-------------|--------------|
+| `lending.borrow` | All borrow/repay events | Top borrowers, borrow volume |
+| `lending.supply` | All supply/withdraw events | Top depositors, TVL analysis |
+| `lending.flashloans` | Flash loan events | Flash loan usage by protocol |
+| `lending.supply_scaled` | Hourly supply balances | Current positions (not just flows) |
+| `lending.info` | Protocol metadata | Check supported projects |
+
+### Schema: lending.borrow
+
+```
+blockchain, project, version, transaction_type, loan_type, symbol, token_address,
+borrower, on_behalf_of, repayer, liquidator, amount, amount_raw, amount_usd,
+block_month, block_time, block_number, project_contract_address, tx_hash, evt_index
+```
+
+**Transaction types:** `borrow`, `repay`, `borrow_liquidation`
+
+### Schema: lending.supply
+
+```
+blockchain, project, version, transaction_type, symbol, token_address,
+depositor, on_behalf_of, withdrawn_to, liquidator, amount, amount_raw, amount_usd,
+block_month, block_time, block_number, project_contract_address, tx_hash, evt_index
+```
+
+**Transaction types:** `deposit`, `withdraw`, `withdraw_liquidation`
+
+### Schema: lending.flashloans
+
+```
+blockchain, project, version, token_address, symbol, recipient,
+amount, amount_raw, amount_usd, fee, project_contract_address,
+block_month, block_time, block_number, tx_hash, evt_index
+```
+
+### Schema: lending.supply_scaled
+
+```
+blockchain, project, version, block_month, block_hour, token_address, symbol, user, amount
+```
+
+**Note:** This is a **balance snapshot** table (hourly), not an event table. Use for current positions.
+
+### Supported Projects
+
+Check `lending.info` for current list. Common projects:
+- `aave`, `aave_lido`, `aave_horizon` - Aave markets
+- `compound` - Compound V2/V3
+- `spark` - Spark Protocol
+- `morpho` - Morpho
+- `euler` - Euler
+- `radiant` - Radiant Capital
+
+**NOT in unified tables (need protocol-specific queries):**
+- Fluid
+- Maple Finance
+
+**Note:** Sky/Maker lending is covered via `spark` (Spark is Sky's lending arm).
+
+### Example: Top Borrowers Across Protocols
+
+```sql
+-- Net borrowers (borrowed - repaid) across Compound V3 and Spark
+select
+    project,
+    borrower,
+    sum(case when transaction_type = 'borrow' then amount_usd else 0 end) as total_borrowed,
+    sum(case when transaction_type = 'repay' then amount_usd else 0 end) as total_repaid,
+    sum(case when transaction_type = 'borrow' then amount_usd else -amount_usd end) as net_borrowed
+from lending.borrow
+where blockchain = 'ethereum'
+  and block_time > now() - interval '90' day
+  and project in ('compound_v3', 'spark')
+group by 1, 2
+having sum(case when transaction_type = 'borrow' then amount_usd else -amount_usd end) > 1000000
+order by net_borrowed desc
+limit 50
+```
+
+### Example: Current Supply Positions
+
+```sql
+-- Latest supply positions from supply_scaled
+select
+    project,
+    user,
+    symbol,
+    amount
+from lending.supply_scaled
+where blockchain = 'ethereum'
+  and block_hour = (select max(block_hour) from lending.supply_scaled where blockchain = 'ethereum')
+  and project = 'aave_v3'
+order by amount desc
+limit 50
+```
+
+### Example: Flash Loan Volume by Protocol
+
+```sql
+select
+    project,
+    count(*) as flash_count,
+    sum(amount_usd) as total_volume_usd
+from lending.flashloans
+where blockchain = 'ethereum'
+  and block_time > now() - interval '30' day
+group by 1
+order by total_volume_usd desc
+```
+
+### Important Notes
+
+1. **Event-based vs State:** `lending.borrow` and `lending.supply` are **event tables** (flows). For current balances, use `lending.supply_scaled` or aggregate events.
+
+2. **Partition by block_month:** These tables are partitioned by `block_month`. Add time filters for performance:
+   ```sql
+   where block_time > now() - interval '90' day
+   ```
+
+3. **Liquidations:** Liquidation events have `transaction_type = 'borrow_liquidation'` or `'withdraw_liquidation'` with the `liquidator` field populated.
+
+4. **on_behalf_of:** Some protocols allow borrowing/supplying on behalf of another address. Check both `borrower`/`depositor` AND `on_behalf_of` for complete analysis.
+
 ## Price Tables
 
 Dune has multiple price tables with different granularities.

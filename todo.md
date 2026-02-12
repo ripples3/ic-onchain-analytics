@@ -123,7 +123,78 @@
 
   **Conclusion:** Most large Spark borrowers are **protocols** (Treehouse, Fluid, Mellow, EtherFi) or **known funds** (Abraxas). The truly anonymous mega-whales are on **Aave** (Trend Research, BitcoinOG). Individual whale identity requires CEX KYC records (subpoena access).
 
-- [x] **Investigate Aave unknown borrowers** - Deep investigation completed
+- [x] **Investigate Aave unknown borrowers** - Deep investigation completed (WebSearch agents)
+
+### BD Borrower Research (2026-02-05) - Tasks 5-6
+
+- [x] **Query top borrowers from Aave, Compound, Morpho, Spark ($10M+)** - Built unified query using `lending.borrow` table, saved as [query 6654792](https://dune.com/queries/6654792)
+- [x] **Focus on hybrid and on-chain borrowers (Task 5)** - 312 multi-protocol borrowers found, 198 unknown, 44 use 3+ protocols. Strategy patterns: stablecoin-only (56%), ETH leverage (12%), ETH looping (11%), multi-asset (11%), BTC leverage (8%)
+- [x] **Identify missing users/lanes (Task 6)** - Full analysis in `references/lending_whales.md`. Top gaps: L2 borrowers ($0 data), unlabeled whales ($238B/391 addresses), DAO treasuries ($9.9B/157 Safe wallets), emerging yield protocols (Veda $2.4B, Cian $1.7B)
+- [x] **Cross-reference addresses with identity labels** - Query 6654792 includes: owner_key, ENS, CEX labels, Safe, DAO, DeFi protocol, MEV, Bridge, L2, OFAC, staking entity
+- [x] **Compile findings into references/lending_whales.md** - Added top unlabeled whales, labeled entities, MEV bots, ENS leads
+- [x] **Query Fluid, Maple borrowers** - Researched: Fluid NOT in Dune `lending.borrow` spellbook (need raw contract queries, ~$6B TVL). Maple is KYC-gated (80+ borrowers, identities not public). See `references/lending_whales.md` Task 6 section for details and dashboard links.
+- [ ] **Build Lending Whales CRM** - Enrich data for BD outreach:
+  - Create CSV export with: address, protocol, borrowed, net_position, entity_type, twitter, website, ens, bd_status, priority, notes
+  - Add entity categorization (protocol vault, fund, individual, MEV, unknown)
+  - Extract social/contact info from Dune labels (social_links, project_website)
+  - Consider Notion/Airtable import for filtering/tracking
+
+- [ ] **Deep investigation with cast/curl** - Token-efficient follow-up for remaining unknowns
+
+  **Why:** WebSearch agents cost ~40K tokens each. Cast/curl cost ~100 tokens per call (30x cheaper).
+
+  **Remaining Unknowns to Investigate (16 Aave addresses):**
+  ```
+  0xc468315a2df54f9c076bd5cfe5002ba211f74ca6  $348M
+  0x23a5e45f9556dc7ffb507db8a3cfb2589bc8adad  $203M
+  0xef417fce1883c6653e7dc6af7c6f85ccde84aa09  $200M
+  0x7cd0b7ed790f626ef1bd42db63b5ebeb5970c912  $172M  (cbBTC+RLUSD, likely institutional)
+  0x9cbf099ff424979439dfba03f00b5961784c06ce  $166M
+  0x893aa69fbaa1ee81b536f0fbe3a3453e86290080  $165M
+  0x517ce9b6d1fcffd29805c3e19b295247fcd94aef  $148M
+  0x197f0a20c1d96f7dffd5c7b5453544947e717d66  $143M
+  0x3edc842766cb19644f7181709a243e523be29c4c  $136M
+  0x99926ab8e1b589500ae87977632f13cf7f70f242  $131M
+  0x28a55c4b4f9615fde3cdaddf6cc01fcf2e38a6b0  $106M  (large wNXM+COMP)
+  0xe40d278afd00e6187db21ff8c96d572359ef03bf  $103M  (Safe multisig)
+  0x78cca58ceeebf201555a3c0f3daeb55d1f1ca564  $101M  (Safe proxy)
+  0x741aa7cfb2c7bf2a1e7d4da2e3df6a56ca4131f3  $98M   (large wNXM, 10+ chains)
+  0xfa5484533acf47bc9f5d9dc931fcdbbdcefb4011  $97M   (Instadapp DSA, 96% WBTC)
+  0x50fc9731dace42caa45d166bff404bbb7464bf21  $97M   (89% WBTC + USDG)
+  ```
+
+  **Investigation Process (per address):**
+  ```bash
+  # 1. Check if EOA or contract (~50 tokens)
+  cast code <ADDRESS> --rpc-url $ETH_RPC_URL | head -c 100
+
+  # 2. If contract, identify type (~50 tokens each)
+  # DSProxy:
+  cast call <ADDRESS> "owner()(address)" --rpc-url $ETH_RPC_URL
+
+  # Safe multisig:
+  cast call <ADDRESS> "getOwners()(address[])" --rpc-url $ETH_RPC_URL
+  cast call <ADDRESS> "getThreshold()(uint256)" --rpc-url $ETH_RPC_URL
+
+  # 3. Get first transaction - funding origin (~100 tokens)
+  curl -s "https://api.etherscan.io/api?module=account&action=txlist&address=<ADDRESS>&startblock=0&endblock=99999999&sort=asc&page=1&offset=1&apikey=$ETHERSCAN_API_KEY" | jq '.result[0] | {from, hash, timeStamp}'
+
+  # 4. If Safe, investigate signers recursively
+  # 5. Cross-reference first funder with known CEX hot wallets
+  ```
+
+  **CEX Hot Wallet Reference:**
+  - Binance 14: `0x28c6c062...`
+  - Binance 16: `0xdfd5293d8e347dfe59e90efd55b2956a1343963d`
+  - Kraken 4: `0x267be1C1...`
+  - Poloniex 4: `0xa910f92acdaf488fa6ef02174fb86208ad7722ba`
+
+  **Priority targets:**
+  1. Safe multisigs (`0xe40d2...`, `0x78cca...`) - can get signer addresses
+  2. Large wNXM holders (`0x28a55...`, `0x741aa...`) - may be same entity
+  3. WBTC-heavy positions (`0xfa548...`, `0x50fc9...`) - unusual pattern
+
+  **Output:** Update `references/lending_whales.md` with findings.
 
   **Aave CRM Unknowns (5 investigated):**
 
