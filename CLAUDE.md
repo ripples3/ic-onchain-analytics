@@ -8,122 +8,71 @@ DuneSQL queries and analytics for Index Coop products across Ethereum, Arbitrum,
 dune-analytics/
 ├── queries/                    # SQL query files ({query_id}_{description}.sql)
 ├── scripts/
-│   └── dune_query.py          # CLI tool for Dune API
+│   ├── dune_query.py          # CLI tool for Dune API
+│   ├── build_knowledge_graph.py  # MASTER: Knowledge graph forensic system
+│   ├── enrich_addresses.py    # Orchestrates whale enrichment pipeline
+│   ├── cio_detector.py        # Common Input Ownership clustering (94.85%)
+│   ├── governance_scraper.py  # Snapshot voting analysis
+│   ├── verify_identity.py     # Multi-source verification
+│   └── [17 more scripts]      # See scripts/README.md
+├── data/
+│   └── knowledge_graph.db     # SQLite knowledge graph database
 ├── references/
-│   └── index_coop.md          # Product addresses & query patterns
+│   ├── index_coop.md          # Product addresses & query patterns
+│   ├── lending_whales.md      # Whale identities, investigation findings
+│   ├── cex_hot_wallets.md     # CEX address labels
+│   └── investigation_status.md # Current investigation progress
 ├── .claude/skills/
-│   └── dune-analytics.md      # Full DuneSQL syntax guide & code style
+│   └── dune-analytics.md      # Full DuneSQL syntax guide
 └── CLAUDE.md                  # This file
 ```
 
 ## Quick Commands
 
 ```bash
-# Fetch cached results (FREE)
-python3 scripts/dune_query.py 5140527
-
-# Export formats
+# Dune queries
+python3 scripts/dune_query.py 5140527              # Fetch cached (FREE)
+python3 scripts/dune_query.py 5140527 --execute    # Fresh execution (USES CREDITS)
 python3 scripts/dune_query.py 5140527 --format csv > out.csv
-python3 scripts/dune_query.py 5140527 --format json
 
-# Fresh execution (USES CREDITS)
-python3 scripts/dune_query.py 5140527 --execute
+# Knowledge graph investigation
+python3 scripts/build_knowledge_graph.py stats     # View statistics
+python3 scripts/build_knowledge_graph.py run       # Run full pipeline
+python3 scripts/build_knowledge_graph.py query --address 0x1234...
+python3 scripts/build_knowledge_graph.py export -o results.csv
 ```
 
 ## Key Query IDs & Materialized Views
 
-**PREFER materialized views** (`dune.index_coop.result_*`) over `query_XXXXX` for better performance.
-**Only use materialized views that are confirmed to exist** - don't assume.
+**PREFER materialized views** (`dune.index_coop.result_*`) over `query_XXXXX`.
 
 ### Queries WITH Materialized Views
 | ID | Materialized View | Description |
 |----|-------------------|-------------|
-| **5140527** | `result_multichain_indexcoop_tokenlist` | Token registry with decimals (PREFERRED) |
+| **5140527** | `result_multichain_indexcoop_tokenlist` | Token registry (PREFERRED) |
 | 4771298 | `result_index_coop_leverage_suite_tokens` | Leverage token configs |
-| 3713252 | `result_allchain_lev_suite_tokens_nav_hourly` | Leverage suite hourly NAV/price |
-| 2646506 | `result_index_coop_issuance_events_all_products` | Issuance events all products |
-| 2812068 | `result_index_coop_token_prices_daily` | Token prices daily |
-| 3668275 | `result_index_coop_product_core_kpi_daily` | Product Core KPIs daily |
-| 5196255 | `result_multichain_all_active_tokens_nav_hourly` | All active tokens NAV hourly |
-| 5140966 | `result_multichain_components_with_hardcoded_values` | Component tokens with base_symbol (replaces 3018988) |
-| 5140916 | `result_multichain_composition_changes_product_events` | Composition changes per token (upstream for NAV) |
+| 3713252 | `result_allchain_lev_suite_tokens_nav_hourly` | Leverage suite NAV hourly |
+| 5196255 | `result_multichain_all_active_tokens_nav_hourly` | All active tokens NAV |
 | 3808728 | `result_hyeth_yield` | hyETH NAV and APY |
-| 3994496 | `result_hyeth_nav_by_minute` | hyETH NAV by minute |
-| 3457583 | `result_fli_token_nav_lr` | FLI tokens (ETH2x-FLI, BTC2x-FLI) NAV hourly |
 
 ### Queries WITHOUT Materialized Views
 | ID | Description |
 |----|-------------|
 | 5298403 | Latest open exposure by asset |
-| 3982525 | Weekly KPI report |
-| 3672187 | Daily KPI report (TVL & NSF) |
-| 4135813 | All chain lev suite trades (user holding periods) |
-| 2364999 | Unit supply daily |
-| 2621012 | Fee structure daily |
-| 4153359 | Staked PRT share |
-| 2878827 | Fee split structure |
-| 3989545 | Post-merge staking yield |
-| 2364870 | Token registry (legacy) |
-| 4007736 | PENDLE hyETH Swap & Hold Incentive Tracker |
-| 3806801 | hyETH composition NAV ETH (minute) |
-| 3806854 | LRT exchange rates (minute) |
-| 547552 | icETH yield (APY, parity value) |
 | 4781646 | Leverage FlashMint events (v1 + v2) |
-
-## Optimization Guidelines
-
-When optimizing queries, **ALWAYS verify logic is intact** after changes:
-
-1. **Don't assume optimizations** - Ask before making changes not explicitly requested
-2. **Verify row counts** - Compare output before/after optimization
-3. **Check aggregation behavior** - `avg(minute prices)` ≠ direct `hourly price` lookup
-4. **UNION vs UNION ALL** - Only use UNION ALL when no duplicates possible (different contracts/events)
-5. **Window function partitions** - Ensure partitions are preserved exactly
-
-Common optimizations (apply carefully):
-- `ethereum.blocks` → `utils.days`, `utils.hours`, or `utils.minutes`
-- `prices.usd` → `prices.hour` or `prices.day` (but test - `prices.usd` can be faster)
-- Add time filters on large tables for partition pruning
-- `UNION` → `UNION ALL` where safe
-
-**Always document optimizations in the file header.**
+| 6654792 | Top lending borrowers ($10M+) with identity labels |
 
 ## DuneSQL Quick Reference
-
-### Materialized Result Tables
-
-**Always prefer materialized views** over `query_XXXXX` for faster execution:
-```sql
--- GOOD: Use materialized view
-from dune.index_coop.result_multichain_indexcoop_tokenlist  -- query_5140527
-from dune.index_coop.result_index_coop_leverage_suite_tokens  -- query_4771298
-from dune.index_coop.result_allchain_lev_suite_tokens_nav_hourly  -- query_3713252
-
--- AVOID: Direct query reference (slower)
-from query_5140527
-```
 
 ### Addresses (no quotes)
 ```sql
 where contract_address = 0x1494ca1f11d487c2bbe4543e90080aeba4ba3c2b
 ```
 
-### Time Differences
+### Time Series (use utils tables, NOT ethereum.blocks)
 ```sql
-date_diff('second', timestamp1, timestamp2)
-date_diff('day', timestamp1, timestamp2)
-```
-
-### Generate Time Series (use utils tables, NOT ethereum.blocks)
-```sql
--- Daily
-select timestamp as day from utils.days where timestamp >= timestamp '2020-09-10'
-
--- Hourly
+select timestamp as day from utils.days where timestamp >= timestamp '2024-01-01'
 select timestamp as hour from utils.hours where timestamp >= timestamp '2024-01-01'
-
--- Minute
-select timestamp as minute from utils.minutes where timestamp >= timestamp '2024-04-10'
 ```
 
 ### Row Filtering (no QUALIFY)
@@ -134,68 +83,97 @@ select * from (
 ) where rn = 1
 ```
 
-### Multichain Tables
-```sql
-from evms.erc20_transfers e
-where e.blockchain in ('ethereum', 'arbitrum', 'base')
-```
-
 ### Multichain Joins (CRITICAL)
-**Always join on BOTH address AND blockchain** to prevent duplicate rows:
 ```sql
--- WRONG: Creates duplicates (same token on multiple chains)
+-- WRONG: Creates duplicates
 left join prices p on s.address = p.token_address
 
--- RIGHT: Unique match per chain
+-- RIGHT: Join on BOTH address AND blockchain
 left join prices p on s.address = p.token_address and s.blockchain = p.blockchain
 ```
 
 ### Price Tables
-| Table | Time Column | Granularity | Notes |
-|-------|-------------|-------------|-------|
-| `prices.usd` | `minute` | Per-minute | ⚠️ **LEGACY** - but can be faster (smaller table) |
-| `prices.minute` | `timestamp` | Per-minute | Broader coverage but larger table |
-| `prices.hour` | `timestamp` | Hourly | ✅ **Recommended** for hourly queries |
-| `prices.day` | `timestamp` | Daily | ✅ Fastest, broadest coverage |
+| Table | Granularity | Notes |
+|-------|-------------|-------|
+| `prices.usd` | Per-minute | Legacy but can be 7x faster |
+| `prices.hour` | Hourly | Recommended for hourly queries |
+| `prices.day` | Daily | Fastest, broadest coverage |
 
-**Price table selection:**
-- `prices.usd` is LEGACY but can be **7x faster** if tokens are already in it (smaller table)
-- `prices.minute` has broader coverage but scans more data
-- Test both if performance matters - don't blindly replace `prices.usd`
+## Investigation Scripts Status
 
-**⚠️ `prices.minute` optimization attempts - TESTED & FAILED:**
+| Script | What It Does | Status (2026-02-12) |
+|--------|--------------|---------------------|
+| `trace_funding.py` | CEX funding origin | ✅ Run on top 10 |
+| `cio_detector.py` | CIO clustering | ✅ Run - 0 clusters in top 10 |
+| `governance_scraper.py` | Snapshot votes | ✅ Run - 1/10 has activity |
+| `resolve_safe_owners.py` | Safe multisig owners | ✅ Run - 0 Safes in top 10 |
+| `behavioral_fingerprint.py` | Timing/gas patterns | ✅ Run on all |
+| `verify_identity.py` | Multi-source check | ✅ Run |
+| `whale_tracker_aggregator.py` | Known whale lookup | ✅ Run - 0 matches |
 
-Tested on query_4781646 (Leverage FlashMint events). None matched `prices.usd` performance:
-- **Semi-join with dynamic token list** - Timed out on free engine
-- **Explicit token list filter** - Timed out on free engine
-- **prices.hour fallback** - Not viable when minute precision needed
+**Result**: Top 10 unidentified whales remain unidentified. Best lead: WLFI whale (#8) with FTX funding + 8.67M WLFI voting power.
 
-**Conclusion:** Stick with `prices.usd` until Dune deprecates it. When deprecated:
-1. Accept ~7x higher query cost with `prices.minute`
-2. Create materialized view to pre-filter prices for specific tokens
-3. Request Dune improve `prices.minute` indexing
+## Whale Investigation Workflow
 
-### Base Wrapped Alt Tokens
-Base tokens (uSOL, uSUI, uXRP) have **direct prices** in `prices.hour` on Base chain - no cross-chain lookup needed:
-- uSOL: `0x9b8df6e244526ab5f6e6400d331db28c8fdddb55`
-- uSUI: `0xb0505e5a99abd03d94a1169e638b78edfed26ea4`
-- uXRP: `0x2615a94df961278DcbC41Fb0a54fEc5f10a693aE`
+Full methodology: `/on-chain-query` skill. See `references/investigation_status.md` for current progress.
 
-### Aave V3 Token Patterns
-Leverage products use Aave V3 aTokens (collateral) and variableDebt tokens (debt):
-- **Collateral**: `aEthWETH`, `aArbWBTC`, `aBasWETH` → price lookup uses underlying token
-- **Debt**: `variableDebtEthUSDC`, `variableDebtArbUSDCn` → price lookup uses underlying token
-
-Find Aave contract addresses at: [bgd-labs/aave-address-book](https://github.com/bgd-labs/aave-address-book)
-
-### Filter NaN Values
-```sql
-where not is_nan(leverage_ratio)
+```bash
+# Quick pipeline
+source .venv/bin/activate
+python3 scripts/enrich_addresses.py addresses.csv -o enriched.csv
+python3 scripts/cio_detector.py enriched.csv -o clusters.csv
+python3 scripts/governance_scraper.py enriched.csv -o governance.csv
+python3 scripts/verify_identity.py enriched.csv -o verified.csv --report
 ```
+
+## Lessons Learned
+
+### 2026-02-12: Arkham Labels Require API Access
+
+**Context**: Tried Playwright scraping of Arkham explorer pages.
+
+**What happened**: Pages require login to see entity labels. Public explorer shows balance but not identity.
+
+**Solution**: Applied for Arkham API access at intel.arkm.com/api. Waiting for approval.
+
+**Pattern**: For Arkham lookups, use API or manual login. Web scraping won't work.
+
+### 2026-02-11: Web Search Has ~10% Hit Rate for Addresses
+
+50 addresses searched → 4 identified (8%). Most large DeFi borrowers are intentionally anonymous.
+
+**What works for high-value unknowns:**
+- Whale trackers (Lookonchain, OnchainLens) — often already track large wallets
+- Wait for liquidation events — identity surfaces in news
+- Paid tools (Nansen $49/mo) — 4x better hit rate
+
+### 2026-02-11: Run Scripts Before Web Search
+
+Scripts are free, have 40-50% combined hit rate. WebSearch costs tokens, has 10% hit rate.
+
+**Workflow**: Local scripts → Aggregate → Web search last (high-value only)
+
+### 2026-02-10: Successful 55-Wallet Cluster ID (Trend Research)
+
+CIO clustering found 55 wallets with common Binance funders. WebSearch for "Trend Research wallet" matched address prefixes. Arkham confirmed entity.
+
+**Pattern**:
+```
+1. CIO clustering → identify common funders
+2. Etherscan → label CEX hot wallets
+3. WebSearch → "[address prefix] whale"
+4. Arkham entity page → confirm
+```
+
+### 2026-02-05: Skills = Methodology, References = Data
+
+Skills became bloated with addresses. Now: methodology in skills, changing data in references.
 
 ## Resources
 
 - [DuneSQL Functions](https://docs.dune.com/query-engine/Functions-and-operators)
-- See `.claude/skills/dune-analytics.md` for complete syntax guide
-- See `references/index_coop.md` for all product addresses
-- For whale research: Use `/on-chain-query` skill (Arkham, Lending CRM, investigation workflow)
+- `.claude/skills/dune-analytics.md` — Full DuneSQL syntax guide
+- `references/index_coop.md` — Product addresses
+- `references/lending_whales.md` — Whale identities
+- `references/cex_hot_wallets.md` — CEX address labels
+- `/on-chain-query` skill — Full investigation methodology
