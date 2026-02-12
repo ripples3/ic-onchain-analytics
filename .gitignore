@@ -15,6 +15,27 @@ build/
 .venv/
 venv/
 
-# Output files
-*.csv
-*.json
+# Data files - intermediate outputs (don't commit)
+data/pipeline/
+data/archive/
+data/*.db
+
+# Data files - raw inputs (large, don't commit)
+data/raw/
+
+# Data files - results (commit selectively)
+data/results/*.json
+
+# Keep results CSV for reference
+!data/results/*.csv
+
+# Root level data files (shouldn't exist after cleanup)
+/*.csv
+/*.txt
+
+# But allow reference files
+!references/*.csv
+!references/*.md
+
+# Jupyter notebooks output
+*.ipynb_checkpoints/
