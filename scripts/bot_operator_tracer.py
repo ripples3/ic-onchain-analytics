@@ -185,6 +185,62 @@ class BotOperatorTracer:
 
         return dict(providers_used)
 
+    def analyze_profit_flow(self, address: str) -> Dict:
+        """Analyze profit flow concentration to identify operator structure.
+
+        Phase 2 improvement: Profit concentration reveals operator type.
+
+        Key insight from 0xdb7030be investigation:
+        - $45M profit → single beneficiary → single operator
+        - 80%+ concentration = Single operator
+        - 50-80% = Primary operator with partners
+        - <50% = Distributed operation (team/DAO)
+        """
+        destinations = self.get_profit_destinations(address, limit=200)
+
+        if not destinations:
+            return {
+                "concentration": 0.0,
+                "operator_type": "unknown",
+                "top_recipient": None,
+                "total_eth": 0.0,
+                "recipient_count": 0,
+            }
+
+        total_eth = sum(d["total_eth"] for d in destinations)
+        if total_eth == 0:
+            return {
+                "concentration": 0.0,
+                "operator_type": "no_outflow",
+                "top_recipient": None,
+                "total_eth": 0.0,
+                "recipient_count": len(destinations),
+            }
+
+        # Calculate concentration
+        top_recipient = destinations[0] if destinations else None
+        top_eth = top_recipient["total_eth"] if top_recipient else 0
+        concentration = top_eth / total_eth if total_eth > 0 else 0
+
+        # Classify operator structure
+        if concentration >= 0.8:
+            operator_type = "single_operator"
+        elif concentration >= 0.5:
+            operator_type = "primary_with_partners"
+        elif concentration >= 0.3:
+            operator_type = "small_team"
+        else:
+            operator_type = "distributed_operation"
+
+        return {
+            "concentration": concentration,
+            "operator_type": operator_type,
+            "top_recipient": top_recipient["address"] if top_recipient else None,
+            "top_recipient_eth": top_eth,
+            "total_eth": total_eth,
+            "recipient_count": len(destinations),
+        }
+
     def trace_operator(self, address: str, deep: bool = False) -> Dict:
         """Full operator trace for a bot/contract address."""
         address = address.lower()
@@ -195,6 +251,7 @@ class BotOperatorTracer:
             "deployer": None,
             "related_contracts": [],
             "profit_destinations": [],
+            "profit_flow": {},  # Phase 2: profit concentration analysis
             "mev_builder": None,
             "flash_loan_providers": {},
             "likely_operator": None,
@@ -234,6 +291,19 @@ class BotOperatorTracer:
             result["flash_loan_providers"] = self.analyze_flash_loan_usage(address)
             if result["flash_loan_providers"]:
                 result["operator_type"] = "flash_loan_bot"
+
+            # Phase 2: Analyze profit flow concentration
+            result["profit_flow"] = self.analyze_profit_flow(address)
+
+            # If profit flow shows single operator and we don't have one yet,
+            # use top recipient as likely operator
+            if not result["likely_operator"] and result["profit_flow"].get("concentration", 0) >= 0.5:
+                top_recipient = result["profit_flow"].get("top_recipient")
+                if top_recipient and not self.is_contract(top_recipient):
+                    result["likely_operator"] = top_recipient
+                    # Confidence based on concentration
+                    concentration = result["profit_flow"]["concentration"]
+                    result["confidence"] = max(result["confidence"], 0.6 + (concentration * 0.3))
 
         else:
             # It's an EOA, check if it deployed contracts

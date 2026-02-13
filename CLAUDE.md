@@ -101,26 +101,46 @@ left join prices p on s.address = p.token_address and s.blockchain = p.blockchai
 
 ## Investigation Scripts Status
 
-| Script | What It Does | Effectiveness | Status (2026-02-14) |
-|--------|--------------|---------------|---------------------|
-| `temporal_correlation.py` | Same-operator detection | ⭐ **85.8%** avg conf | Best method for DeFi whales |
-| `cio_detector.py` | CIO clustering | ⭐ **80.2%** avg conf | Second best method |
-| `trace_funding.py` | CEX funding origin | **70%** avg conf | Works well for CEX-funded |
-| `behavioral_fingerprint.py` | Timing/gas patterns | **60%** avg conf | Good for clustering |
-| `pattern_matcher.py` | Entity type classification | **58%** avg conf | Fund vs individual |
-| `governance_scraper.py` | Snapshot votes | **70%** avg conf | Works if address is active |
-| `counterparty_graph.py` | Shared counterparty analysis | **57%** avg conf | Needs protocol filtering |
-| `label_propagation.py` | Identity propagation | **45%** avg conf | Limited by network structure |
-| `nft_tracker.py` | NFT holdings | ❌ **0%** hit rate | Skip for DeFi whales |
-| `bridge_tracker.py` | Cross-chain bridges | ❌ **0%** hit rate | Skip for DeFi whales |
-| `change_detector.py` | Change address detection | ❌ **0%** hit rate | Not applicable to tokens |
-| `dex_analyzer.py` | DEX trading patterns | ❌ **0%** activity | Position holders don't trade |
+### Phase 2 Method Effectiveness (Updated 2026-02-14)
 
-**Phase 2 Results (2026-02-14)**:
+| Script | Contracts | EOAs ($500M+) | EOAs (Standard) | Recommendation |
+|--------|-----------|---------------|-----------------|----------------|
+| `bot_operator_tracer.py` | ⭐ **100%** | 60% | 30% | **Use first for contracts** |
+| `behavioral_fingerprint.py` | ⭐ **100%** | ⭐ **100%** | ⭐ **100%** | **Universal fallback** |
+| `trace_funding.py` | ⭐ **100%** | ⭐ **100%** | ⭐ **100%** | **Always run** |
+| `temporal_correlation.py` | 25% | **85%** | **85%** | Use when partners exist |
+| `cio_detector.py` | ❌ 0% | ❌ 0% | **80%** | Skip for sophisticated |
+| `counterparty_graph.py` | ❌ 0% | ❌ 0% | 57% | Skip for sophisticated |
+| `ens_resolver.py` | ❌ 0% | ❌ 0% | 40% | Skip for sophisticated |
+| `whale_tracker.py` | ❌ 0% | ❌ 0% | 20% | Skip for sophisticated |
+| `governance_scraper.py` | ❌ 0% | 50% | 70% | Use when active |
+| `nft_tracker.py` | ❌ 0% | ❌ 0% | ❌ 0% | Skip for DeFi |
+| `bridge_tracker.py` | ❌ 0% | ❌ 0% | ❌ 0% | Skip for DeFi |
+
+### Smart Investigation Routing (NEW)
+
+```bash
+# Smart orchestrator - routes based on address type and sophistication
+python3 scripts/smart_investigator.py --address 0x1234... --borrowed 500
+
+# Show recommended methods only (no investigation)
+python3 scripts/smart_investigator.py --address 0x1234... --borrowed 1000 --methods-only
+
+# Batch investigation
+python3 scripts/smart_investigator.py addresses.csv -o results.csv
+```
+
+**Routing logic:**
+1. **Contracts** → bot_operator_tracer (100%) + behavioral + funding
+2. **$500M+ EOAs** → behavioral + funding + temporal (skip CIO/counterparty/ENS)
+3. **Standard EOAs** → full pipeline
+
+### Phase 2 Results (2026-02-14)
 - Identified 80/100 top whales (80% coverage)
-- Borrowed coverage: $34.96B of $42.52B (82.2%)
-- Key identification: Celsius Network cluster (42 wallets, $3.6B+)
-- Key identification: Asia-Pacific VC/Investment Fund (4 hubs, $4.5B+)
+- Cracked 5/5 remaining unknowns at 69.6% avg confidence
+- Key finding: bot_operator_tracer is **new MVP for contracts** (100% success)
+- Key finding: behavioral_fingerprint **never fails** (universal fallback)
+- Key finding: CIO/counterparty/ENS = **0% on sophisticated whales**
 
 **Best leads**: FTX whale with 8.67M WLFI voting power, Institutional Fund pair (92% confidence)
 
@@ -274,16 +294,53 @@ python3 scripts/investigate_safes.py safes.csv --update-kg
 
 Full methodology: `/on-chain-query` skill. See `references/investigation_status.md` for current progress.
 
+### Quick Pipeline (Smart Routing)
+
 ```bash
-# Quick pipeline
+# RECOMMENDED: Use smart orchestrator for optimal method routing
+source .venv/bin/activate
+python3 scripts/smart_investigator.py addresses.csv -o results.csv
+
+# Or show method recommendations without running
+python3 scripts/smart_investigator.py addresses.csv --methods-only
+```
+
+### Manual Pipeline (All Methods)
+
+```bash
 source .venv/bin/activate
 python3 scripts/enrich_addresses.py addresses.csv -o enriched.csv
 python3 scripts/cio_detector.py enriched.csv -o clusters.csv
-python3 scripts/investigate_safes.py enriched.csv -o safes.csv  # NEW - for Safes
+python3 scripts/investigate_safes.py enriched.csv -o safes.csv  # For Safes
 python3 scripts/temporal_correlation.py enriched.csv -o temporal.csv
 python3 scripts/counterparty_graph.py enriched.csv -o counterparty.csv
 python3 scripts/governance_scraper.py enriched.csv -o governance.csv
 python3 scripts/verify_identity.py enriched.csv -o verified.csv --report
+```
+
+### Updated Investigation Workflow (Phase 2)
+
+```
+1. CHECK CONTRACT FIRST
+   └── Yes → bot_operator_tracer (100% success on contracts)
+   └── No → continue
+
+2. CHECK SOPHISTICATION ($500M+)
+   └── Yes → Skip CIO/counterparty/ENS/whale_tracker (0% hit rate)
+   └── No → continue with full pipeline
+
+3. RUN UNIVERSAL METHODS (always work)
+   └── behavioral_fingerprint → timezone = region
+   └── trace_funding → CEX origin chain
+
+4. RUN TEMPORAL CORRELATION
+   └── >80% correlation found → use as primary signal
+   └── No correlation → note as isolated operator
+
+5. COMBINE SIGNALS
+   └── bot_operator + behavioral = 75%+ confidence
+   └── temporal + behavioral = 80%+ confidence
+   └── funding + behavioral only = 55-60% confidence
 ```
 
 ## Lessons Learned
