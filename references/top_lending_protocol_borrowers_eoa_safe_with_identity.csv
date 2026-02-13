@@ -2,7 +2,7 @@ address_type,borrowed_assets,borrower,bridge_label,burn_label,cex_deposit_for,ce
 EOA,"['USDT', 'WBTC', 'USDC', 'USDS', 'cbBTC', 'DAI']",0xed0c6079229e2d407672a117c22b62064f4a4312,,,,,,,,,,,,,,,28979.96,,,,aave,,,,,,14440.88,Abraxas Capital,HIGH,Arkham
 EOA,"['PYUSD', 'USDT', 'USDC', 'USDS', 'DAI']",0xed0c6079229e2d407672a117c22b62064f4a4312,,,,,,,,,,,,,,,15321.62,,,,spark,,,,,,7736.08,Abraxas Capital,HIGH,Arkham
 EOA,"['USDT', 'USDC', 'USDS', 'wstETH', 'WBTC', 'DAI']",0xb99a2c4c1c4f1fc27150681b740396f6ce1cbcf5,,,,,,,,,,,,,,,14765.97,,,,aave,,,,,,7267.24,Abraxas Capital,HIGH,Arkham
-EOA,['USDC'],0xee55328d240d10b09f549dc3b2a6653c13f10bfc,,,,,,,,,,,,,,,13584.2,,,,aave,,,,,,6791.75,,,
+EOA,['USDC'],0xee55328d240d10b09f549dc3b2a6653c13f10bfc,,,,,,,,,,,,,,,13584.2,,,,aave,,,,,,6791.75,Flash Loan/MEV Bot,HIGH,"Behavioral,Pattern Match,Manual Investigation,Temporal"
 EOA,"['DAI', 'USDC', 'PYUSD', 'USDS', 'USDT']",0xb99a2c4c1c4f1fc27150681b740396f6ce1cbcf5,,,,,,,,,,,,,,,11395.16,,,,spark,,,,,,5696.69,Abraxas Capital,HIGH,Arkham
 EOA,"['DAI', 'USDC', 'TUSD', 'MKR', 'USDT']",0x3ddfa8ec3052539b6c9549f12cea2c295cff5296,,,,,,,,,,,,,,,9731.48,,,,aave,,,,,,4839.59,Justin Sun (TRON/HTX),HIGH,Etherscan + Wu Blockchain
 EOA,"['USDT', 'DAI', 'USDC']",0xd275e5cb559d6dc236a5f8002a5f0b4c8e610701,,,,,,,,,,,,,,,7844.94,,,,aave,,,,,,3705.77,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
@@ -15,13 +15,13 @@ EOA,"['cbBTC', 'USDe', 'USDT', 'USDC', 'USDS', 'wstETH', 'WBTC', 'weETH', 'DAI',
 EOA,"['USDC', 'WETH']",0x99fd1378ca799ed6772fe7bcdc9b30b389518962,,,,,,,,,,,,,,,3130.66,,,,compound,,,,,,1575,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['USDC', 'PYUSD', 'USDS', 'DAI', 'USDT']",0x1be45fef92c4e2538fecd150757ed62b7b3757d7,,,,,,,,,,,,,,,2975.16,,,,spark,,,,,,1483.47,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,['USDC'],0x2bdded18e2ca464355091266b7616956944ee7ee,,,,,,,,,,,,,,,2938.97,,,,compound,,,,,,1467.32,Abraxas Capital (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
-EOA,"['USDT', 'USDC']",0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,,,,,,,,,,,,,,,2504.4,,,,aave,,,,,,1438.67,,,
+EOA,"['USDT', 'USDC']",0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,,,,,,,,,,,,,,,2504.4,,,,aave,,,,,,1438.67,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Pattern Match,Propagation"
 EOA,"['CRV', 'CVX', 'LINK', 'WETH', 'sUSD', 'USDS', 'WBTC', 'RPL', 'DPI', 'ENS', 'DAI', 'BAL', 'USDe', 'cbBTC', 'SNX', '1INCH', 'USDC', 'BUSD', 'LDO', 'MKR', 'UNI', 'YFI', 'USDT']",0xc37704a457b1ee87eb657cae584a34961e86acac,,,,,,,,,,,,,,,3257.08,,,,aave,,,,,,1351.22,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,"['USDC', 'WETH', 'DAI', 'wstETH', 'USDT', 'USDe', 'cbETH', 'WBTC', 'cbBTC', 'GHO']",0xf72d6a06ea0066dc9694156ca544f5d463a26bf4,,,,,,,,,,,,,,,2580.97,,,,aave,,,,,,1290.49,,,
+EOA,"['USDC', 'WETH', 'DAI', 'wstETH', 'USDT', 'USDe', 'cbETH', 'WBTC', 'cbBTC', 'GHO']",0xf72d6a06ea0066dc9694156ca544f5d463a26bf4,,,,,,,,,,,,,,,2580.97,,,,aave,,,,,,1290.49,MEV Bot (Titan/MEV Builder),HIGH,"Behavioral,Manual Investigation,Counterparty"
 EOA,"['WBTC', 'TUSD', 'WETH', 'SNX', 'USDC', 'YFI', 'sUSD', 'LINK', 'USDT', 'DAI']",0x4deb3edd991cfd2fcdaa6dcfe5f1743f6e7d16a6,,,,,,,,,,,,,,,2535.72,,,,aave,,,,,,1249.33,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['WBTC', 'USDC', 'USDe', 'USDT']",0xeb2a1125f1e14822d0708464b795baad6b9038ce,,,,,,,,,,,,,,,2442.02,,,,aave,,,,,,1238.7,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,['USDC'],0x3aa39dff4964043a61d94029fcedaac2f02f3187,,,,,,,,,,,,,,,2331.38,,,,compound,,,,,,1163.91,,,
-EOA,"['WBTC', 'WETH', 'USDT']",0x6c2a355929ee1262305e385ad49b84fe5f5a4777,,,,,,,,,,,,,,,2801.46,,,,aave,,,,,,1086.91,,,
+EOA,['USDC'],0x3aa39dff4964043a61d94029fcedaac2f02f3187,,,,,,,,,,,,,,,2331.38,,,,compound,,,,,,1163.91,Inactive Compound User (2020-2021),HIGH,"Behavioral,Manual Investigation"
+EOA,"['WBTC', 'WETH', 'USDT']",0x6c2a355929ee1262305e385ad49b84fe5f5a4777,,,,,,,,,,,,,,,2801.46,,,,aave,,,,,,1086.91,Unknown Asia-Pacific Trader,MEDIUM,"Behavioral,Pattern Match,Manual Investigation"
 EOA,"['WETH', 'DAI', 'WBTC', 'xSUSHI', 'BUSD', 'TUSD', 'USDT', 'BAT', 'REN', 'USDC', 'SNX', 'KNC', 'CRV', 'sUSD', 'YFI', 'MANA', 'UNI', 'MKR']",0xb1adceddb2941033a090dd166a462fe1c2029484,,,,,,,,,,,,notpunks.eth,,,2324.13,,,,aave,,,,,,1042.25,notpunks.eth,UNVERIFIED,ENS
 EOA,"['USDC', 'WETH']",0x4deb3edd991cfd2fcdaa6dcfe5f1743f6e7d16a6,,,,,,,,,,,,,,,2031.27,,,,compound,,,,,,1012.14,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'USDT']",0x517ce9b6d1fcffd29805c3e19b295247fcd94aef,,,,,,,,,,,,,,,1837.36,,,,aave,,,,,,973.69,FalconX Client,MEDIUM,On-chain analysis
@@ -31,10 +31,10 @@ EOA,"['USDT', 'USDC', 'USDe', 'RLUSD']",0x1be45fef92c4e2538fecd150757ed62b7b3757
 EOA,['USDC'],0x1f99aaa8b4fb631d25b38b8a9099ef8f2611e46b,,,,,,,,,,,,,,,1822.62,,,,compound,,,,,,909.76,Abraxas Capital (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDT', 'USDC', 'WETH']",0x3c9ea5c4fec2a77e23dd82539f4414266fe8f757,,,,,,,,,,,,,,,1715.49,,,,compound,,,,,,897.72,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDT', 'USDC']",0x1e2ac461edc05bdc7b471cf93aeceec91f32ed29,,,,,,,,,,,,,,,1783.06,,,,aave,,,,,,888.94,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,"['USDC', 'DAI', 'cbETH', 'LUSD', 'wstETH', 'GHO', 'WBTC', 'tBTC', 'crvUSD', 'EURC', 'USDT', 'LINK', 'USDe', 'cbBTC']",0x5814fc20f0e09114503569ed6b27a4a86c9f8de4,,,,,,,,,,,,,,,1708.83,,,,aave,,,,,,854.41,,,
+EOA,"['USDC', 'DAI', 'cbETH', 'LUSD', 'wstETH', 'GHO', 'WBTC', 'tBTC', 'crvUSD', 'EURC', 'USDT', 'LINK', 'USDe', 'cbBTC']",0x5814fc20f0e09114503569ed6b27a4a86c9f8de4,,,,,,,,,,,,,,,1708.83,,,,aave,,,,,,854.41,MEV Bot (Titan/MEV Builder),MEDIUM,"Behavioral,Counterparty,Propagation"
 EOA,"['USDC', 'WETH']",0x712d0f306956a6a4b4f9319ad9b9de48c5345996,,,,,,,,,,,,,,,1704.79,,,,compound,,,,,,852.38,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['wstETH', 'USDe', 'USDtb', 'CRV', 'TUSD', 'rETH', 'DAI', 'USDT', 'GHO', 'weETH', 'WETH', 'USDC']",0x9cbf099ff424979439dfba03f00b5961784c06ce,,,,,,,,,,,,,,,1650.33,,,,aave,,,,,,845.91,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Snapshot,OSINT,Pattern Match"
-EOA,"['USDe', 'wstETH', 'GHO', 'DAI', 'crvUSD', 'USDC', 'EURC', 'WBTC', 'USDT', 'WETH', 'cbETH', 'cbBTC', 'tBTC', 'PYUSD']",0xc3623ab16de256bf11855f884fdffd6f971c5fb7,,,,,,,,,,,,,,,1659.35,,,,aave,,,,,,829.67,,,
+EOA,"['USDe', 'wstETH', 'GHO', 'DAI', 'crvUSD', 'USDC', 'EURC', 'WBTC', 'USDT', 'WETH', 'cbETH', 'cbBTC', 'tBTC', 'PYUSD']",0xc3623ab16de256bf11855f884fdffd6f971c5fb7,,,,,,,,,,,,,,,1659.35,,,,aave,,,,,,829.67,MEV Bot (Titan/MEV Builder),MEDIUM,"Behavioral,Counterparty"
 EOA,"['GUSD', 'sUSD', 'USDC', 'CRV', 'DAI', 'USDT']",0x9c5083dd4838e120dbeac44c052179692aa5dac5,,,,,,,,,,,,pennilesswassie.sismo.eth,,,1629.1,,,,aave,,,,,,813.02,pennilesswassie.sismo.eth,UNVERIFIED,ENS
 EOA,"['DAI', 'USDC', 'USDT']",0x602d9abd5671d24026e2ca473903ff2a9a957407,,,,,,,,,,,,,,,1597.89,,,,aave,,,,,,793.58,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Snapshot,Pattern Match"
 EOA,"['GUSD', 'rETH', 'WETH', 'FEI', 'CVX', 'WBTC', 'BAL', 'USDT', 'weETH', 'LINK', 'TUSD', 'USDC', 'FRAX', 'UNI', 'wstETH', 'SNX', 'ZRX', 'DAI', 'sUSD', 'CRV']",0x171c53d55b1bcb725f660677d9e8bad7fd084282,,,,,,,,,,,,,,,1893.35,,,,aave,,,,,,790.5,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
@@ -45,25 +45,25 @@ EOA,"['USDC', 'LINK', 'SNX', 'USDT', 'WBTC', 'BUSD', 'WETH', 'sUSD', 'wstETH', '
 EOA,"['USDT', 'USDC']",0x4093fbe60ab50ab79a5bd32fa2adec255372f80e,,,,,,,,,,,,,,,1304.39,,,,aave,,,,,,666.59,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'weETH', 'WETH', 'wstETH', 'USDe', 'WBTC', 'USDT']",0xe5379345675132653bd303030c6e456034ed1961,,,,,,,,,,,,,,,2891.74,,,,aave,,,,,,655.03,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['DAI', 'GHO', 'TUSD', 'USDS', 'WBTC', 'WETH', 'RAI', 'USDT', 'SNX', 'UNI', 'USDC', 'LINK']",0x78e96be52e38b3fc3445a2ed34a6e586ffab9631,,,,,,,,,,,,,,,1322.55,,,,aave,,,,,,625.34,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Snapshot,OSINT,Pattern Match"
-EOA,"['USDC', 'USDe', 'USDT']",0xccee77e74c4466df0da0ec85f2d3505956fd6fa7,,,,,,,,,,,,,,,1322.29,,,,aave,,,,,,624,,,
-EOA,"['USDT', 'USDC']",0xd93814273b33dd33b32cd345225cfb65deb048dd,,,,,,,,,,,,,,,1247.05,,,,aave,,,,,,605.31,,,
+EOA,"['USDC', 'USDe', 'USDT']",0xccee77e74c4466df0da0ec85f2d3505956fd6fa7,,,,,,,,,,,,,,,1322.29,,,,aave,,,,,,624,FTX User,MEDIUM,"CrossChain,Behavioral,Snapshot,OSINT,Pattern Match,FundingAnalysis,Governance,trace_funding.py"
+EOA,"['USDT', 'USDC']",0xd93814273b33dd33b32cd345225cfb65deb048dd,,,,,,,,,,,,,,,1247.05,,,,aave,,,,,,605.31,Binance User,MEDIUM,"CrossChain,Behavioral,Pattern Match,trace_funding.py"
 EOA,"['UNI', 'sUSD', 'MANA', 'ENS', 'DAI', 'ZRX', 'BAL', 'USDC', 'LINK', 'YFI', 'CRV', 'USDT', 'MKR']",0x712d0f306956a6a4b4f9319ad9b9de48c5345996,,,,,,,,,,,,,,,1187.8,,,,aave,,,,,,583.81,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDT', 'USDC', 'WBTC', 'DAI', 'FEI', 'sUSD']",0xc803698a4be31f0b9035b6eba17623698f3e2f82,,,,,,,,,,,,,,,1400.13,,,,aave,,,,,,568.39,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,['USDC'],0x50fc9731dace42caa45d166bff404bbb7464bf21,,,,,,,,,,,,,,,1027.05,,,,aave,,,,,,557.59,,,
-Contract,"['WETH', 'WBTC', 'USDe', 'USDS', 'USDC', 'DAI', 'USDT']",0xf20b338752976878754518183873602902360704,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,1387.58,,Safev1.1.1,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,556.51,,,
+EOA,['USDC'],0x50fc9731dace42caa45d166bff404bbb7464bf21,,,,,,,,,,,,,,,1027.05,,,,aave,,,,,,557.59,Flash Loan/MEV Bot,MEDIUM,"CrossChain,Behavioral,Temporal,Propagation"
+Contract,"['WETH', 'WBTC', 'USDe', 'USDS', 'USDC', 'DAI', 'USDT']",0xf20b338752976878754518183873602902360704,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,1387.58,,Safev1.1.1,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,556.51,few.com / Bitfinex-funded entity,HIGH,"CrossChain,Behavioral,Snapshot"
 EOA,"['USDC', 'USDT', 'USDe']",0x487828727cc97172205faeb8d15b3ee5d9924599,,,,,,,,,,,,,,,1097.69,,,,aave,,,,,,548.09,,,
-Contract,"['FEI', 'WBTC', 'USDC', 'FRAX', 'DAI', 'USDT', 'sUSD', 'CRV']",0xa976ea51b9ba3232706af125a92e32788dc08ddc,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,1450.94,,Safev1.1.1,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,544.98,,,
+Contract,"['FEI', 'WBTC', 'USDC', 'FRAX', 'DAI', 'USDT', 'sUSD', 'CRV']",0xa976ea51b9ba3232706af125a92e32788dc08ddc,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,1450.94,,Safev1.1.1,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,544.98,OG DeFi Whale (2021),MEDIUM,"Behavioral,FundingAnalysis"
 EOA,"['USDC', 'USDT', 'WETH']",0xd48573cda0fed7144f2455c5270ffa16be389d04,,,,,,,,,,,,,,,1345.84,,,,aave,,,,,,535.94,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['DAI', 'GHO', 'USDT', 'CRV', 'USDC']",0x9026a229b535ecf0162dfe48fdeb3c75f7b2a7ae,,,,,,,,,,,,czsamsunsb.eth,,,1107.48,,,,aave,,,,,,532.96,czsamsunsb.eth,UNVERIFIED,ENS
 EOA,['USDC'],0x815c8d0ca4227180119664b5ed2df11b7858a2f1,,,,,,,,,,,,,,,1057.79,,,,compound,,,,,,525.71,Abraxas Capital (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 Contract,"['DAI', 'xSUSHI', 'USDC', 'USDT']",0x4a49985b14bd0ce42c25efde5d8c379a48ab02f3,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,1060.1,,Safev1.1.1,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,504.93,Aave Genesis Team,HIGH,Etherscan
 EOA,['USDT'],0xe051fb91ec09eefb77e7f7a599291bf921eb504d,,,,,,,,,,,,,,,502.38,,,,aave,,,,,,502.38,,,
-EOA,['USDT'],0xc6badce2f5e10db90d74dbe023768259ec4699c7,,,,,,,,,,,,,,,1002.6,,,,aave,,,,,,499.29,,,
+EOA,['USDT'],0xc6badce2f5e10db90d74dbe023768259ec4699c7,,,,,,,,,,,,,,,1002.6,,,,aave,,,,,,499.29,Staking: thomasg.eth,MEDIUM,"CIO,Behavioral"
 EOA,"['wstETH', 'USDC', 'USDT', 'WBTC', 'USDS', 'USDe']",0xc08b122fb1057149f55d49d3d5cea0d083b37ffb,,,,,,,,,,,,,,,993.45,,,,aave,,,,,,488.81,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'GHO', 'USDT', 'TUSD', 'DAI']",0x28a55c4b4f9615fde3cdaddf6cc01fcf2e38a6b0,,,,,,,,,,,,,,,820.05,,,,aave,,,,,,472.43,7 Siblings,HIGH,Arkham + Etherscan
 EOA,"['WETH', 'DAI']",0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,,,,,,,,,,,,,,,958.99,,,,spark,,,,,,469.57,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['USDC', 'USDe', 'USDT']",0x9a20bed545c3ccb0be85b182f47225fe74cead02,,,,,,,,,,,,,,,923.49,,,,aave,,,,,,461.53,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
-EOA,"['USDT', 'USDe', 'USDC']",0x55f6ccf0f57c3de5914d90721ad4e9fbce4f3266,,,,,,,,,,,,,,,1231.29,,,,aave,,,,,,460.13,,,
+EOA,"['USDT', 'USDe', 'USDC']",0x55f6ccf0f57c3de5914d90721ad4e9fbce4f3266,,,,,,,,,,,,,,,1231.29,,,,aave,,,,,,460.13,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Pattern Match,Propagation"
 Contract,"['USDe', 'USDT', 'USDC']",0x99926ab8e1b589500ae87977632f13cf7f70f242,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,770.64,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,454.1,0x9992 Whale (Lookonchain tracked),MEDIUM,Lookonchain
 EOA,"['USDe', 'USDT', 'USDC', 'USDS']",0x0ad500d23a43ae9b26a570cfb02b68c48a866565,,,,,,,,,,,,,,,887.89,,,,aave,,,,,,443.66,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,['USDC'],0x9b4772e59385ec732bccb06018e318b7b3477459,,,,,,,,,,,,,,,860.1,,,,compound,,,,,,430.17,,,
@@ -71,21 +71,21 @@ EOA,"['USDT', 'USDC']",0xa76b6a7aa1b4501e6edcb29898e1ce4b9784e81c,,,,,,,,,,,,,,,
 EOA,['USDT'],0x90d443b372b2a1212dda03c9b56c4e622688e981,,,,,,,,,,,,,,,819.31,,,,aave,,,,,,422.37,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['WETH', 'USDT', 'WBTC', 'USDS', 'USDC', 'PYUSD', 'USDe', 'GHO']",0xddf725d2ebd795748dd8c6b700b7c98d1dfb8ce5,,,,,,,,,,,,,,,811.97,,,,aave,,,,,,412.6,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'USDT', 'USDe']",0xa9f86d9eaf339305cd36e76bc0de7ac5b024f075,,,,,,,,,,,,,,,785.64,,,,aave,,,,,,407.15,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
-EOA,"['WBTC', 'USDT', 'USDC', 'USDe', 'WETH']",0x37829fe9b8e67b8267c2058b9459f524b9e3ca5d,,,,,,,,,,,,,,,815.12,,,,aave,,,,,,407.1,,,
+EOA,"['WBTC', 'USDT', 'USDC', 'USDe', 'WETH']",0x37829fe9b8e67b8267c2058b9459f524b9e3ca5d,,,,,,,,,,,,,,,815.12,,,,aave,,,,,,407.1,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Propagation"
 EOA,"['WETH', 'DAI', 'wstETH']",0x3c9ea5c4fec2a77e23dd82539f4414266fe8f757,,,,,,,,,,,,,,,849.79,,,,spark,,,,,,399.6,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['WETH', 'USDC', 'BAT']",0x767ecb395def19ab8d1b2fcc89b3ddfbed28fd6b,,,,Celsius Network 14,Celsius Network,,,,Celsius Network,,,,,,808.19,,,celsius_network,compound,,,,,,390.1,Celsius Network,HIGH,"CIO,CrossChain,Snapshot,Behavioral"
 EOA,"['USDT', 'GHO', 'DAI', 'USDC', 'WBTC']",0x741aa7cfb2c7bf2a1e7d4da2e3df6a56ca4131f3,,,,,,,,,,,,,,,642.98,,,,aave,,,,,,382.13,7 Siblings,HIGH,Arkham + Etherscan
 EOA,"['GHO', 'DAI', 'cbETH', 'USDC', 'USDT']",0xf368d43f148e1803ec793670183b0ca6a07d3898,,,,,,,,,,,,,,,740.7,,,,aave,,,,,,381.42,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,['USDT'],0xe5c248d8d3f3871bd0f68e9c4743459c43bb4e4c,,,,,,,,,,,,,,,666.07,,,,aave,,,,,,370,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-Contract,['wstETH'],0x23a5e45f9556dc7ffb507db8a3cfb2589bc8adad,,,,,,,Safe_v_4_1,Safe Test,,,,,,,520.41,,,,aave,,Safe Wallet,,,,368.86,,,
+Contract,['wstETH'],0x23a5e45f9556dc7ffb507db8a3cfb2589bc8adad,,,,,,,Safe_v_4_1,Safe Test,,,,,,,520.41,,,,aave,,Safe Wallet,,,,368.86,Tornado-funded Entity (Cluster A),HIGH,Behavioral
 EOA,"['WBTC', 'GUSD', 'BUSD', 'USDC', 'DAI', 'USDT', 'TUSD']",0x06185ca50a8ab43726b08d8e65c6f2173fb2b236,,,,,,,,,,,,,,,745.6,,,,aave,,,,,,366.09,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['DAI', 'USDT', 'USDC']",0x71a91c9202c8091c62c630ca2de44b333ddcd0d7,,,,,,,,,,,,,,,721.41,,,,aave,,,,,,360.31,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,['USDC'],0x701bd63938518d7db7e0f00945110c80c67df532,,,,,,,,,,,,,,,699.21,,,,compound,,,,,,348.88,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDC', 'USDT']",0x8879ae6c281495a5d40dce8015bc3bbf7b109233,,,,,,,,,,,,,,,688.97,,,,aave,,,,,,346.52,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,['USDT'],0xfaf1358fe6a9fa29a169dfc272b14e709f54840f,,,,,,,,,,,,,,,537.49,,,,aave,,,,,,343.18,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,"['cbBTC', 'USDe', 'GHO', 'USDS', 'USDC', 'USDT']",0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,,,,,,,,,,,,,,,959.58,,,,aave,,,,,,334.83,,,
+EOA,"['cbBTC', 'USDe', 'GHO', 'USDS', 'USDC', 'USDT']",0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,,,,,,,,,,,,,,,959.58,,,,aave,,,,,,334.83,FTX User (propagated),MEDIUM,"CrossChain,Behavioral,Propagation"
 EOA,"['WBTC', 'UNI', 'USDC', 'wstETH', 'DAI', 'USDT', 'USDe']",0xf078969e55cabf9ae3f26afeb5ec627b4430f19e,,,,,,,,,,,,,,,693.11,,,,aave,,,,,,333.54,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
-EOA,"['USDT', 'USDC']",0x920eefbcf1f5756109952e6ff6da1cab950c64d7,,,,,,,,,,,,,,,664.79,,,,aave,,,,,,331.73,,,
+EOA,"['USDT', 'USDC']",0x920eefbcf1f5756109952e6ff6da1cab950c64d7,,,,,,,,,,,,,,,664.79,,,,aave,,,,,,331.73,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Pattern Match,Propagation"
 EOA,"['BAT', 'USDC']",0x3ba21b6477f48273f41d241aa3722ffb9e07e247,,,,,,,,,,,,,,,662.49,,,,compound,,,,,,330.79,Celsius Network (cluster member),HIGH,"CIO,Snapshot,OSINT,Behavioral"
 EOA,['USDC'],0xabde2f02fe84e083e1920471b54c3612456365ef,,,FalconX,,,,,,,,,,,,717.01,,,,aave,,,,,,326.9,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['USDC', 'DAI', 'USDT', 'MKR']",0xdb5aa12ad695ef2a28c6cdb69f2bb04bed20a48e,,,,Celsius Network 10,Celsius Network,,,,Celsius Network,,,,,,671.87,,,celsius_network,aave,,,,,,326.6,Celsius Network,HIGH,"CIO,Snapshot,OSINT,Behavioral"
@@ -94,7 +94,7 @@ EOA,"['USDT', 'USDC', 'DAI']",0x9d783e9b0b19cc1bf4f6bf36169fc004ce8fa9d0,,,,,,,,
 EOA,"['DAI', 'USDC', 'USDT']",0x0f1dfef1a40557d279d0de6e49ab306891a638b8,,,,,,,,,,,,,,,644.52,,,,aave,,,,,,322.25,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDT', 'LINK', 'DAI', 'WETH', 'USDC', 'TUSD']",0x208b82b04449cd51803fae4b1561450ba13d9510,,,,,,,,,,,,,,,584.09,,,,aave,,,,,,320.72,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Snapshot,OSINT,Behavioral"
 EOA,"['USDC', 'USDe', 'USDT']",0x53f4ec44c6786c4b15945b4321ac23e9eaab597c,,,,,,,,,,,,,,,644.56,,,,aave,,,,,,318.27,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
-EOA,"['USDC', 'USDT']",0x2c4fb358eadfe01184451a74bd0a3812e3da1c08,,,,,,,,,,,,,,,613.41,,,,aave,,,,,,313.47,,,
+EOA,"['USDC', 'USDT']",0x2c4fb358eadfe01184451a74bd0a3812e3da1c08,,,,,,,,,,,,,,,613.41,,,,aave,,,,,,313.47,Binance User (propagated),MEDIUM,"Behavioral,Pattern Match,Propagation"
 EOA,"['USDT', 'USDC']",0x34780c209d5c575cc1c1ceb57af95d4d2a69ddcf,,,,,,,,,,,,,,,542.79,,,,aave,,,,,,313.14,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['WETH', 'WBTC', 'USDe', 'USDT', 'USDC', 'GHO', 'RLUSD']",0x4352cc849b33a936ad93bb109afdec1c89653b4f,,,,,,,,,,,,,,,678.63,,,,aave,,,,,,312.33,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDT', 'RLUSD', 'USDC', 'PYUSD']",0x691cb02bf62a0bb2397bfae9a55f7380d415fff2,,,,,,,,,,,,,,,604.83,,,,aave,,,,,,310.69,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
@@ -107,7 +107,7 @@ EOA,"['USDC', 'USDT']",0xf42bcfd3dd5fcdd984d24fd2787383195c7f2b51,,,,,,,,,,,,,,,
 EOA,"['DAI', 'rETH', 'wstETH', 'WETH']",0x171c53d55b1bcb725f660677d9e8bad7fd084282,,,,,,,,,,,,,,,572.98,,,,spark,,,,,,286.86,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['DAI', 'USDT', 'UST', 'USDC', 'FEI']",0xd0ed2d0b2b136f0dfeefc1387dc52ef5d2293dae,,,,,,,,,,,,,,,573.71,,,,aave,,,,,,286.8,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Snapshot,OSINT,Behavioral,Pattern Match"
 EOA,"['WETH', 'WBTC', 'USDC', 'BAT']",0xcfc50541c3deaf725ce738ef87ace2ad778ba0c5,,,,,,,,,,,,drdumplingsats.eth,,,590.45,,,,compound,,,,,,286.68,drdumplingsats.eth,UNVERIFIED,ENS
-Contract,"['USDC', 'PYUSD', 'USDT', 'USDe', 'GHO']",0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,501.66,,,,aave,,Safe Wallet,,,,284.61,,,
+Contract,"['USDC', 'PYUSD', 'USDT', 'USDe', 'GHO']",0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,501.66,,,,aave,,Safe Wallet,,,,284.61,Coinbase Prime Custody Client (Cluster B),HIGH,"Behavioral,FundingAnalysis"
 EOA,"['USDS', 'USDT', 'DAI', 'USDC', 'PYUSD']",0xddf725d2ebd795748dd8c6b700b7c98d1dfb8ce5,,,,,,,,,,,,,,,549.98,,,,spark,,,,,,281.87,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDe', 'USDT', 'USDC', 'USDS']",0x5b30506175844cc91eddc6d66fdca6bc75758882,,,,,,,,,,,,,,,563.48,,,,aave,,,,,,281.36,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,['DAI'],0x8af700ba841f30e0a3fcb0ee4c4a9d223e1efa05,,,,,,,,,,,,,,,552.14,,,,spark,,,,,,273.41,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Snapshot,Behavioral,Pattern Match"
@@ -128,7 +128,7 @@ Contract,"['EURC', 'USDT', 'USDC']",0xe40d278afd00e6187db21ff8c96d572359ef03bf,,
 EOA,"['DAI', 'USDe', 'WETH', 'USDT', 'USDS', 'USDC', 'GHO']",0x4444ee1efbcfc7716754d4df119a1dbbe29934b3,,,,,,,,,,,,,,,516.87,,,,aave,,,,,,254.92,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Snapshot,Behavioral,Pattern Match"
 EOA,"['USDT', 'WETH', 'USDC', 'WBTC', 'sUSD', 'wstETH', 'SNX', 'LINK', 'USDe', 'TUSD', 'DAI']",0xa0f75491720835b36edc92d06ddc468d201e9b73,,,,,,,,,,,,analytico.eth,,,543.81,,,,aave,,,,,,253.79,analytico.eth,UNVERIFIED,ENS
 EOA,"['USDT', 'USDe', 'wstETH', 'GHO', 'USDC', 'WETH']",0x73a9ee34eaa91046b12e7598a540f28fa1b590a6,,,,,,,,,,,,,,,577.71,,,,aave,,,,,,249.52,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,"['USDS', 'USDC', 'USDT']",0x7bee8d37fba61a6251a08b957d502c56e2a50fab,,,,,,,,,,,,,,,498.35,,,,aave,,,,,,248.85,,,
+EOA,"['USDS', 'USDC', 'USDT']",0x7bee8d37fba61a6251a08b957d502c56e2a50fab,,,,,,,,,,,,,,,498.35,,,,aave,,,,,,248.85,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Propagation"
 EOA,"['WBTC', 'GHO', 'sUSD', 'GUSD', 'TUSD', 'USDT', 'USDC', 'DAI', 'USDP', 'BUSD', 'WETH']",0x7a16ff8270133f063aab6c9977183d9e72835428,,,,,,,,,,,,llamalend.eth,,,596.98,,,,aave,,,,,,247.11,llamalend.eth,UNVERIFIED,ENS
 EOA,"['DAI', 'USDT', 'USDC', 'USDS', 'USDe']",0x01f78f128f09034744d2847cc8d5939719285527,,,,,,,,,,,,,,,504.45,,,,aave,,,,,,242.62,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,['WETH'],0x8889ff5b6323e71c28c26d2c34b8bb52654f00a6,,,,,,,,,,,,,,,493.96,,,,compound,,,,,,242.55,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
@@ -136,8 +136,8 @@ EOA,"['WETH', 'ZRX', 'BAT', 'USDC']",0x11b50686d3983c14c0d0972a5e46e38e0d9b2e14,
 EOA,"['USDC', 'BAT', 'WBTC', 'ZRX', 'WETH']",0x0eb4add4ba497357546da7f5d12d39587ca24606,,,,,,,,,,,,,,,486.41,,,,compound,,,,,,241.34,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 Contract,"['wstETH', 'WETH']",0x40e93a52f6af9fcd3b476aedadd7feabd9f7aba8,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,325.1,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,238,,,
 EOA,"['GHO', 'WBTC', 'USDC', 'WETH', 'USDT']",0x0ed0ea598e89765471e86a060bd91f4bb2dc1fb0,,,,,,,,,,,,,,,468.69,,,,aave,,,,,,237.47,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
-EOA,"['USDT', 'GHO']",0xcd0673721a489b1cea0e2580fa304bcb6cca3186,,,,,,,,,,,,,,,678.14,,,,aave,,,,,,237.03,,,
-EOA,"['USDT', 'WBTC', 'DAI', 'USDC', 'FRAX', 'WETH']",0x82287cdda3d1b5d26d49ce03280d07b86d54fe54,,,,,,,,,,,,,,,477.4,,,,aave,,,,,,236.59,,,
+EOA,"['USDT', 'GHO']",0xcd0673721a489b1cea0e2580fa304bcb6cca3186,,,,,,,,,,,,,,,678.14,,,,aave,,,,,,237.03,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Pattern Match,Propagation"
+EOA,"['USDT', 'WBTC', 'DAI', 'USDC', 'FRAX', 'WETH']",0x82287cdda3d1b5d26d49ce03280d07b86d54fe54,,,,,,,,,,,,,,,477.4,,,,aave,,,,,,236.59,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Propagation"
 EOA,['WETH'],0x2178e1d614fefb2b304db58f07116d89f948fda1,,,,,,,,,,,,,,,245.42,,,,compound,,,,,,235.06,Celsius Network (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
 EOA,"['USDT', 'GHO', 'USDe']",0x8c5cb83b823448e2369b54acb30f31203bef37a7,,,,,,,,,,,,,,,469.79,,,,aave,,,,,,234.77,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDC', 'WETH']",0xab7972ef0628d98400acf83e8b54c2695099d3b2,,,,,,,,,,,,highcliff.eth,,,466.73,,,,compound,,,,,,232.79,highcliff.eth,UNVERIFIED,ENS
@@ -156,7 +156,7 @@ EOA,"['WBTC', 'DAI', 'USDC', 'GHO', 'sUSD', 'LINK', 'USDT']",0xf929122994e177079
 EOA,"['LINK', 'WETH', 'USDC', 'DAI', 'BUSD', 'WBTC', 'USDT']",0xf55d84504217542d4f39d9bf9a70342744836007,,,,,,,,,,,,,,,469.91,,,,aave,,,,,,218.96,Celsius Network (cluster member),HIGH,"CIO,Snapshot,Behavioral"
 EOA,"['USDT', 'sUSD', 'UNI', 'GUSD', 'YFI', 'WETH', 'USDP', 'BUSD', 'TUSD', 'CRV', 'LINK', 'DAI', 'USDC']",0x17080b589cdcbd10ebeaa24cb0096f4bb29eb52b,,,,,,,,,,,,,,,459.14,,,,aave,,,,,,218.67,Celsius Network (cluster member),HIGH,"CIO,Snapshot,OSINT,Behavioral"
 EOA,"['USDT', 'REN', 'CRV', 'USDC', 'SNX', 'KNC', 'DAI', 'YFI', 'MANA', 'BAL', 'LINK', 'MKR']",0x0eb4add4ba497357546da7f5d12d39587ca24606,,,,,,,,,,,,,,,438.39,,,,aave,,,,,,216.17,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
-EOA,"['USDe', 'USDT', 'USDC']",0xb8c703ed075190c8167c7134c03c1d36ea583d12,,,,,,,,,,,,,,,431.1,,,,aave,,,,,,215.35,,,
+EOA,"['USDe', 'USDT', 'USDC']",0xb8c703ed075190c8167c7134c03c1d36ea583d12,,,,,,,,,,,,,,,431.1,,,,aave,,,,,,215.35,Binance User (propagated),MEDIUM,"Behavioral,Pattern Match,Propagation"
 EOA,"['WETH', 'BAT', 'USDC', 'REP']",0x22fa8cc33a42320385cbd3690ed60a021891cb32,,,,,,,,,,,,,,,432.5,,,,compound,,,,,,214.58,Celsius Network (cluster member),HIGH,"CIO,Snapshot,OSINT,Behavioral"
 EOA,"['BUSD', 'sUSD', 'USDT', 'DAI', 'TUSD', 'USDC']",0xec46dd165ee2d4af460a9c3d01b5a4c9516c9c3f,,,,,,,,,,,,lxuan.eth,,,441.52,,,,aave,,,,,,214.19,lxuan.eth,UNVERIFIED,ENS
 EOA,"['USDT', 'USDe', 'USDC']",0x531e08e19e54ea655822d62f160e27af727b6e9f,,,,,,,,,,,,,,,449.83,,,,aave,,,,,,212.56,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
@@ -167,26 +167,26 @@ Contract,['USDC'],0xe84a061897afc2e7ff5fb7e3686717c528617487,,,,,,,Safev1.1.1,1i
 EOA,"['USDT', 'USDe', 'USDC']",0x08889e4ed070ad92545679d26cffe9ef837802b1,,,,,,,,,,,,,,,411.28,,,,aave,,,,,,205.6,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDT', 'SNX', 'weETH', 'FRAX', 'USDS', 'USDC', 'GHO', 'WBTC', 'DAI', 'CRV', 'WETH']",0xa53a13a80d72a855481de5211e7654fabdfe3526,,,,,,,,,,,,greenfund.eth,,,464.43,,,,aave,,,,,,204.28,greenfund.eth,UNVERIFIED,ENS
 EOA,"['USDC', 'USDT', 'WBTC', 'tBTC']",0xb4d3bea9d824c4dd7ded7ccc93e6212e3f0b186a,,,,,,,,,,,,,,,395.25,,,,aave,,,,,,204.1,,,
-Contract,['WETH'],0xb745b681db7b2d254e8c98624bef13681305cad9,,,,,,,Safe_v_4_1,Safe Test,,,,,,,378.71,,,,spark,,Safe Wallet,,,,202.33,,,
+Contract,['WETH'],0xb745b681db7b2d254e8c98624bef13681305cad9,,,,,,,Safe_v_4_1,Safe Test,,,,,,,378.71,,,,spark,,Safe Wallet,,,,202.33,Junyi Zheng (Safe),HIGH,Behavioral
 EOA,"['USDT', 'WETH', 'USDC']",0x4196c40de33062ce03070f058922baa99b28157b,,,,,,,,,,,,,,,400.73,,,,aave,,,,,,201.5,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['DAI', 'WETH']",0xc0979af67786f30dea9335665592d6813b21b819,,,,,,,,,,,,,,,401.21,,,,spark,,,,,,200.04,Abraxas Capital (cluster member),HIGH,"CIO,CrossChain,Behavioral,Pattern Match"
-Contract,"['USDS', 'USDT', 'DAI']",0xacce2d0b77bcb844a1b95c64696b071ab8c7ada3,,,,,,,GnosisSafev1,1inch,Gnosis Safe,,,,,,404.84,,GnosisSafev1.3.0,gnosis_safe,spark,https://safe.global/,Safe Wallet,,,,200.03,,,
+Contract,"['USDS', 'USDT', 'DAI']",0xacce2d0b77bcb844a1b95c64696b071ab8c7ada3,,,,,,,GnosisSafev1,1inch,Gnosis Safe,,,,,,404.84,,GnosisSafev1.3.0,gnosis_safe,spark,https://safe.global/,Safe Wallet,,,,200.03,Tornado-funded Entity (Cluster A),HIGH,Behavioral
 EOA,['USDT'],0x81d0ac9a5f91188074fd753a03885162bec74246,,,,,,,,,,,,,,,345.26,,,,aave,,,,,,199.98,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'WBTC']",0xd85351181b3f264ee0fdfa94518464d7c3defada,,,,,,,,,,,,uwu.eth,,,443.72,,,,aave,,,,,,199.09,uwu.eth,UNVERIFIED,ENS
 EOA,"['USDT', 'WETH', 'USDC']",0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,,,,,,,,,,,,,,,203.79,,,,compound,,,,,,198.69,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDT', 'USDS', 'USDC']",0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,,,,,,,,,,,,,,,395.75,,,,spark,,,,,,197.7,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
-EOA,"['USDe', 'USDC', 'USDT']",0xc88f7057d7bd54d80d2110b6e271e0f52f5eab39,,,,,,,,,,,,,,,394.4,,,,aave,,,,,,196.96,,,
+EOA,"['USDe', 'USDC', 'USDT']",0xc88f7057d7bd54d80d2110b6e271e0f52f5eab39,,,,,,,,,,,,,,,394.4,,,,aave,,,,,,196.96,Binance User (propagated),MEDIUM,"Behavioral,Pattern Match,Propagation"
 EOA,"['WETH', 'USDC', 'USDS', 'USDT', 'USDe', 'DAI']",0x8607a7d180de23645db594d90621d837749408d5,,,,,,,,,,,,buying-on-frontrun-dot-market.eth,,,394.61,,,,aave,,,,,,195.96,buying-on-frontrun-dot-market.eth,UNVERIFIED,ENS
 EOA,"['USDS', 'RLUSD', 'EURC', 'GHO', 'wstETH', 'USDe', 'USDC', 'USDT', 'PYUSD', 'USDtb', 'cbBTC', 'DAI']",0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,,,,,,,,,,,,,,,484.21,,,,aave,,,,,,195.86,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDC', 'USDT', 'DAI']",0xb1e9d641249a2033c37cf1c241a01e717c2f6c76,,,,,,,,,,,,thomasg.eth,,,390.63,,,,aave,,,,Solo Staker,thomasg.eth,195.08,Staking: thomasg.eth,HIGH,"CIO,Behavioral,ENS,Snapshot"
 EOA,"['USDC', 'DAI', 'USDT', 'WETH']",0x1778767436111ec0adb10f9ba4f51a329d0e7770,,,,,,,,,,,,,,,408.98,,,,aave,,,,,,193.83,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'WETH']",0x6cf9aa65ebad7028536e353393630e2340ca6049,,,,SwissBorg 7,SwissBorg,swissborg,,,SwissBorg,,,,,,387.34,,,swissborg,compound,https://swissborg.com/,,,,,192.75,SwissBorg,MEDIUM,Dune CEX
-Contract,"['wstETH', 'USDC', 'USDT', 'USDe']",0x324c0cbdeb97d58096d630176b1b247684d534cb,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,380.66,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,192.04,,,
+Contract,"['wstETH', 'USDC', 'USDT', 'USDe']",0x324c0cbdeb97d58096d630176b1b247684d534cb,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,380.66,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,192.04,Coinbase Prime Custody Client (Cluster B),HIGH,"Behavioral,FundingAnalysis"
 EOA,"['USDC', 'WETH']",0xd8495b95a3a6a85f4e3baa003e8b7ed1ed85562d,,,,,,,,,,,,,,,292.34,,,,aave,,,,,,191.29,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['USDC', 'TUSD', 'USDT', 'DAI']",0x32dd0756316b31d731aa6ae0f60b9b560e0ed92c,,,,,,,,,,,,,,,380.95,,,,aave,,,,,,190.27,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['USDT', 'USDC', 'USDS', 'USDtb', 'USDe', 'weETH']",0x08c14b32c8a48894e4b933090ebcc9ce33b21135,,,,,,,,,,,,,,,375.58,,,,aave,,,,,,189.91,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,['USDe'],0xd72626b46c6a94808365c0803f92903db87aa83c,,,,,,,,,,,,,,,376.3,,,,aave,,,,,,188.04,,,
-Contract,"['GHO', 'USDS']",0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,312.73,,,,aave_lido,,Safe Wallet,,,,186.92,,,
+Contract,"['GHO', 'USDS']",0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,312.73,,,,aave_lido,,Safe Wallet,,,,186.92,Coinbase Prime Custody Client (Cluster B),HIGH,"Behavioral,FundingAnalysis"
 EOA,"['LDO', 'USDC', 'ENS', 'WBTC', 'USDT']",0xd730cd62cda9cfdc109be2d819b0337fafdca959,,,,,,,,,,,,aavebank.eth,,,428.9,,,,aave,,,,,,186.26,aavebank.eth,UNVERIFIED,ENS
 EOA,"['USDT', 'USDC']",0xbebcf4b70935f029697f39f66f4e5cea315128c3,,,,,,,,,,,,,,,382.74,,,,aave,,,,,,185.89,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,"['DAI', 'USDT', 'USDC', 'USDS']",0xcaf1943ce973c1de423fe6e9f1a255049e51666e,,,,,,,,,,,,,,,309.78,,,,spark,,,,,,185,Celsius Network (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
@@ -211,7 +211,7 @@ EOA,"['ZRX', 'REP', 'WBTC', 'USDC']",0x52185a2bbcfd67c1d07963e3575175ee9f95a551,
 EOA,"['USDT', 'USDC']",0xd4584bf988c9e8994688b56484e2f74ceaeefb20,,,,,,,,,,,,,,,188.89,,,,aave,,,,,,167.48,,,
 EOA,"['DAI', 'YFI', 'TUSD', 'MKR', 'USDC', 'wstETH', 'WBTC', 'USDT', 'WETH', 'CRV']",0x2de640a18fe3480aa802aca91f70177ada103391,,,,,,,,,,,,,,,420.66,,,,aave,,,,,,167.14,Trend Research (Jack Yi / LD Capital) (cluster member),MEDIUM,"Behavioral,Snapshot,OSINT,CIO,CrossChain,Pattern Match"
 EOA,"['WBTC', 'USDG', 'USDS', 'USDe', 'cbBTC', 'USDC', 'DAI', 'RLUSD', 'USDT', 'EURC']",0x81ebde24453b8e40454616579ea79c79a197699d,,,,,,,,,,,,,,,335.09,,,,aave,,,,,,166.06,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Behavioral,CIO,CrossChain"
-Contract,['WETH'],0xb745b681db7b2d254e8c98624bef13681305cad9,,,,,,,Safe_v_4_1,Safe Test,,,,,,,326.91,,,,aave,,Safe Wallet,,,,164.3,,,
+Contract,['WETH'],0xb745b681db7b2d254e8c98624bef13681305cad9,,,,,,,Safe_v_4_1,Safe Test,,,,,,,326.91,,,,aave,,Safe Wallet,,,,164.3,Junyi Zheng (Safe),HIGH,Behavioral
 EOA,"['WETH', '1INCH', 'rETH', 'WBTC', 'DAI', 'KNC', 'UNI', 'MKR', 'GHO', 'wstETH', 'YFI', 'RPL', 'LINK', 'TUSD', 'USDT', 'USDC', 'FRAX', 'CRV', 'BAL', 'RAI', 'ENJ', 'ZRX']",0xe5350e927b904fdb4d2af55c566e269bb3df1941,,,,,,,,,,,,,,,349.83,,,,aave,,,,,,163.66,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Behavioral,Snapshot,OSINT,CIO,CrossChain"
 EOA,['USDe'],0xa2e3d7e8bbcbeac6d07cfc972b3bee6d1e2b2c24,,,,,,,,,,,,,,,162.03,,,,aave,,,,,,162.03,,,
 EOA,"['WETH', 'USDC']",0x485773ab2c5b060380a4c826c08cde45b00f8792,,,,,,,,,,,,,,,325.32,,,,compound,,,,,,161.98,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Behavioral,CIO"
@@ -250,7 +250,7 @@ EOA,"['USDT', 'USDC']",0xabbd5b2b0b034781e58434736728b9d0673de7f1,,,,,,,,,,,,,,,
 EOA,['USDC'],0x716034c25d9fb4b38c837afe417b7f2b9af3e9ae,,,,,,,,,,,,,,,284.69,,,,compound,,,,,,141.07,Trend Research (Jack Yi / LD Capital),HIGH,CIO Cluster + Arkham + Lookonchain
 EOA,"['WBTC', 'USDC', 'cbBTC', 'USDS', 'DAI']",0xee2826453a4fd5afeb7ceffeef3ffa2320081268,,,,,,,,,,,,,,,291.77,,,,spark,,,,,,140.71,Junyi Zheng,HIGH,"CIO,CrossChain,Behavioral,Snapshot,OSINT"
 EOA,"['UNI', 'REN', 'MANA', 'WETH', 'KNC', 'USDC', 'ENJ', 'SNX', 'DAI', 'sUSD', 'MKR', 'BUSD', 'LINK', 'YFI', 'USDT', 'CRV']",0x78b58e4197c04d320a33c582ecc3e7e885f26a58,,,,,,,,,,,,,,,330.78,,,,aave,,,,,,140.59,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Behavioral,CIO,CrossChain"
-Contract,['weETH'],0xc156d3038dab47476caa8a9b662015d3aa91f581,,,,,,,GnosisSafev1,1inch,Gnosis Safe,,,,,,395.08,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,140.49,,,
+Contract,['weETH'],0xc156d3038dab47476caa8a9b662015d3aa91f581,,,,,,,GnosisSafev1,1inch,Gnosis Safe,,,,,,395.08,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,140.49,Tornado-funded Entity (Cluster A),HIGH,Behavioral
 EOA,"['rETH', 'DAI', 'WBTC', 'USDT', 'UNI', 'YFI', 'GHO', 'xSUSHI', 'USDC', 'wstETH', 'MKR', 'SNX', 'LINK', 'WETH']",0xe831c8903de820137c13681e78a5780afddf7697,,,,,,,,,,,,,,,291.07,,,,aave,,,,,,139.94,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Snapshot,OSINT,Behavioral,CIO,CrossChain"
 EOA,"['USDC', 'USDT', 'USDe']",0x3b3f03015b479b734f41b77dd72851e676d0f406,,,,,,,,,,,,,,,281.11,,,,aave,,,,,,139.83,Trend Research (Jack Yi / LD Capital) (cluster member),HIGH,"Behavioral,CIO"
 EOA,"['USDT', 'USDC']",0x5555551fc55b8800db43b69a3c4f468d413578dd,,,,,,,,,,,,,,,279.32,,,,aave,,,,,,139.52,Trend Research (Jack Yi / LD Capital) (cluster member),MEDIUM,"Snapshot,OSINT,Behavioral,CIO,CrossChain,Pattern Match"
@@ -431,7 +431,7 @@ EOA,"['TUSD', 'USDC', 'USDT', 'GUSD', 'sUSD', 'DAI']",0x8877889ff4a0fa0415d7572c
 EOA,['USDT'],0xb8551abd2bb66498f6d257ae181d681fd2401e8a,,,,,,,,,,,,,,,122.11,,,,aave,,,,,,77.96,,,
 EOA,"['USDT', 'USDC', 'DAI']",0x71e343797a751555d9542a619a5d50fb757b9e6e,,,,,,,,,,,,,,,155.54,,,,aave,,,,,,77.9,linkdegen.eth (cluster member),HIGH,"Behavioral,CIO,CrossChain"
 EOA,"['USDC', 'USDT', 'USDS']",0xbf47e471eee2c58782abd0b66cb7be865c809a95,,,,,,,,,,,,,,,161.51,,,,aave,,,,,,77.66,linkdegen.eth (cluster member),HIGH,"Behavioral,CIO,CrossChain,Pattern Match"
-Contract,"['DAI', 'WBTC']",0xf20b338752976878754518183873602902360704,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,357.02,,Safev1.1.1,gnosis_safe,spark,https://safe.global/,Safe Wallet,,,,77.49,,,
+Contract,"['DAI', 'WBTC']",0xf20b338752976878754518183873602902360704,,,,,,,Safev1.1.1,1inch,Gnosis Safe,,,,,,357.02,,Safev1.1.1,gnosis_safe,spark,https://safe.global/,Safe Wallet,,,,77.49,few.com / Bitfinex-funded entity,HIGH,"CrossChain,Behavioral,Snapshot"
 EOA,"['WETH', 'USDT']",0xa38aa9ae8953f245b44e84b6f25e0032e58b1f42,,,,,,,,,,,,,,,155.59,,,,aave,,,,,,77.48,linkdegen.eth (cluster member),HIGH,"Behavioral,CIO,CrossChain"
 EOA,"['USDC', 'USDT']",0x1f2cfaddcad3a4e398fac6df39b51c310dd1729a,,,,,,,,,,,,,,,139.01,,,,aave,,,,,,77.47,,,
 EOA,"['WETH', 'WBTC', 'USDC']",0x72a916702bd97923e55d78ea5a3f413dec7f7f85,,,,,,,,,,,,,,,159.86,,,,compound,,,,,,77.47,linkdegen.eth (cluster member),HIGH,"Behavioral,Snapshot,OSINT,CIO,CrossChain"
@@ -870,7 +870,7 @@ EOA,['USDC'],0x4248a5bfcf77e9a6e9f6a35a269d79dfb0f7eeff,,,,,,,,,,,,,,,133.77,,,,
 EOA,"['USDC', 'USDT']",0xc45a525be77a208ef610449f30345ba5380d42dd,,,,,,,,,,,,,,,65.17,,,,aave,,,,,,35.08,defifun.eth (cluster member),HIGH,"CIO,Behavioral"
 EOA,"['USDT', 'USDC']",0xfaa779cc3d28caa7a65ea57e172c19c2e60bb8d5,,,,,,,,,,,,,,,70.22,,,,aave,,,,,,34.99,defifun.eth (cluster member),HIGH,"CIO,Behavioral,Pattern Match"
 EOA,['WETH'],0x7f20e66199c7b261db54439e0d4bbbbea34b9247,,,,,,,,,,,,,,,34.99,,,,aave,,Safe Wallet,,,,34.99,,,
-Contract,['DAI'],0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,70.03,,,,spark,,Safe Wallet,,,,34.98,,,
+Contract,['DAI'],0x96f49d0e9724dfd8780fa667ac37a993f005cb94,,,,,,,Safe_v_4_1,Safe Test,,,,,,,70.03,,,,spark,,Safe Wallet,,,,34.98,Coinbase Prime Custody Client (Cluster B),HIGH,"Behavioral,FundingAnalysis"
 EOA,"['YFI', 'DAI', 'sUSD', 'USDC', 'AMPL', 'USDT', 'REN', 'BUSD', 'CRV', 'MANA', 'TUSD', 'LINK']",0x777999be819ffecee44a995560a9d0e97780a30c,,,,,,,,,,,,top-j.eth,,,71.07,,,,aave,,,,,,34.88,top-j.eth,UNVERIFIED,ENS
 EOA,['USDC'],0x42c8e43048f6ff3586945a1fd23e0bec540dcd07,,,,,,,,,,,,,,,70.86,,,,compound,,,,,,34.8,linkdegen.eth (cluster member),MEDIUM,"CIO,Behavioral,Pattern Match"
 EOA,['USDT'],0xe6d0ca9844f4c079e6e732f396ef3b9f98a2dac8,,,,,,,,,,,,,,,36.44,,,,aave,,,,,,34.78,,,
@@ -1708,7 +1708,7 @@ EOA,['USDT'],0x1e7ffb649152ce1306314e531a98e91d76a861ae,,,,,,,,,,,,,,,30.98,,,,a
 EOA,"['WETH', 'ZRX', 'USDC', 'WBTC', 'BAT']",0x8e949b62a177452f5b327b539eaa63802a3ab6a4,,,,,,,,,,,,,,,30.7,,,,compound,,,,,,15.36,centraltrust.eth (cluster member),MEDIUM,"Behavioral,Snapshot,OSINT,CIO"
 EOA,"['USDC', 'USDT', 'PYUSD']",0x500bea59133e20dc63b7e88913b30348494b84ba,,,,,,,,,,,,,,,30.66,,,,spark,,,,,,15.32,centraltrust.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
 EOA,"['USDC', 'DAI', 'GHO']",0x612fdb880f09a5a5a2547dbf575531657fbd33c2,,,,,,,,,,,,,,,33.05,,,,aave,,,,,,15.3,centraltrust.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
-EOA,"['GHO', 'USDC']",0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,,,,,,,,,,,,,,,30.55,,,,aave_lido,,,,,,15.28,,,
+EOA,"['GHO', 'USDC']",0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,,,,,,,,,,,,,,,30.55,,,,aave_lido,,,,,,15.28,Binance User (propagated),MEDIUM,"CrossChain,Behavioral,Pattern Match,Propagation"
 EOA,['USDC'],0xa6c2827d0d93c2d63df7022343dd520bea94b064,,,,,,,,,,,,,,,30.53,,,,aave,,,,,,15.26,centraltrust.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
 EOA,"['USDC', 'WETH']",0xdd6e1a285790d4088fd020c65c764babf44b31e8,,,,,,,,,,,,shivali.eth,,,30.47,,,,compound,,,,,,15.23,shivali.eth,UNVERIFIED,ENS
 EOA,"['USDC', 'USDT', 'wstETH', 'WETH']",0x53cc1b407b9cb27efec629b35dbda04d05b4fa27,,,,,,,,,,,,,,,20.81,,,,aave,,,,,,15.23,centraltrust.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
@@ -2117,7 +2117,7 @@ EOA,"['USDT', 'USDC', 'USDS', 'USDe']",0x7411356ea8c40bfdd70e7fff9c1a81ddc60ae95
 EOA,"['cbBTC', 'USDC', 'DAI', 'USDT']",0x0755e9db73782669b24a948c567be291e3724382,,,,,,,,,,,,,,,23.56,,,,aave,,,,,,11.28,financeliberty.eth (cluster member),HIGH,"Behavioral,CIO,Pattern Match"
 EOA,"['CVX', 'USDC', 'WETH', 'USDT']",0x31d3243cfb54b34fc9c73e1cb1137124bd6b13e1,,,,,,,,,,,,sifuvision.eth,,,23.85,,,,aave,,,,,,11.27,sifuvision.eth,UNVERIFIED,ENS
 EOA,"['USDT', 'USDC']",0x52434934895014cbeed22b8177fb359723c6c0a4,,,,,,,,,,,,,,,22.59,,,,aave,,,,,,11.26,financeliberty.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
-EOA,['GHO'],0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,,,,,,,,,,,,,,,22.56,,,,aave_lido,,,,,,11.25,,,
+EOA,['GHO'],0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,,,,,,,,,,,,,,,22.56,,,,aave_lido,,,,,,11.25,FTX User (propagated),MEDIUM,"CrossChain,Behavioral,Propagation"
 EOA,['USDC'],0xed41a12ea862f31df054e9bd3af1dd59486c6029,,,,,,,,,,,,,,,22.54,,,,aave,,,,,,11.25,financeliberty.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
 Contract,['USDT'],0xd196248aa5582485adf743c1ba22ef4c1f5d068a,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,22.61,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,11.25,,,
 EOA,"['USDC', 'USDT']",0xde4f1b8b87b1a3599c82ef43015df4e9801339cb,,,,,,,,,,,,,,,22.93,,,,aave,,,,,,11.24,financeliberty.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
@@ -2199,7 +2199,7 @@ EOA,"['USDC', 'SNX', 'USDT']",0x5e05a68e939e4e9dfa93eb400e9f85e59916ed8b,,,,,,,,
 EOA,['USDT'],0xe06d9135f2c0629508ced68c6e409c60551476ef,,,,,,,,,,,,,,,21.45,,,,aave,,,,,,10.71,haos.eth (cluster member),MEDIUM,"Behavioral,CIO,Pattern Match"
 EOA,['USDT'],0x342a1e63f23b98f90f3f7675a6e155935e55ed71,,,,,,,,,,,,,,,21.48,,,,aave,,,,,,10.71,,,
 EOA,['USDT'],0x1442bd4f8ae664c561c2ed73b3b7ce5879a99f13,,,,,,,,,,,,,,,21.51,,,,aave,,,,,,10.7,,,
-EOA,"['USDC', 'USDT', 'WBTC']",0x892745942a4f2c9a0d92f461c89f97818d8df140,,,,,,,,,,,,,,,21.57,,,,aave,,,,,,10.7,,,
+EOA,"['USDC', 'USDT', 'WBTC']",0x892745942a4f2c9a0d92f461c89f97818d8df140,,,,,,,,,,,,,,,21.57,,,,aave,,,,,,10.7,顶级交易员.eth,MEDIUM,"Behavioral,CIO"
 EOA,"['WETH', 'WBTC', 'LINK']",0xff4d5b07f95dc9715411c1286ae0033188c4c346,,,,,,,,,,,,,,,23.42,,,,aave,,,,,,10.7,haos.eth (cluster member),HIGH,"Behavioral,CIO,Pattern Match"
 Contract,"['USDC', 'DAI', 'GUSD', 'USDT', 'WBTC']",0xa1cc732bee3d7aa1a30410aba77feac501725e7b,,,,,,,GnosisSafev1.3.0,1inch,Gnosis Safe,,,,,,21.42,,GnosisSafev1.3.0,gnosis_safe,aave,https://safe.global/,Safe Wallet,,,,10.69,,,
 Contract,['WETH'],0x95db48cbfe79af3ea982eca5b9d78bc783fc06cc,,,,,,,GnosisSafev1,1inch,,,,,,,20.04,,,,aave,,Safe Wallet,,,,10.68,,,

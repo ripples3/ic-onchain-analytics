@@ -11,11 +11,11 @@ aave,0x8aceab8167c80cb8b3de7fa6228b889bb1130ee8,3581.72,7294.7,[DAI REN UNI BAL 
 aave,0x3c9ea5c4fec2a77e23dd82539f4414266fe8f757,1837.27,4296.08,[USDC USDe cbBTC WETH wstETH LINK BUSD DAI USDT GHO],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x66b870ddf78c975af5cd8edc6de25eca81791de1,1770.08,3628.91,[CRV USDC WBTC UST DAI sUSD wstETH USDT],,,,defunddao.eth,,,EOA,,,,defunddao.eth,80,knowledge_graph
 compound,0x8aceab8167c80cb8b3de7fa6228b889bb1130ee8,1724.15,3463.41,[USDC],celsius,Celsius,,,"https://twitter.com/CelsiusNetwork , https://www.instagram.com/celsiusnetwork/ , https://www.facebook.com/CelsiusNetwork/ , https://www.linkedin.com/company/celsiusnetwork/ ,  https://www.reddit.com/r/CelsiusNetwork/ ",https://celsius.network/,EOA,,,,Celsius,95,dune_custody
-aave,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,1696.22,3459.07,[USDS USDC USDT DAI WETH USDe cbBTC weETH wstETH WBTC],,,,,,,EOA,,,,,0,
+aave,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,1696.22,3459.07,[USDS USDC USDT DAI WETH USDe cbBTC weETH wstETH WBTC],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 compound,0x99fd1378ca799ed6772fe7bcdc9b30b389518962,1575.0,3130.66,[WETH USDC],,,,,,,EOA,,,,,0,
-spark,0x1be45fef92c4e2538fecd150757ed62b7b3757d7,1483.47,3000.65,[USDS USDT USDC PYUSD DAI],,,,,,,EOA,,,,,0,
+spark,0x1be45fef92c4e2538fecd150757ed62b7b3757d7,1483.47,3000.65,[USDS USDT USDC PYUSD DAI],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 compound,0x2bdded18e2ca464355091266b7616956944ee7ee,1467.32,2938.97,[USDC],,,,,,,EOA,,,,,0,
-aave,0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,1459.19,2553.75,[USDT USDC],,,,,,,EOA,,,,,0,
+aave,0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,1459.19,2553.75,[USDT USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0xf72d6a06ea0066dc9694156ca544f5d463a26bf4,1446.16,2892.31,[WETH DAI USDe cbETH USDC wstETH WBTC GHO USDT cbBTC],,,,,,,EOA,,,,MEV Bot (Titan/MEV Builder),85,knowledge_graph
 aave,0x5814fc20f0e09114503569ed6b27a4a86c9f8de4,1415.59,2831.17,[WBTC EURC DAI wstETH GHO LUSD tBTC crvUSD USDC cbETH LINK USDe cbBTC USDT],,,,,,,EOA,,,,MEV Bot (Titan/MEV Builder),57,knowledge_graph
 aave,0xc37704a457b1ee87eb657cae584a34961e86acac,1353.06,3260.75,[cbBTC DPI CVX 1INCH SNX LDO LINK ENS DAI sUSD RPL BAL WETH WBTC UNI USDT YFI MKR CRV USDe USDS USDC BUSD],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
@@ -27,26 +27,26 @@ aave,0xb1adceddb2941033a090dd166a462fe1c2029484,1042.25,2324.13,[xSUSHI KNC WETH
 compound,0x4deb3edd991cfd2fcdaa6dcfe5f1743f6e7d16a6,1012.14,2031.27,[USDC WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x517ce9b6d1fcffd29805c3e19b295247fcd94aef,973.69,1867.37,[USDC USDT],,,,,,,EOA,,,,FalconX Client,60,knowledge_graph
 aave,0xcd40532686b94abc88b06b9705aacbc14c8364d6,970.26,2053.45,[USDT SNX USDe USDtb WBTC USDC RLUSD GHO renFIL],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,927.69,1982.53,[USDe USDT USDC],,,,,,,EOA,,,,,0,
-aave,0x1be45fef92c4e2538fecd150757ed62b7b3757d7,916.92,1834.72,[USDC USDe USDT RLUSD],,,,,,,EOA,,,,,0,
-compound,0x1f99aaa8b4fb631d25b38b8a9099ef8f2611e46b,909.76,1822.62,[USDC],,,,,,,EOA,,,,,0,
+aave,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,927.69,1982.53,[USDe USDT USDC],,,,,,,EOA,,,,Binance User,55,knowledge_graph
+aave,0x1be45fef92c4e2538fecd150757ed62b7b3757d7,916.92,1834.72,[USDC USDe USDT RLUSD],,,,,,,EOA,,,,Binance User,55,knowledge_graph
+compound,0x1f99aaa8b4fb631d25b38b8a9099ef8f2611e46b,909.76,1822.62,[USDC],,,,,,,EOA,,,,FTX User,55,knowledge_graph
 aave,0xc3623ab16de256bf11855f884fdffd6f971c5fb7,908.36,1816.72,[PYUSD LINK WBTC EURC crvUSD DAI USDC cbETH wstETH GHO tBTC cbBTC USDe USDT WETH],,,,,,,EOA,,,,MEV Bot (Titan/MEV Builder),57,knowledge_graph
 compound,0x3c9ea5c4fec2a77e23dd82539f4414266fe8f757,907.92,1750.66,[WETH USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x1e2ac461edc05bdc7b471cf93aeceec91f32ed29,898.93,1803.06,[USDT USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 compound,0x712d0f306956a6a4b4f9319ad9b9de48c5345996,852.38,1704.79,[USDC WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),71,knowledge_graph
 aave,0x9cbf099ff424979439dfba03f00b5961784c06ce,845.91,1656.69,[DAI TUSD rETH weETH wstETH USDe WETH CRV GHO USDtb USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x9c5083dd4838e120dbeac44c052179692aa5dac5,813.02,1629.1,[DAI GUSD CRV sUSD USDC USDT],,,,pennilesswassie.sismo.eth,,,EOA,,,,pennilesswassie.sismo.eth,77,knowledge_graph
-aave,0x602d9abd5671d24026e2ca473903ff2a9a957407,793.58,1597.89,[USDC DAI USDT],,,,,,,EOA,,,,,0,
+aave,0x602d9abd5671d24026e2ca473903ff2a9a957407,793.58,1597.89,[USDC DAI USDT],,,,,,,EOA,,,,Bitfinex User,55,knowledge_graph
 aave,0x171c53d55b1bcb725f660677d9e8bad7fd084282,790.5,1893.35,[CVX weETH SNX LINK CRV ZRX DAI TUSD wstETH WETH FEI GUSD WBTC BAL USDT USDC FRAX rETH UNI sUSD],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
-aave,0xdbc652411605f8bb8969136923aa039c79989482,758.25,1517.65,[USDT USDe USDC],,,,,,,EOA,,,,,0,
+aave,0xdbc652411605f8bb8969136923aa039c79989482,758.25,1517.65,[USDT USDe USDC],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 aave,0x97137466bc8018531795217f0ecc4ba24dcba5c1,734.17,1478.65,[USDT SNX LINK ZRX DAI REN USDC TUSD WBTC MKR WETH YFI],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
-aave,0xc0979af67786f30dea9335665592d6813b21b819,704.99,1662.63,[USDe USDC USDT],,,,,,,EOA,,,,,0,
+aave,0xc0979af67786f30dea9335665592d6813b21b819,704.99,1662.63,[USDe USDC USDT],,,,,,,EOA,,,,Binance User (propagated),42,knowledge_graph
 aave,0xee2826453a4fd5afeb7ceffeef3ffa2320081268,687.19,1500.33,[WETH USDT SNX YFI UST USDe WBTC USDC BUSD KNC wstETH sUSD LINK UNI DAI],,,,,,,EOA,,,,Junyi Zheng,92,knowledge_graph
 aave,0x4093fbe60ab50ab79a5bd32fa2adec255372f80e,666.59,1304.39,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0xe5379345675132653bd303030c6e456034ed1961,655.03,2891.74,[wstETH WBTC USDe USDC WETH weETH USDT],,,,,,,EOA,,,,,0,
-aave,0xd93814273b33dd33b32cd345225cfb65deb048dd,627.32,1288.32,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0xd93814273b33dd33b32cd345225cfb65deb048dd,627.32,1288.32,[USDC USDT],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 aave,0x78e96be52e38b3fc3445a2ed34a6e586ffab9631,625.34,1322.55,[UNI DAI GHO USDS WBTC TUSD USDC LINK WETH RAI SNX USDT],,,,,,,EOA,,,,,0,
-aave,0xccee77e74c4466df0da0ec85f2d3505956fd6fa7,624.0,1322.29,[USDT USDC USDe],,,,,,,EOA,,,,,0,
+aave,0xccee77e74c4466df0da0ec85f2d3505956fd6fa7,624.0,1322.29,[USDT USDC USDe],,,,,,,EOA,,,,FTX User,55,knowledge_graph
 aave,0x712d0f306956a6a4b4f9319ad9b9de48c5345996,583.81,1187.8,[USDC sUSD MANA ENS DAI CRV UNI USDT MKR ZRX BAL YFI LINK],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),71,knowledge_graph
 aave,0xc803698a4be31f0b9035b6eba17623698f3e2f82,568.39,1400.13,[DAI WBTC USDC FEI USDT sUSD],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x50fc9731dace42caa45d166bff404bbb7464bf21,557.59,1038.55,[USDC USDG],,,,,,,EOA,,,,Flash Loan/MEV Bot,57,knowledge_graph
@@ -54,25 +54,25 @@ aave,0xf20b338752976878754518183873602902360704,556.51,1387.58,[DAI USDC USDS US
 aave,0x40d8c2d3f642c1f65e0b173c98355320d14e784c,548.6,1097.2,[USDT WETH USDC DAI],,,,,,,EOA,,,,,0,
 aave,0x487828727cc97172205faeb8d15b3ee5d9924599,548.09,1097.69,[USDe USDC USDT],,,,,,,EOA,,,,,0,
 aave,0xa976ea51b9ba3232706af125a92e32788dc08ddc,544.98,1450.94,[WBTC FEI USDT USDC CRV FRAX DAI sUSD],gnosis_safe,Gnosis Safe,Safev1.1.1,,,https://safe.global/,Contract,Safe Wallet,,,OG DeFi Whale (2021),55,knowledge_graph
-aave,0xd48573cda0fed7144f2455c5270ffa16be389d04,535.94,1345.84,[USDT USDC WETH],,,,,,,EOA,,,,,0,
+aave,0xd48573cda0fed7144f2455c5270ffa16be389d04,535.94,1345.84,[USDT USDC WETH],,,,,,,EOA,,,,Poloniex User,55,knowledge_graph
 aave,0x9026a229b535ecf0162dfe48fdeb3c75f7b2a7ae,532.96,1107.48,[GHO DAI USDT CRV USDC],,,,czsamsunsb.eth,,,EOA,,,,czsamsunsb.eth,77,knowledge_graph
-compound,0x815c8d0ca4227180119664b5ed2df11b7858a2f1,525.71,1057.79,[USDC],,,,,,,EOA,,,,,0,
+compound,0x815c8d0ca4227180119664b5ed2df11b7858a2f1,525.71,1057.79,[USDC],,,,,,,EOA,,,,FTX User,55,knowledge_graph
 aave,0x4a49985b14bd0ce42c25efde5d8c379a48ab02f3,504.93,1060.1,[USDC DAI xSUSHI USDT],gnosis_safe,Gnosis Safe,Safev1.1.1,,,https://safe.global/,Contract,Safe Wallet,,,Aave Genesis Team,71,knowledge_graph
 aave,0xe051fb91ec09eefb77e7f7a599291bf921eb504d,502.38,502.38,[USDT],,,,,,,EOA,,,,,0,
 aave,0xc6badce2f5e10db90d74dbe023768259ec4699c7,499.29,1002.6,[USDT],,,,,,,EOA,,,,Staking: thomasg.eth,59,knowledge_graph
 aave,0xc08b122fb1057149f55d49d3d5cea0d083b37ffb,488.81,993.45,[USDe USDT wstETH USDC WBTC USDS],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
 aave,0x28a55c4b4f9615fde3cdaddf6cc01fcf2e38a6b0,472.43,820.05,[USDT USDC GHO TUSD DAI],,,,,,,EOA,,,,7 Siblings,74,knowledge_graph
-spark,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,469.57,958.99,[DAI WETH],,,,,,,EOA,,,,,0,
+spark,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,469.57,958.99,[DAI WETH],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 aave,0x0ad500d23a43ae9b26a570cfb02b68c48a866565,467.23,911.86,[USDC USDe USDS USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0x9a20bed545c3ccb0be85b182f47225fe74cead02,461.53,923.49,[USDC USDe USDT],,,,,,,EOA,,,,,0,
-aave,0x55f6ccf0f57c3de5914d90721ad4e9fbce4f3266,460.13,1231.29,[USDe USDT USDC],,,,,,,EOA,,,,,0,
+aave,0x9a20bed545c3ccb0be85b182f47225fe74cead02,461.53,923.49,[USDC USDe USDT],,,,,,,EOA,,,,Binance User (propagated),46,knowledge_graph
+aave,0x55f6ccf0f57c3de5914d90721ad4e9fbce4f3266,460.13,1231.29,[USDe USDT USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0x99926ab8e1b589500ae87977632f13cf7f70f242,454.1,770.64,[USDT USDC USDe],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,0x9992 Whale (Lookonchain tracked),60,knowledge_graph
 compound,0x9b4772e59385ec732bccb06018e318b7b3477459,430.17,860.1,[USDC],,,,,,,EOA,,,,,0,
-aave,0xa9f86d9eaf339305cd36e76bc0de7ac5b024f075,426.49,823.26,[USDe USDC USDT],,,,,,,EOA,,,,,0,
+aave,0xa9f86d9eaf339305cd36e76bc0de7ac5b024f075,426.49,823.26,[USDe USDC USDT],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0xa76b6a7aa1b4501e6edcb29898e1ce4b9784e81c,423.07,839.68,[USDT USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x90d443b372b2a1212dda03c9b56c4e622688e981,422.37,819.31,[USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),60,knowledge_graph
 aave,0xddf725d2ebd795748dd8c6b700b7c98d1dfb8ce5,416.59,828.58,[USDC PYUSD WETH USDT WBTC USDS GHO USDe],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0x37829fe9b8e67b8267c2058b9459f524b9e3ca5d,407.1,815.12,[USDe WBTC WETH USDT USDC],,,,,,,EOA,,,,,0,
+aave,0x37829fe9b8e67b8267c2058b9459f524b9e3ca5d,407.1,815.12,[USDe WBTC WETH USDT USDC],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 spark,0x3c9ea5c4fec2a77e23dd82539f4414266fe8f757,399.6,849.79,[wstETH DAI WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 compound,0x767ecb395def19ab8d1b2fcc89b3ddfbed28fd6b,390.1,808.19,[WETH BAT USDC],celsius_network,Celsius Network,,,,,EOA,,,,Celsius Network,95,dune_custody
 aave,0xf368d43f148e1803ec793670183b0ca6a07d3898,385.0,755.28,[USDC USDT GHO DAI cbETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
@@ -84,9 +84,9 @@ aave,0x71a91c9202c8091c62c630ca2de44b333ddcd0d7,360.31,721.41,[USDT USDC DAI],,,
 compound,0x701bd63938518d7db7e0f00945110c80c67df532,348.88,699.21,[USDC],,,,,,,EOA,,,,,0,
 aave,0x8879ae6c281495a5d40dce8015bc3bbf7b109233,348.31,693.71,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0xfaf1358fe6a9fa29a169dfc272b14e709f54840f,343.18,688.42,[USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,334.83,959.58,[USDe USDT cbBTC USDS GHO USDC],,,,,,,EOA,,,,,0,
+aave,0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,334.83,959.58,[USDe USDT cbBTC USDS GHO USDC],,,,,,,EOA,,,,FTX User (propagated),42,knowledge_graph
 aave,0xf078969e55cabf9ae3f26afeb5ec627b4430f19e,333.54,693.11,[USDC WBTC USDe USDT UNI wstETH DAI],,,,,,,EOA,,,,,0,
-aave,0x920eefbcf1f5756109952e6ff6da1cab950c64d7,331.73,664.79,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x920eefbcf1f5756109952e6ff6da1cab950c64d7,331.73,664.79,[USDC USDT],,,,,,,EOA,,,,Binance User (propagated),46,knowledge_graph
 compound,0x3ba21b6477f48273f41d241aa3722ffb9e07e247,330.79,662.49,[USDC BAT],,,,,,,EOA,,,,,0,
 aave,0xf42bcfd3dd5fcdd984d24fd2787383195c7f2b51,329.75,618.69,[USDT USDC],,,,,,,EOA,,,,,0,
 aave,0xabde2f02fe84e083e1920471b54c3612456365ef,326.9,717.01,[USDC],,,,,,,EOA,,,,,0,
@@ -95,10 +95,10 @@ compound,0x86af94e5e8d3d583575bbafdd2dcb6b898a555e4,326.26,653.14,[WETH WBTC USD
 aave,0x9d783e9b0b19cc1bf4f6bf36169fc004ce8fa9d0,322.59,645.26,[USDC USDT DAI],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),60,knowledge_graph
 aave,0x0f1dfef1a40557d279d0de6e49ab306891a638b8,322.25,644.52,[DAI USDT USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x208b82b04449cd51803fae4b1561450ba13d9510,320.72,584.09,[USDC TUSD USDT WETH LINK DAI],,,,,,,EOA,,,,,0,
-aave,0x53f4ec44c6786c4b15945b4321ac23e9eaab597c,318.27,644.56,[USDe USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x53f4ec44c6786c4b15945b4321ac23e9eaab597c,318.27,644.56,[USDe USDC USDT],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0x4352cc849b33a936ad93bb109afdec1c89653b4f,317.78,688.2,[USDC USDT WETH USDe GHO RLUSD WBTC EURC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x34780c209d5c575cc1c1ceb57af95d4d2a69ddcf,316.14,545.79,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),71,knowledge_graph
-aave,0x2c4fb358eadfe01184451a74bd0a3812e3da1c08,313.47,613.41,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x2c4fb358eadfe01184451a74bd0a3812e3da1c08,313.47,613.41,[USDC USDT],,,,,,,EOA,,,,Binance User (propagated),42,knowledge_graph
 aave,0x691cb02bf62a0bb2397bfae9a55f7380d415fff2,310.69,604.83,[PYUSD RLUSD USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),71,knowledge_graph
 aave,0xaf9b98d2acde5f13eaeaeb0101273cdfa86dcc95,309.16,610.38,[USDT USDC],,,,,,,EOA,,,,,0,
 spark,0x0f1dfef1a40557d279d0de6e49ab306891a638b8,302.07,604.35,[DAI],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
@@ -106,11 +106,11 @@ compound,0xb1adceddb2941033a090dd166a462fe1c2029484,301.59,604.39,[BAT WETH USDC
 aave,0x3ee505ba316879d246a8fd2b3d7ee63b51b44fab,299.48,659.03,[weETH LINK DAI USDtb YFI BUSD KNC CRV USDT sUSD WETH USDe SNX WBTC xSUSHI GHO TUSD USDC UNI],,,,,,,EOA,,,,,0,
 aave,0x4740fa6b32c5b41ebbf631fe1af41e6fff6e2388,295.29,597.71,[DAI USDC FRAX USDT UNI LINK UST],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
 spark,0x171c53d55b1bcb725f660677d9e8bad7fd084282,286.86,572.98,[rETH DAI wstETH WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
-aave,0xd0ed2d0b2b136f0dfeefc1387dc52ef5d2293dae,286.8,573.71,[USDC USDT UST FEI DAI],,,,,,,EOA,,,,,0,
+aave,0xd0ed2d0b2b136f0dfeefc1387dc52ef5d2293dae,286.8,573.71,[USDC USDT UST FEI DAI],,,,,,,EOA,,,,Bitfinex User (propagated),41,knowledge_graph
 compound,0xcfc50541c3deaf725ce738ef87ace2ad778ba0c5,286.68,590.45,[BAT WETH WBTC USDC],,,,drdumplingsats.eth,,,EOA,,,,drdumplingsats.eth,77,knowledge_graph
 aave,0x96f49d0e9724dfd8780fa667ac37a993f005cb94,286.61,512.65,[USDT PYUSD USDe USDC GHO],,,,,,,Contract,Safe Wallet,,,Coinbase Prime Custody Client (Cluster B),75,knowledge_graph
 spark,0xddf725d2ebd795748dd8c6b700b7c98d1dfb8ce5,281.87,549.98,[USDT USDS USDC PYUSD DAI],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0x5b30506175844cc91eddc6d66fdca6bc75758882,281.36,563.48,[USDS USDe USDT USDC],,,,,,,EOA,,,,,0,
+aave,0x5b30506175844cc91eddc6d66fdca6bc75758882,281.36,563.48,[USDS USDe USDT USDC],,,,,,,EOA,,,,FTX User (propagated),41,knowledge_graph
 spark,0x8af700ba841f30e0a3fcb0ee4c4a9d223e1efa05,273.41,552.14,[DAI],,,,,,,EOA,,,,,0,
 aave,0x4125caf9dd93ec6ad7a4c668ec55102f8f18203a,270.1,542.69,[YFI WETH CRV TUSD LINK USDT DAI UNI WBTC sUSD USDC],,,,,,,EOA,,,,,0,
 aave,0x4444ee1efbcfc7716754d4df119a1dbbe29934b3,269.51,545.55,[USDT DAI WETH USDe GHO USDS USDC],,,,,,,EOA,,,,,0,
@@ -125,29 +125,29 @@ aave,0x6761826e71fa2f47fbd2db2eb9f94fbbd49a9e8a,263.21,556.25,[wstETH WETH],,,,,
 compound,0x926e78b8df67e129011750dd7b975f8e50d3d7ad,262.19,525.9,[USDC],,,,,,,EOA,,,,,0,
 aave,0xee8e0fcc8bff03ec5f100d02cb7b3196d78863a7,260.73,550.0,[WBTC LUSD WETH USDT CRV USDC sUSD CVX],,,,5ucms.eth,,,EOA,,,,5ucms.eth,77,knowledge_graph
 aave,0xca08371f6e9204dd6927dcc2db5504ea062b2998,258.04,516.43,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),71,knowledge_graph
-spark,0xd48573cda0fed7144f2455c5270ffa16be389d04,256.68,520.31,[WETH DAI],,,,,,,EOA,,,,,0,
+spark,0xd48573cda0fed7144f2455c5270ffa16be389d04,256.68,520.31,[WETH DAI],,,,,,,EOA,,,,Poloniex User,55,knowledge_graph
 aave,0xee7ca610d896c53ffe716b801c05748efd902954,256.13,519.47,[USDC WBTC USDP],,,,,,,EOA,,,,,0,
 aave,0xa0f75491720835b36edc92d06ddc468d201e9b73,253.79,543.81,[WBTC SNX LINK wstETH WETH sUSD USDC USDT USDe TUSD DAI],,,,analytico.eth,,,EOA,,,,analytico.eth,77,knowledge_graph
 aave,0x73a9ee34eaa91046b12e7598a540f28fa1b590a6,249.52,577.71,[wstETH USDC GHO USDe USDT WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
-aave,0x7bee8d37fba61a6251a08b957d502c56e2a50fab,248.85,498.35,[USDT USDS USDC],,,,,,,EOA,,,,,0,
-aave,0x2c106367ec891c1d7de2d2c3cf5f369845f5db1e,247.65,474.2,[USDT USDe],,,,,,,EOA,,,,,0,
+aave,0x7bee8d37fba61a6251a08b957d502c56e2a50fab,248.85,498.35,[USDT USDS USDC],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
+aave,0x2c106367ec891c1d7de2d2c3cf5f369845f5db1e,247.65,474.2,[USDT USDe],,,,,,,EOA,,,,Poloniex User (propagated),46,knowledge_graph
 aave,0x7a16ff8270133f063aab6c9977183d9e72835428,247.11,596.98,[USDP WETH BUSD USDC TUSD WBTC GHO USDT DAI GUSD sUSD],,,,llamalend.eth,,,EOA,,,,llamalend.eth,77,knowledge_graph
-aave,0x01f78f128f09034744d2847cc8d5939719285527,242.62,504.45,[DAI USDT USDS USDe USDC],,,,,,,EOA,,,,,0,
+aave,0x01f78f128f09034744d2847cc8d5939719285527,242.62,504.45,[DAI USDT USDS USDe USDC],,,,,,,EOA,,,,FTX User (propagated),41,knowledge_graph
 compound,0x8889ff5b6323e71c28c26d2c34b8bb52654f00a6,242.55,493.96,[WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
 compound,0x11b50686d3983c14c0d0972a5e46e38e0d9b2e14,241.86,486.32,[ZRX BAT WETH USDC],,,,,,,EOA,,,,,0,
 compound,0x0eb4add4ba497357546da7f5d12d39587ca24606,241.34,486.41,[USDC ZRX BAT WBTC WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),70,knowledge_graph
-aave,0x0ed0ea598e89765471e86a060bd91f4bb2dc1fb0,238.54,470.82,[WETH GHO WBTC USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x0ed0ea598e89765471e86a060bd91f4bb2dc1fb0,238.54,470.82,[WETH GHO WBTC USDC USDT],,,,,,,EOA,,,,Binance User (propagated),46,knowledge_graph
 aave,0x40e93a52f6af9fcd3b476aedadd7feabd9f7aba8,238.0,344.79,[WETH wstETH],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,,0,
-aave,0xcd0673721a489b1cea0e2580fa304bcb6cca3186,237.03,678.14,[USDT GHO],,,,,,,EOA,,,,,0,
-aave,0x82287cdda3d1b5d26d49ce03280d07b86d54fe54,236.59,477.4,[USDC FRAX WBTC DAI WETH USDT],,,,,,,EOA,,,,,0,
-compound,0x2178e1d614fefb2b304db58f07116d89f948fda1,235.06,245.42,[WETH],,,,,,,EOA,,,,,0,
-aave,0x8c5cb83b823448e2369b54acb30f31203bef37a7,234.77,469.79,[USDT GHO USDe],,,,,,,EOA,,,,,0,
+aave,0xcd0673721a489b1cea0e2580fa304bcb6cca3186,237.03,678.14,[USDT GHO],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
+aave,0x82287cdda3d1b5d26d49ce03280d07b86d54fe54,236.59,477.4,[USDC FRAX WBTC DAI WETH USDT],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
+compound,0x2178e1d614fefb2b304db58f07116d89f948fda1,235.06,245.42,[WETH],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
+aave,0x8c5cb83b823448e2369b54acb30f31203bef37a7,234.77,469.79,[USDT GHO USDe],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 compound,0xab7972ef0628d98400acf83e8b54c2695099d3b2,232.79,466.73,[USDC WETH],,,,highcliff.eth,,,EOA,,,,highcliff.eth,78,knowledge_graph
 compound,0x183c9077fb7b74f02d3badda6c85a19c92b1f648,231.38,463.02,[USDC WBTC],,,,,,,EOA,,,,,0,
 aave,0x84d34f4f83a87596cd3fb6887cff8f17bf5a7b83,230.42,461.28,[DAI USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),61,knowledge_graph
 aave,0x85e05c10db73499fbdecab0dfbb794a446feeec8,229.99,545.64,[USDT USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
 compound,0xd275e5cb559d6dc236a5f8002a5f0b4c8e610701,229.47,459.17,[USDC WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),78,knowledge_graph
-aave,0x438403a3ba8815d1707145d8052820d56f0c8240,229.25,446.21,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x438403a3ba8815d1707145d8052820d56f0c8240,229.25,446.21,[USDC USDT],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0x64b6ebe0a55244f09dfb1e46fe59b74ab94f8be1,227.96,456.28,[wstETH USDT LINK CRV DAI USDC WBTC],,,,,,,EOA,,,,,0,
 aave,0xc2c5ad1a018ffd61fdcf94e5bfc6af863ae5873e,225.85,441.79,[USDe USDT USDC],sushiswap,sushiswap,,,,https://www.sushi.com/,EOA,,,,sushiswap,95,dune_custody
 aave,0xe3786bf25e15013fdda09dbe881529d44b9ca239,223.95,542.83,[WBTC USDC WETH USDT BUSD TUSD YFI DAI],,,,drprofitt4.eth,,,EOA,,,,drprofitt4.eth,76,knowledge_graph
@@ -159,27 +159,27 @@ aave,0xf55d84504217542d4f39d9bf9a70342744836007,218.96,469.91,[WETH DAI LINK WBT
 aave,0x17080b589cdcbd10ebeaa24cb0096f4bb29eb52b,218.67,459.14,[USDT WETH TUSD BUSD USDP GUSD CRV YFI UNI DAI sUSD USDC LINK],,,,,,,EOA,,,,,0,
 compound,0x1e2ac461edc05bdc7b471cf93aeceec91f32ed29,216.54,388.02,[USDT WETH USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x0eb4add4ba497357546da7f5d12d39587ca24606,216.17,438.39,[MKR MANA YFI REN CRV USDC KNC DAI SNX USDT BAL LINK],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),70,knowledge_graph
-aave,0xb8c703ed075190c8167c7134c03c1d36ea583d12,215.35,431.1,[USDT USDe USDC],,,,,,,EOA,,,,,0,
-aave,0x1fc75ad0511ddc3a23b9583ba1c285b8292faed5,215.33,390.83,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0xb8c703ed075190c8167c7134c03c1d36ea583d12,215.35,431.1,[USDT USDe USDC],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
+aave,0x1fc75ad0511ddc3a23b9583ba1c285b8292faed5,215.33,390.83,[USDC USDT],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 compound,0x22fa8cc33a42320385cbd3690ed60a021891cb32,214.58,432.5,[BAT USDC WETH REP],,,,,,,EOA,,,,,0,
 aave,0xec46dd165ee2d4af460a9c3d01b5a4c9516c9c3f,214.19,441.52,[USDT sUSD BUSD USDC TUSD DAI],,,,lxuan.eth,,,EOA,,,,lxuan.eth,76,knowledge_graph
-spark,0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,212.32,411.82,[USDS USDC USDT],,,,,,,EOA,,,,,0,
-aave,0xe413e8543b2c2818ac54306810cebc48266392f2,210.36,420.97,[USDC USDe USDT],,,,,,,EOA,,,,,0,
-aave,0x9c07627d108455985fbcc15863e15c0b07be9226,208.71,418.75,[USDT USDe USDC],,,,,,,EOA,,,,,0,
+spark,0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,212.32,411.82,[USDS USDC USDT],,,,,,,EOA,,,,Poloniex User (propagated),45,knowledge_graph
+aave,0xe413e8543b2c2818ac54306810cebc48266392f2,210.36,420.97,[USDC USDe USDT],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
+aave,0x9c07627d108455985fbcc15863e15c0b07be9226,208.71,418.75,[USDT USDe USDC],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 aave,0xb4d3bea9d824c4dd7ded7ccc93e6212e3f0b186a,207.16,398.98,[WBTC USDT USDC tBTC],,,,,,,EOA,,,,,0,
 compound,0xe84a061897afc2e7ff5fb7e3686717c528617487,206.36,423.84,[USDC],gnosis_safe,Gnosis Safe,Safev1.1.1,,,https://safe.global/,Contract,Safe Wallet,,,,0,
-aave,0x08889e4ed070ad92545679d26cffe9ef837802b1,205.6,411.28,[USDe USDC USDT],,,,,,,EOA,,,,,0,
+aave,0x08889e4ed070ad92545679d26cffe9ef837802b1,205.6,411.28,[USDe USDC USDT],,,,,,,EOA,,,,FTX User (propagated),46,knowledge_graph
 aave,0xa53a13a80d72a855481de5211e7654fabdfe3526,204.28,464.43,[USDS DAI USDC GHO FRAX SNX USDT weETH WETH WBTC CRV],,,,greenfund.eth,,,EOA,,,,greenfund.eth,76,knowledge_graph
 spark,0xb745b681db7b2d254e8c98624bef13681305cad9,203.94,380.32,[WETH],,,,,,,Contract,Safe Wallet,,,Junyi Zheng (Safe),92,knowledge_graph
 aave,0x4196c40de33062ce03070f058922baa99b28157b,201.5,400.73,[WETH USDT USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
-spark,0xc0979af67786f30dea9335665592d6813b21b819,200.04,401.21,[WETH DAI],,,,,,,EOA,,,,,0,
+spark,0xc0979af67786f30dea9335665592d6813b21b819,200.04,401.21,[WETH DAI],,,,,,,EOA,,,,Binance User (propagated),42,knowledge_graph
 spark,0xacce2d0b77bcb844a1b95c64696b071ab8c7ada3,200.03,404.84,[USDS USDT DAI],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,Tornado-funded Entity (Cluster A),75,knowledge_graph
 aave,0x81d0ac9a5f91188074fd753a03885162bec74246,199.98,355.84,[USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),60,knowledge_graph
 aave,0x1778767436111ec0adb10f9ba4f51a329d0e7770,199.43,416.02,[USDT DAI USDC WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
 aave,0xd85351181b3f264ee0fdfa94518464d7c3defada,199.09,443.72,[WBTC USDC],,,,uwu.eth,,,EOA,,,,uwu.eth,78,knowledge_graph
-compound,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,198.69,203.79,[WETH USDT USDC],,,,,,,EOA,,,,,0,
-aave,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,197.19,493.09,[USDC wstETH GHO USDtb cbBTC USDe USDT USDS RLUSD EURC DAI PYUSD],,,,,,,EOA,,,,,0,
-aave,0xc88f7057d7bd54d80d2110b6e271e0f52f5eab39,196.96,394.4,[USDC USDT USDe],,,,,,,EOA,,,,,0,
+compound,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,198.69,203.79,[WETH USDT USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
+aave,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,197.19,493.09,[USDC wstETH GHO USDtb cbBTC USDe USDT USDS RLUSD EURC DAI PYUSD],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
+aave,0xc88f7057d7bd54d80d2110b6e271e0f52f5eab39,196.96,394.4,[USDC USDT USDe],,,,,,,EOA,,,,Binance User (propagated),46,knowledge_graph
 aave,0x8607a7d180de23645db594d90621d837749408d5,195.96,394.61,[USDT WETH USDC USDS DAI USDe],,,,buying-on-frontrun-dot-market.eth,,,EOA,,,,buying-on-frontrun-dot-market.eth,76,knowledge_graph
 aave,0xb1e9d641249a2033c37cf1c241a01e717c2f6c76,195.08,390.63,[USDC DAI USDT],,,,thomasg.eth,,,EOA,,thomasg.eth,Solo Staker,Staking: thomasg.eth,81,knowledge_graph
 compound,0x6cf9aa65ebad7028536e353393630e2340ca6049,192.75,387.34,[USDC WETH],swissborg,SwissBorg,,,,https://swissborg.com/,EOA,,,,SwissBorg,95,dune_custody
@@ -192,13 +192,13 @@ aave,0xd72626b46c6a94808365c0803f92903db87aa83c,188.04,376.3,[USDe],,,,,,,EOA,,,
 aave_lido,0x96f49d0e9724dfd8780fa667ac37a993f005cb94,186.92,312.73,[GHO USDS],,,,,,,Contract,Safe Wallet,,,Coinbase Prime Custody Client (Cluster B),75,knowledge_graph
 aave,0xd730cd62cda9cfdc109be2d819b0337fafdca959,186.26,428.9,[WBTC ENS LDO USDT USDC],,,,aavebank.eth,,,EOA,,,,aavebank.eth,78,knowledge_graph
 spark,0xcaf1943ce973c1de423fe6e9f1a255049e51666e,186.0,310.78,[USDS DAI USDC USDT],,,,,,,EOA,,,,,0,
-aave,0xbebcf4b70935f029697f39f66f4e5cea315128c3,185.89,382.74,[USDC USDT],,,,,,,EOA,,,,,0,
+aave,0xbebcf4b70935f029697f39f66f4e5cea315128c3,185.89,382.74,[USDC USDT],,,,,,,EOA,,,,Poloniex User (propagated),41,knowledge_graph
 aave,0x63950cfd75e2290a3581b6b0e39c86bc11697d5b,185.18,369.33,[USDe USDT USDS USDC],,,,betamargin.eth,,,EOA,,,,betamargin.eth,78,knowledge_graph
 aave,0x564b1a055d9caaaff7435dce6b5f6e522b27de7d,184.88,425.82,[CVX wstETH sUSD weETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
 spark,0x55ea3e38fa0aa495b205fe45641a44ccc1c3df26,182.24,319.67,[WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),81,knowledge_graph
 compound,0xee2826453a4fd5afeb7ceffeef3ffa2320081268,181.06,358.31,[USDC WBTC WETH BAT],,,,,,,EOA,,,,Junyi Zheng,92,knowledge_graph
 aave,0x739adc03a7d8cea2f0a64d9622a5c346cb0ca1eb,180.24,355.64,[UST USDC GUSD USDT FRAX],,,,,,,EOA,,,,,0,
-aave,0x51e49ce1f4ace38ac815cfe2cef14397cd9932fb,179.55,355.86,[USDe WBTC cbBTC wstETH USDT RLUSD USDC USDtb tBTC],,,,,,,EOA,,,,,0,
+aave,0x51e49ce1f4ace38ac815cfe2cef14397cd9932fb,179.55,355.86,[USDe WBTC cbBTC wstETH USDT RLUSD USDC USDtb tBTC],,,,,,,EOA,,,,FTX User (propagated),42,knowledge_graph
 aave,0xa25a9b7c73158b3b34215925796ce6aa8100c13a,179.04,288.19,[BUSD WETH WBTC TUSD USDC USDT sUSD DAI],,,,,,,EOA,,,,,0,
 aave,0x767ecb395def19ab8d1b2fcc89b3ddfbed28fd6b,177.29,349.93,[YFI SNX USDC WBTC REN BAL DAI MKR BAT USDT CRV],celsius_network,Celsius Network,,,,,EOA,,,,Celsius Network,95,dune_custody
 aave,0x8af700ba841f30e0a3fcb0ee4c4a9d223e1efa05,175.04,329.19,[GHO USDT DAI USDC],,,,,,,EOA,,,,,0,
@@ -226,16 +226,16 @@ aave,0x1f244e040713b4139b4d98890db0d2d7d6468de4,153.64,319.09,[USDT USDC],,,,,,,
 compound,0x9c5083dd4838e120dbeac44c052179692aa5dac5,153.5,307.92,[USDC],,,,pennilesswassie.sismo.eth,,,EOA,,,,pennilesswassie.sismo.eth,77,knowledge_graph
 aave,0x6914fc70fac4cab20a8922e900c4ba57feecf8e1,153.42,328.09,[YFI BAL sUSD USDC FRAX DAI RAI ENJ USDT UNI FEI],nexo,Nexo,,,"https://twitter.com/Nexo , https://t.me/nexofinance , https://www.facebook.com/nexofinance/",https://nexo.com/,EOA,,,,Nexo,95,dune_custody
 compound,0xaaf5feaa9e5694b2b293e67558e2da8ea4b1fb13,153.16,156.02,[WETH USDT],,,,,,,EOA,,,,,0,
-aave,0x488b99c4a94bb0027791e8e0eeb421187ec9a487,153.12,316.45,[sUSD USDT USDC],,,,,,,EOA,,,,,0,
+aave,0x488b99c4a94bb0027791e8e0eeb421187ec9a487,153.12,316.45,[sUSD USDT USDC],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 spark,0x4353e2df4e3444e97e20b2bda165bdd9a23913ab,152.61,381.49,[WETH USDS DAI],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,,0,
 aave,0xfad075025424f08e06037a9b18dc5f9941021053,152.3,374.99,[USDC USDe USDT USDtb],,,,,,,EOA,,,,,0,
-aave,0x93853a2a05d01e3e64a3c18e1cd413b376215c1b,152.15,338.62,[WBTC USDC],,,,,,,EOA,,,,,0,
+aave,0x93853a2a05d01e3e64a3c18e1cd413b376215c1b,152.15,338.62,[WBTC USDC],,,,,,,EOA,,,,Poloniex User (propagated),41,knowledge_graph
 aave,0x931433324e6b0b5b04e3460ef3fb3f78dda3c721,151.88,347.33,[USDT USDC],,,,,,,EOA,,,,,0,
 aave,0x1fcc47ee0f19ca0f07f8b987f0ad32ac204c03a7,151.45,303.02,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x793c1a43f2aed8c02ee9005c9de2ecc1cf1580a0,151.16,304.38,[USDT USDS],,,,,,,EOA,,,,,0,
 aave,0x5846ac5619d2a762751b1663d86a402085505765,149.23,286.02,[WETH USDT USDC],,,,,,,EOA,,,,,0,
 compound,0x5921c191fe58175b1fb8943ed3f17345e615ff02,148.92,305.55,[WETH USDC],,,,,,,EOA,,,,,0,
-aave,0xaf184b4cbc73a9ca2f51c4a4d80ed67a2578e9f4,148.3,293.09,[USDT USDC DAI USDS USDe],,,,,,,EOA,,,,,0,
+aave,0xaf184b4cbc73a9ca2f51c4a4d80ed67a2578e9f4,148.3,293.09,[USDT USDC DAI USDS USDe],,,,,,,EOA,,,,Binance User (propagated),42,knowledge_graph
 aave,0x5732b9f8c80a8fa48879bbfd0f51344e94fc532c,148.2,211.36,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x94def848159b30605afe0c1d1ac43d6d588b940a,147.95,222.39,[USDT],,,,,,,EOA,,,,,0,
 aave,0xefad748654ec2c072b8735c010ae2fdea04aaf7d,147.36,299.85,[USDC],,,,,,,EOA,,,,,0,
@@ -244,7 +244,7 @@ spark,0xdde0d6e90bfb74f1dc8ea070cfd0c0180c03ad16,145.76,375.82,[DAI],,,,,,,EOA,,
 aave,0x09732c94654f77e3650424942a1e7e05181f1420,144.53,289.15,[USDT USDC DAI],,,,,,,EOA,,,,,0,
 aave,0x61c808d82a3ac53231750dadc13c777b59310bd9,144.29,376.81,[TUSD WETH USDT BUSD USDC SNX WBTC],,,,satofishi.eth,,,EOA,,,,satofishi.eth,74,knowledge_graph
 aave,0x7f67f6a09bcb2159b094b64b4acc53d5193aea2e,144.0,290.72,[USDC USDT GUSD],,,,,,,EOA,,,,,0,
-spark,0xaf184b4cbc73a9ca2f51c4a4d80ed67a2578e9f4,143.77,288.8,[DAI],,,,,,,EOA,,,,,0,
+spark,0xaf184b4cbc73a9ca2f51c4a4d80ed67a2578e9f4,143.77,288.8,[DAI],,,,,,,EOA,,,,Binance User (propagated),42,knowledge_graph
 aave,0xc1914872a1dd8e7a39ac6d5ee0d6fa9fcecf001e,143.55,493.97,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
 aave,0x00a2913501c4b09b92b825dc8a2937efdad9953b,143.55,282.86,[USDC USDe USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
 aave,0x1111567e0954e74f6ba7c4732d534e75b81dc42e,143.45,405.33,[WBTC USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
@@ -276,7 +276,7 @@ aave,0x349937ad5db113cfe177fef8f9031878eb255583,128.2,314.88,[wstETH weETH USDC 
 aave,0x08b6470e62235947b766ac63f584a52d25cb14e6,128.04,208.84,[USDC WETH USDT],,,,,,,EOA,,,,,0,
 aave,0xfadb1e5913c439e5bde92826a5b820475f58d24c,127.87,257.11,[USDC USDT],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),72,knowledge_graph
 aave,0xa923b13270f8622b5d5960634200dc4302b7611e,127.64,255.8,[USDC],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,,0,
-spark,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,127.21,283.9,[DAI],,,,,,,EOA,,,,,0,
+spark,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,127.21,283.9,[DAI],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 aave,0x1cebd13797636b94c5cad7108cebe42d2fce7732,125.91,244.5,[PYUSD DAI wstETH USDC USDS WETH cbBTC USDT],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,,0,
 aave,0x6ece8a1cd8ce927a69b023cbac2b0cf5636cca3a,125.68,251.5,[USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),60,knowledge_graph
 compound,0x1e17f8876b175d37ebe08849434973c051261461,125.6,255.92,[USDC BAT WETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),72,knowledge_graph
@@ -293,7 +293,7 @@ aave,0xe7cd2fa44cce16e70867338f7b9fd60ad3b9d4b5,121.49,282.6,[WETH USDe USDT USD
 compound,0x57ca561798413a20508b6bc997481e784f3e6e5f,121.25,243.84,[WETH BAT ZRX WBTC USDC],,,,,,,EOA,,,,,0,
 aave,0x1be3d6c73e7af74a0ab818c4a95bd72f058f320a,121.15,271.2,[USDT USDS USDC],,,,,,,EOA,,,,,0,
 compound,0xcb1096e77d6eab734ffceced1fcd2d35ee6b8d15,120.29,227.38,[WETH BAT USDC WBTC],,,,,,,EOA,,,,,0,
-compound,0xd48573cda0fed7144f2455c5270ffa16be389d04,119.91,235.96,[WETH USDC],,,,,,,EOA,,,,,0,
+compound,0xd48573cda0fed7144f2455c5270ffa16be389d04,119.91,235.96,[WETH USDC],,,,,,,EOA,,,,Poloniex User,55,knowledge_graph
 aave,0x54dda22ae140edb605c73073eabb6f4aea2fc237,119.68,451.47,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0xc16414ac1fedfdac4f8a09674d994e1bbb9d7113,119.19,244.93,[MKR GUSD RAI WBTC TUSD WETH USDC sUSD DAI],,,,,,,EOA,,,,,0,
 aave,0x6e1784b360f1becb692fcf8393a699811af90733,118.94,238.45,[USDT],,,,,,,EOA,,,,,0,
@@ -303,7 +303,7 @@ aave,0xb3abe0777aa9685941e54744e704378b4b33eeaa,117.02,205.73,[USDC USDT],,,,,,,
 aave,0xb3f0c00b0fc69baab5f9318b61a7b67f412a4b8b,116.46,233.32,[USDC USDT USDe],,,,,,,EOA,,,,,0,
 aave,0xbc79855178842fdba0c353494895deef509e26bb,116.35,387.09,[USDT WBTC],gnosis_safe,Gnosis Safe,Safev1.1.1,,,https://safe.global/,Contract,Safe Wallet,,,,0,
 aave,0x51346d389ec7adf11c5b96695ef003dbb849af9a,115.92,256.8,[WETH YFI USDT LINK DAI USDC UNI],,,,,,,EOA,,,,,0,
-aave,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,115.67,227.81,[PYUSD USDT USDe USDC USDtb wstETH RLUSD GHO USDS],,,,,,,EOA,,,,,0,
+aave,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,115.67,227.81,[PYUSD USDT USDe USDC USDtb wstETH RLUSD GHO USDS],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave_lido,0x171c53d55b1bcb725f660677d9e8bad7fd084282,115.07,240.73,[WETH wstETH],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),74,knowledge_graph
 aave,0x5f32351f668c04ae371dee96478eb567e64d0b7e,114.9,229.98,[USDe USDT GHO USDC USDtb],,,,,,,EOA,,,,,0,
 aave,0x3b3bdaa4462851621818d2cebc835e077587147a,114.69,212.25,[USDT],,,,,,,EOA,,,,,0,
@@ -373,7 +373,7 @@ aave,0x79d93cbf3583e62dd3edbddd1ee1121f8b07af81,93.29,189.33,[USDC TUSD SNX YFI 
 aave,0x8c0824ffccbe9a3cdda4c3d409a0b7447320f364,93.13,186.72,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x6843d905eb3e0d21d74fb9966f5196e952e94bb3,93.03,185.85,[USDT WBTC DAI],,,,,,,EOA,,,,,0,
 aave,0x39c09fdc4e5c5ab72f6319ddbc2cae40e67b2a60,92.81,186.54,[WETH WBTC USDT USDC SNX TUSD LINK DAI],,,,,,,EOA,,,,,0,
-spark,0x488b99c4a94bb0027791e8e0eeb421187ec9a487,92.68,186.27,[DAI],,,,,,,EOA,,,,,0,
+spark,0x488b99c4a94bb0027791e8e0eeb421187ec9a487,92.68,186.27,[DAI],,,,,,,EOA,,,,Binance User (propagated),45,knowledge_graph
 aave,0x7bf6e86eea9b360a49066d7fdf12c9d2f3bc6c29,92.47,186.16,[WBTC USDT tBTC cbBTC],,,,,,,EOA,,,,,0,
 aave,0xc26b5977c42c4fa2dd41750f8658f6bd2b67869c,92.36,214.07,[DAI USDT USDC],,,,,,,EOA,,,,,0,
 aave,0xfea3f5b06d41cb1526b9caf8be63c5b37c475f23,92.09,188.94,[DAI USDC USDT],,,,,,,EOA,,,,,0,
@@ -477,9 +477,9 @@ aave,0x64471d103a7f77262529383d53bdd28b260b1ae8,72.08,79.81,[USDT USDC],,,,,,,EO
 aave,0xcfb13b7497be8c8678d87bf622c34cb50f09fd84,72.04,144.19,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x8fdc74bad4aa20904a362d4b69434a0cf4d97f43,71.98,144.25,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x80dca3125961abd9d6e6b62b488fa3c6d6cfff2e,71.6,143.56,[USDT USDe USDC],,,,,,,EOA,,,,,0,
-spark,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,71.19,142.32,[USDT wstETH PYUSD],,,,,,,EOA,,,,,0,
-aave,0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,71.09,190.75,[weETH WETH],,,,,,,EOA,,,,,0,
-compound,0x93853a2a05d01e3e64a3c18e1cd413b376215c1b,71.0,142.07,[USDC],,,,,,,EOA,,,,,0,
+spark,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,71.19,142.32,[USDT wstETH PYUSD],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
+aave,0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,71.09,190.75,[weETH WETH],,,,,,,EOA,,,,Poloniex User (propagated),45,knowledge_graph
+compound,0x93853a2a05d01e3e64a3c18e1cd413b376215c1b,71.0,142.07,[USDC],,,,,,,EOA,,,,Poloniex User (propagated),41,knowledge_graph
 compound,0xedcdf2e84f2a6ba94b557b03bdfb7d10eca5aa50,70.59,141.33,[USDC],,,,,,,EOA,,,,,0,
 aave,0x108a8b7200d044bbbe95bef6f671baec5473e05f,70.51,142.74,[TUSD YFI AMPL DAI LINK WETH USDT USDC],,,,yenyenyen.eth,,,EOA,,,,yenyenyen.eth,74,knowledge_graph
 compound,0x4c232fdbe114a597531ff29bc79c72faa0698a55,70.44,175.45,[WBTC],celsius_network,Celsius Network,,,,,EOA,,,,Celsius Network,95,dune_custody
@@ -635,7 +635,7 @@ aave,0x367f7def4c05f4ae7ae47f88e270f8c0c85a9273,51.86,116.72,[USDC sUSD],,,,,,,E
 aave,0x9d8f9295268674332a108ed7d2f537413fc8b9ea,51.81,80.62,[USDC USDT],,,,,,,EOA,,,,,0,
 aave,0x338f3ec014d7edacb98506881d1e18dc00980fdc,51.54,103.16,[USDT sUSD],,,,,,,EOA,,,,,0,
 aave_lido,0xb282081b2681ba4eb2899c2722eeef0a98515b98,51.51,132.27,[WETH],,,,,,,EOA,,,,,0,
-compound,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,51.48,58.4,[WETH USDT USDC],,,,,,,EOA,,,,,0,
+compound,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,51.48,58.4,[WETH USDT USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 compound,0x1f244e040713b4139b4d98890db0d2d7d6468de4,51.32,103.17,[USDC],,,,,,,EOA,,,,,0,
 aave,0x22a709eece6ee82293e5fcdeea7ceefdefd499cd,51.31,189.7,[USDS WBTC USDC USDT],,,,,,,EOA,,,,,0,
 aave,0xd46934040a33b002916cb44e7c0a8f7bbd908cbb,51.12,122.39,[USDC USDT],,,,,,,EOA,,,,,0,
@@ -687,7 +687,7 @@ compound,0x78e96be52e38b3fc3445a2ed34a6e586ffab9631,46.47,74.45,[WETH USDC],,,,,
 aave,0x904a22dcbbfb961568312d5cce301bf165c2a1fb,46.43,93.06,[USDC sUSD],,,,,,,EOA,,,,,0,
 compound,0x0f1dfef1a40557d279d0de6e49ab306891a638b8,46.38,92.73,[USDC],,,,,,,EOA,,,,Trend Research (Jack Yi / LD Capital),80,knowledge_graph
 aave,0x6c230917a1d50dae8bb146e08a3ba5993b1de169,46.29,94.69,[tBTC cbBTC WBTC],,,,,,,EOA,,,,,0,
-aave_lido,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,46.17,161.23,[GHO],,,,,,,EOA,,,,,0,
+aave_lido,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,46.17,161.23,[GHO],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0xbcd420d13362532756c968f663f96ba95e240dd2,46.16,152.11,[USDC USDT DAI],,,,,,,EOA,,,,,0,
 aave,0x70d70b5b746493e4c247da944032ad6af77e0d97,46.1,92.23,[GHO USDT USDe USDC cbBTC],,,,jaiyce.eth,,,EOA,,,,jaiyce.eth,81,knowledge_graph
 aave,0xd17a0636b762ef4570359bb9a41e60c1f8540bf5,45.99,173.64,[USDe],,,,,,,EOA,,,,,0,
@@ -861,7 +861,7 @@ aave,0x5e90387025235d07576f80c76b3e57ec96547ec4,35.98,44.02,[USDT],,,,,,,EOA,,,,
 compound,0xe5350e927b904fdb4d2af55c566e269bb3df1941,35.94,39.02,[WETH BAT WBTC USDC],,,,,,,EOA,,,,,0,
 aave,0x7a39608107dc014d4bbd7a5f01d3fba5dff6d042,35.92,72.31,[WBTC CVX SNX LINK USDC UNI USDT BAT WETH YFI DAI xSUSHI MKR],,,,,,,EOA,,,,,0,
 spark,0xb801f83c0212a714660469e62903057aea18e386,35.85,71.89,[DAI],,,,,,,EOA,,,,,0,
-compound,0xbebcf4b70935f029697f39f66f4e5cea315128c3,35.84,72.31,[USDC],,,,,,,EOA,,,,,0,
+compound,0xbebcf4b70935f029697f39f66f4e5cea315128c3,35.84,72.31,[USDC],,,,,,,EOA,,,,Poloniex User (propagated),41,knowledge_graph
 aave,0xeb93e6fc46b78c19bfe3264afabccae410956389,35.71,77.68,[USDT GHO WETH USDC],,,,,,,EOA,,,,,0,
 aave,0xba318553753d2f8a2f4a28cfeb3aa8b90ebb845d,35.59,73.02,[WBTC USDT USDC cbBTC],,,,,,,EOA,,,,,0,
 aave,0x7aad74b7f0d60d5867b59dbd377a71783425af47,35.55,66.9,[wstETH],,,,,,,EOA,,,,,0,
@@ -1110,7 +1110,7 @@ aave,0x4fc95b91ff1f8671676d272182c2e1a9125bfd2f,26.32,52.9,[USDT USDC WBTC],,,,,
 aave,0x664dd5bcf28bbb3518ff532a384849830f2154ea,26.32,56.96,[xSUSHI SNX BUSD DAI CRV USDC USDT],,,,,,,EOA,,,,,0,
 aave,0xc77fa6c05b4e472feee7c0f9b20e70c5bf33a99b,26.31,53.28,[USDC MKR DAI CRV USDT WBTC],,,,sisyphus.eth,,,EOA,,,,sisyphus.eth,76,knowledge_graph
 compound,0xab92fca834aac2afe16cf6a2fc60cc7a864a77a5,26.31,53.46,[USDC],,,,,,,EOA,,,,,0,
-aave_lido,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,26.3,103.43,[USDS USDC],,,,,,,EOA,,,,,0,
+aave_lido,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,26.3,103.43,[USDS USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0x6f0f01aa6101ed4577760edd2405a4455a60a304,26.26,52.55,[USDC USDT USDe],,,,,,,EOA,,,,,0,
 aave,0x47415c9e7a0900695e1ca0d110864505567ce0a3,26.26,67.14,[DAI USDT EURC USDC],,,,,,,EOA,,,,,0,
 aave,0x02d57837308005decab3822ea4a2394e77d0aa4b,26.15,52.39,[USDe USDT USDC],,,,,,,EOA,,,,,0,
@@ -1324,7 +1324,7 @@ aave,0x0514f2f3e0277c47117e3f33d9390efb0acfbdfe,21.22,42.37,[USDT USDC],,,,,,,EO
 aave,0x57655b342b7bf1a1134b572e43eb62bbe56bf7cf,21.21,44.58,[USDC DAI],,,,,,,EOA,,,,,0,
 aave,0x3f1647d33707830e088e9cb6aa791017a1dfdf84,21.19,50.99,[USDC USDT USDS USDe],,,,,,,EOA,,,,,0,
 aave,0x68c83af7e1f20d3bbedb875aece6dffd377aec62,21.16,42.37,[USDC],,,,,,,EOA,,,,,0,
-compound,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,21.14,42.45,[USDC],,,,,,,EOA,,,,,0,
+compound,0x59a661f1c909ca13ba3e9114bfdd81e5a420705d,21.14,42.45,[USDC],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 compound,0xdff74a333383f4557eb269625d96cf8682e92813,21.04,38.95,[USDC],,,,,,,EOA,,,,,0,
 aave,0x2f8d4e7b1d771932e1367ee46f4c7be11cd94ac3,21.03,23.47,[USDC DAI USDT],,,,,,,EOA,,,,,0,
 spark,0x77e19de48f43af1d150aaef2de7e7ab8f3e55360,21.01,41.98,[wstETH USDT],,,,,,,EOA,,,,,0,
@@ -1721,7 +1721,7 @@ aave,0xc749a5b4bc339a097fcf0d93662e84d1b44e19bc,15.38,29.55,[USDC WBTC USDT cbBT
 compound,0x8e949b62a177452f5b327b539eaa63802a3ab6a4,15.36,30.7,[WETH USDC WBTC BAT ZRX],,,,,,,EOA,,,,,0,
 spark,0x500bea59133e20dc63b7e88913b30348494b84ba,15.32,30.66,[USDT PYUSD USDC],,,,,,,EOA,,,,,0,
 aave,0x612fdb880f09a5a5a2547dbf575531657fbd33c2,15.3,33.05,[DAI USDC GHO],,,,,,,EOA,,,,,0,
-aave_lido,0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,15.28,30.55,[GHO USDC],,,,,,,EOA,,,,,0,
+aave_lido,0xc468315a2df54f9c076bd5cfe5002ba211f74ca6,15.28,30.55,[GHO USDC],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0xa6c2827d0d93c2d63df7022343dd520bea94b064,15.26,30.53,[USDC],,,,,,,EOA,,,,,0,
 aave,0x9297989b23c5fb2a1340c65a8c63b0c46fc721bf,15.23,19.14,[DAI GHO USDC USDT],,,,,,,EOA,,,,,0,
 compound,0xdd6e1a285790d4088fd020c65c764babf44b31e8,15.23,30.47,[WETH USDC],,,,shivali.eth,,,EOA,,,,shivali.eth,69,knowledge_graph
@@ -1783,7 +1783,7 @@ compound,0x79d93cbf3583e62dd3edbddd1ee1121f8b07af81,14.67,29.88,[WETH USDC],,,,,
 aave,0xa87652c8b6954c7a5adca1177468ca0e78c39585,14.66,29.06,[WBTC cbBTC USDC],,,,,,,EOA,,,,,0,
 aave,0x93b86323939a2c3715b6dc5c206b0fb1a6efe9a3,14.65,29.36,[USDe USDC USDtb USDT],,,,,,,EOA,,,,,0,
 compound,0x4a2c544fc56cc7e024a336ecb829e39b91d28f51,14.65,29.78,[USDC WETH],,,,headlinewallet.eth,,,EOA,,,,headlinewallet.eth,69,knowledge_graph
-spark,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,14.64,29.27,[PYUSD cbBTC USDT],,,,,,,EOA,,,,,0,
+spark,0xfe99cc4664a939f826dbeb545c1aad4c89ee737a,14.64,29.27,[PYUSD cbBTC USDT],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0xc5655450d4d738869d003b24b4ded842cea5af78,14.63,29.57,[WBTC USDT USDe cbBTC cbETH WETH USDC],,,,,,,EOA,,,,,0,
 compound,0x984425ed5af89d93ed2f11b6b86020e3457bae21,14.6,24.5,[USDC],,,,,,,EOA,,,,,0,
 aave,0xe1d18ae098ffb1ad301e0609180f155b329a710a,14.58,28.78,[USDC GUSD USDT UNI DAI],,,,nitin.eth,,,EOA,,nitin.eth,Solo Staker,Staking: nitin.eth,69,knowledge_graph
@@ -1872,7 +1872,7 @@ aave,0xfcd091e1207e467a5b23ac3bc0105e2742309d9f,13.58,13.58,[USDT],,,,,,,EOA,,,,
 aave,0xc3ccaf9b9649b13a073d6bc3699d72666dad7342,13.56,27.21,[USDT USDC],,,,,,,EOA,,,,,0,
 aave,0x916792f7734089470de27297903bed8a4630b26d,13.56,46.76,[USDC USDT],,,,,,,EOA,,,,,0,
 compound,0x3991adbdf461d6817734555efdc8ef056fefbf21,13.53,27.25,[WETH BAT USDC],,,,,,,EOA,,,,,0,
-spark,0x51e49ce1f4ace38ac815cfe2cef14397cd9932fb,13.52,27.42,[USDC WETH USDS wstETH],,,,,,,EOA,,,,,0,
+spark,0x51e49ce1f4ace38ac815cfe2cef14397cd9932fb,13.52,27.42,[USDC WETH USDS wstETH],,,,,,,EOA,,,,FTX User (propagated),42,knowledge_graph
 aave,0x220abd48f2b444e1a352b6927c885c4579738081,13.52,26.95,[USDC SNX],,,,,,,EOA,,,,,0,
 aave,0x026346aa00bcbfdbfa2f8f87ec963d2939018bdd,13.51,17.12,[PYUSD USDT USDC],,,,,,,EOA,,,,,0,
 aave,0x51ab7dfcd47283dfbcee6f0a15d25053825f4eaf,13.51,13.51,[USDT],,,,,,,EOA,,,,,0,
@@ -1949,7 +1949,7 @@ aave,0x3480a76f8774f3fdd6ce625ce657ef11a9b11616,12.92,28.75,[DAI USDC USDT],,,,,
 aave,0x6513b81d8240cb94abc089f2cba60be6fda2f805,12.9,28.66,[DAI USDC USDT],,,,,,,EOA,,,,,0,
 aave,0xa4b4ec1d2653a8ad814aad49c406330915e94987,12.9,25.9,[USDT],,,,,,,EOA,,,,,0,
 aave,0xae6f8bf8ab9b6087ddff1730c3139e253f0e9fa1,12.89,25.82,[USDC],,,,,,,EOA,,,,,0,
-aave,0x2178e1d614fefb2b304db58f07116d89f948fda1,12.89,1002.9,[weETH WETH rETH],,,,,,,EOA,,,,,0,
+aave,0x2178e1d614fefb2b304db58f07116d89f948fda1,12.89,1002.9,[weETH WETH rETH],,,,,,,EOA,,,,Binance User (propagated),41,knowledge_graph
 aave,0x34348254c0952e2a3519a176aac840a0efb8b84b,12.87,24.97,[TUSD WETH LINK USDC],,,,,,,EOA,,,,,0,
 aave,0xd07993c6cb9692a71522baf970a31069034df2b0,12.87,26.56,[USDC GHO USDT],,,,,,,EOA,,,,,0,
 aave,0xd2b2a8ab7a8c903501f4db4ee45c67522a4511ed,12.87,25.84,[USDT USDe USDC DAI],,,,,,,EOA,,,,,0,
@@ -2025,7 +2025,7 @@ compound,0xd6d6869333c5cbf3af8c973b17193d921dbe2df3,12.23,24.51,[WBTC USDC],,,,,
 spark,0x431e81e5dfb5a24541b5ff8762bdef3f32f96354,12.21,24.66,[DAI],,,,,,,EOA,,,,,0,
 aave,0xbdd715ac9d0f62d43f86dbf422739f682e1261e9,12.21,25.65,[USDT USDe USDC],,,,,,,EOA,,,,,0,
 aave,0x56626169451d0aca031702e7cfe3502ec1eec49a,12.2,48.96,[USDT],,,,,,,EOA,,,,,0,
-aave_lido,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,12.19,24.67,[WETH],,,,,,,EOA,,,,,0,
+aave_lido,0xaaf9f14f20145ad50db369e52b2793bfeb18a45b,12.19,24.67,[WETH],,,,,,,EOA,,,,Binance User,55,knowledge_graph
 compound,0xec7fe1bbbc4955836bd54d23088a91e5b4b32b77,12.19,24.55,[USDC],,,,,,,EOA,,,,,0,
 aave,0xd162e7744ffd970a385fd9888e30a08f1fff8101,12.19,24.39,[USDT],,,,,,,EOA,,,,,0,
 compound,0xd3e9a012de4584528dc2416a641aab9cbe75fdc6,12.19,26.7,[WETH USDC],,,,,,,EOA,,,,,0,
@@ -2132,7 +2132,7 @@ aave,0x0755e9db73782669b24a948c567be291e3724382,11.28,23.56,[USDC cbBTC USDT DAI
 aave,0x7a79969a0b9d51d922c4810d2950560360f6f234,11.28,12.78,[USDT DAI USDC],,,,,,,EOA,,,,,0,
 aave,0x31d3243cfb54b34fc9c73e1cb1137124bd6b13e1,11.27,23.85,[WETH CVX USDC USDT],,,,sifuvision.eth,,,EOA,,,,sifuvision.eth,73,knowledge_graph
 aave,0x52434934895014cbeed22b8177fb359723c6c0a4,11.26,22.59,[USDC USDT],,,,,,,EOA,,,,,0,
-aave_lido,0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,11.25,22.56,[GHO],,,,,,,EOA,,,,,0,
+aave_lido,0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,11.25,22.56,[GHO],,,,,,,EOA,,,,FTX User (propagated),42,knowledge_graph
 aave,0xed41a12ea862f31df054e9bd3af1dd59486c6029,11.25,22.54,[USDC],,,,,,,EOA,,,,,0,
 aave,0xd196248aa5582485adf743c1ba22ef4c1f5d068a,11.25,22.61,[USDT],gnosis_safe,Gnosis Safe,GnosisSafev1.3.0,,,https://safe.global/,Contract,Safe Wallet,,,,0,
 aave,0xde4f1b8b87b1a3599c82ef43015df4e9801339cb,11.24,22.93,[USDC USDT],,,,,,,EOA,,,,,0,
