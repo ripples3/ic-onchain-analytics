@@ -63,33 +63,67 @@ MIN_INTERACTIONS = 2
 MIN_VALUE_ETH = 0.01  # Ignore dust
 
 # Known contracts to EXCLUDE from counterparty analysis (everyone uses these)
+# Phase 2 improvement: expanded list based on false positive analysis
 COMMON_CONTRACTS = {
     # DEX Routers (too common)
     "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45": "Uniswap V3 Router",
     "0xe592427a0aece92de3edee1f18e0157c05861564": "Uniswap V3 SwapRouter",
     "0x7a250d5630b4cf539739df2c5dacb4c659f2488d": "Uniswap V2 Router",
+    "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad": "Uniswap Universal Router",
+    "0xef1c6e67703c7bd7107eed8303fbe6ec2554bf6b": "Uniswap Universal Router Old",
     "0x1111111254eeb25477b68fb85ed929f73a960582": "1inch V5",
     "0x1111111254fb6c44bac0bed2854e76f90643097d": "1inch V4",
+    "0x111111125421ca6dc452d289314280a0f8842a65": "1inch V6",
     "0xdef1c0ded9bec7f1a1670819833240f027b25eff": "0x Exchange",
     "0x9008d19f58aabd9ed0d60971565aa8510560ab41": "CoW Protocol",
+    "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f": "Sushiswap Router",
+    "0x99a58482bd75cbab83b27ec03ca68ff489b5788f": "Curve Router",
+    "0xf0d4c12a5768d806021f80a262b4d39d26c58b8d": "Curve Router 2",
+    "0xba12222222228d8ba445958a75a0704d566bf2c8": "Balancer Vault",
     # Lending Pools (too common)
     "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2": "Aave V3 Pool",
     "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9": "Aave V2 Pool",
     "0xc13e21b648a5ee794902342038ff3adab66be987": "Spark Pool",
     "0xc3d688b66703497daa19211eedff47f25384cdc3": "Compound V3 USDC",
+    "0xa17581a9e3356d9a858b789d68b4d866e593ae94": "Compound V3 WETH",
     "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": "Morpho Blue",
+    "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b": "Compound Comptroller",
+    "0xa238dd80c259a72e81d7e4664a9801593f98d1c5": "Venus Pool",
     # Staking/Liquid Staking
     "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": "Lido stETH",
     "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": "wstETH",
+    "0xac3e018457b222d93114458476f3e3416abbe38f": "Frax sfrxETH",
+    "0x5e8422345238f34275888049021821e8e08caa1f": "frxETH",
+    "0xbe9895146f7af43049ca1c1ae358b0541ea49704": "Coinbase cbETH",
+    "0xa35b1b31ce002fbf2058d22f30f95d405200a15b": "Stader ETHx",
+    "0xf951e335afb289353dc249e82926178eac7ded78": "swETH",
     # Bridges (too common)
     "0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a": "Arbitrum Bridge",
     "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1": "Optimism Gateway",
+    "0x3154cf16ccdb4c6d922629664174b904d80f2c35": "Base Bridge",
+    "0x49048044d57e1c92a77f79988d21fa8faf74e97e": "Base Portal",
+    "0x32400084c286cf3e17e7b677ea9583e60a000324": "zkSync Bridge",
+    "0x3ee18b2214aff97000d974cf647e7c347e8fa585": "Wormhole",
+    "0x4d73adb72bc3dd368966edd0f0b2148401a178e2": "Stargate",
+    "0x2796317b0ff8538f253012862c06787adfb8ceb6": "Synapse Bridge",
     # Tokens (transfers to token contracts are approvals, not counterparties)
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "USDC",
     "0xdac17f958d2ee523a2206206994597c13d831ec7": "USDT",
     "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": "WETH",
     "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": "WBTC",
     "0x6b175474e89094c44da98b954eedeac495271d0f": "DAI",
+    "0x4c9edd5852cd905f086c759e8383e09bff1e68b3": "USDe",
+    "0x9d39a5de30e57443bff2a8307a4256c8797a3497": "sUSDe",
+    "0x83f20f44975d03b1b09e64809b757c47f942beea": "sDAI",
+    "0x4fabb145d64652a948d72533023f6e7a623c7c53": "BUSD",
+    "0x853d955acef822db058eb8505911ed77f175b99e": "FRAX",
+    "0x5f98805a4e8be255a32880fdec7f6728c6568ba0": "LUSD",
+    # GHO/Aave ecosystem
+    "0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f": "GHO",
+    "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9": "AAVE",
+    # Maker/Sky
+    "0x9759a6ac90977b93b58547b4a71c78317f391a28": "MKR",
+    "0x0ab87046fbb341d058f17cbc4c1133f25a20a52f": "gOHM",
 }
 
 # Known CEX hot wallets (deposits TO these are significant, but exclude from general analysis)

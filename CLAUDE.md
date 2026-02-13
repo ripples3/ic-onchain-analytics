@@ -101,26 +101,28 @@ left join prices p on s.address = p.token_address and s.blockchain = p.blockchai
 
 ## Investigation Scripts Status
 
-| Script | What It Does | Status (2026-02-13) |
-|--------|--------------|---------------------|
-| `trace_funding.py` | CEX funding origin | ✅ Run on top 10 + Safe signers |
-| `cio_detector.py` | CIO clustering | ✅ Run - 0 clusters in top 10 |
-| `governance_scraper.py` | Snapshot votes | ✅ Run - 1/10 has activity |
-| `resolve_safe_owners.py` | Safe multisig owners | ✅ Run - found clusters |
-| `behavioral_fingerprint.py` | Timing/gas patterns | ✅ Run on all |
-| `temporal_correlation.py` | **Same-operator detection** | 🆕 NEW |
-| `counterparty_graph.py` | **Shared counterparty analysis** | 🆕 NEW |
-| `label_propagation.py` | **Identity propagation** | 🆕 NEW |
-| `verify_identity.py` | Multi-source check | ✅ Run |
-| `whale_tracker_aggregator.py` | Known whale lookup | ✅ Run - 0 matches |
-| `investigate_safes.py` | **Integrated Safe pipeline** | 🆕 NEW |
+| Script | What It Does | Effectiveness | Status (2026-02-14) |
+|--------|--------------|---------------|---------------------|
+| `temporal_correlation.py` | Same-operator detection | ⭐ **85.8%** avg conf | Best method for DeFi whales |
+| `cio_detector.py` | CIO clustering | ⭐ **80.2%** avg conf | Second best method |
+| `trace_funding.py` | CEX funding origin | **70%** avg conf | Works well for CEX-funded |
+| `behavioral_fingerprint.py` | Timing/gas patterns | **60%** avg conf | Good for clustering |
+| `pattern_matcher.py` | Entity type classification | **58%** avg conf | Fund vs individual |
+| `governance_scraper.py` | Snapshot votes | **70%** avg conf | Works if address is active |
+| `counterparty_graph.py` | Shared counterparty analysis | **57%** avg conf | Needs protocol filtering |
+| `label_propagation.py` | Identity propagation | **45%** avg conf | Limited by network structure |
+| `nft_tracker.py` | NFT holdings | ❌ **0%** hit rate | Skip for DeFi whales |
+| `bridge_tracker.py` | Cross-chain bridges | ❌ **0%** hit rate | Skip for DeFi whales |
+| `change_detector.py` | Change address detection | ❌ **0%** hit rate | Not applicable to tokens |
+| `dex_analyzer.py` | DEX trading patterns | ❌ **0%** activity | Position holders don't trade |
 
-**Safe Investigation Results (2026-02-13)**:
-- Cluster A ($709M): Tornado-funded entity (65% confidence)
-- Cluster B ($476M): Coinbase Prime custody client (75% confidence)
-- $544M Safe: OG DeFi whale from 2021 (55% confidence)
+**Phase 2 Results (2026-02-14)**:
+- Identified 80/100 top whales (80% coverage)
+- Borrowed coverage: $34.96B of $42.52B (82.2%)
+- Key identification: Celsius Network cluster (42 wallets, $3.6B+)
+- Key identification: Asia-Pacific VC/Investment Fund (4 hubs, $4.5B+)
 
-**Result**: Top 10 EOA whales remain unidentified. Best lead: WLFI whale (#8) with FTX funding + 8.67M WLFI voting power.
+**Best leads**: FTX whale with 8.67M WLFI voting power, Institutional Fund pair (92% confidence)
 
 ## Temporal Correlation Engine (NEW)
 
@@ -452,6 +454,44 @@ See `references/bug_fix_retrospective.md` for full analysis.
 ### 2026-02-05: Skills = Methodology, References = Data
 
 Skills became bloated with addresses. Now: methodology in skills, changing data in references.
+
+### 2026-02-14: Phase 2 Investigation Retrospective
+
+**Context**: Ran 10 parallel agents with "creative" investigation methods (NFT, DEX, Bridge, Change detection) on top 100 unidentified whales.
+
+**Results**:
+- Temporal correlation: 85.8% avg confidence (best method)
+- CIO clustering: 80.2% avg confidence (second best)
+- NFT tracker: **0/100 hit rate** (complete failure)
+- Bridge tracker: **0/100 hit rate** (complete failure)
+- Change detector: **0/100 hit rate** (not applicable)
+- DEX analyzer: **0/100 trading activity** (position holders, not traders)
+
+**Root cause**: Scripts designed for general wallets, not DeFi lending whales specifically.
+
+**Key learnings**:
+
+| Finding | Implication |
+|---------|-------------|
+| DeFi lending whales ≠ NFT holders | Profile matters - match method to target |
+| Top whales are single-chain | No bridge activity - they use CEX/OTC |
+| Hub identification has 15:1 ROI | Identify 1 hub → unlock 15 related addresses |
+| Counterparty graph has protocol noise | Filter out Aave/Uniswap before calculating overlap |
+| Bots need deployer tracing | Trace operator, not the contract |
+
+**Updated workflow**:
+```
+0. PROFILE FIRST: Classify target type before choosing scripts
+1. HUB IDENTIFICATION: Find temporal correlation hubs
+2. DEEP INVESTIGATE HUBS: Only 5-10 addresses
+3. PROPAGATE: Use hub identities to label spoke addresses
+```
+
+**Scripts to skip for DeFi whale research**: `nft_tracker.py`, `bridge_tracker.py`, `change_detector.py`
+
+**Scripts that work**: `temporal_correlation.py`, `cio_detector.py`, `trace_funding.py`, `behavioral_fingerprint.py`
+
+See `references/phase2_retrospective.md` for full analysis.
 
 ## Resources
 
