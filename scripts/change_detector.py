@@ -61,14 +61,12 @@ class ChangeDetector:
     def get_transactions(self, address: str, max_txs: int = 500) -> list[dict]:
         """Get transaction history for an address."""
         try:
-            url = "https://api.etherscan.io/api"
+            url = "https://api.etherscan.io/v2/api"
             params = {
+                "chainid": 1,  # Ethereum mainnet
                 "module": "account",
                 "action": "txlist",
                 "address": address,
-                "startblock": 0,
-                "endblock": 99999999,
-                "sort": "asc",
                 "apikey": self.api_key
             }
 
@@ -86,14 +84,12 @@ class ChangeDetector:
     def get_internal_transactions(self, address: str, max_txs: int = 100) -> list[dict]:
         """Get internal (contract) transactions."""
         try:
-            url = "https://api.etherscan.io/api"
+            url = "https://api.etherscan.io/v2/api"
             params = {
+                "chainid": 1,  # Ethereum mainnet
                 "module": "account",
                 "action": "txlistinternal",
                 "address": address,
-                "startblock": 0,
-                "endblock": 99999999,
-                "sort": "asc",
                 "apikey": self.api_key
             }
 
@@ -118,8 +114,9 @@ class ChangeDetector:
             return True
 
         try:
-            url = "https://api.etherscan.io/api"
+            url = "https://api.etherscan.io/v2/api"
             params = {
+                "chainid": 1,  # Ethereum mainnet
                 "module": "proxy",
                 "action": "eth_getCode",
                 "address": address,
