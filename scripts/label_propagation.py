@@ -45,6 +45,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
@@ -56,13 +57,16 @@ from typing import Dict, List, Optional, Set, Tuple, Any
 # ============================================================================
 
 # Relationship type weights - how much confidence decays per hop
+# UPDATED based on cluster contamination audit - reduced CIO weights
 RELATIONSHIP_WEIGHTS = {
     'same_entity': 0.95,        # Verified same entity
-    'same_cluster': 0.90,       # Part of detected cluster
+    'same_signer': 0.95,        # Same Safe signer (very strong)
     'shared_deposits': 0.90,    # Same exchange deposit addresses
+    'same_cluster': 0.85,       # Part of detected cluster (reduced from 0.90)
     'temporal_correlation': 0.85,  # Same-operator timing
-    'counterparty_overlap': 0.80,  # Similar counterparties
-    'funded_by': 0.75,          # Funding relationship
+    'counterparty_overlap': 0.70,  # Similar counterparties (reduced from 0.80)
+    'cio_common_funder': 0.50,  # CIO via common funder (NEW - low weight)
+    'funded_by': 0.50,          # Funding relationship (reduced from 0.75)
     'delegated_to': 0.70,       # Governance delegation
     'traded_with': 0.40,        # Just transacted (weak)
 }
@@ -75,6 +79,175 @@ MAX_HOPS = 4
 
 # Minimum confidence to apply a label
 MIN_LABEL_CONFIDENCE = 0.40
+
+# ============================================================================
+# Timezone Validation Gate (Phase 2 Improvement)
+# ============================================================================
+# Prevents cluster contamination by validating timezone compatibility
+# before propagating labels. Key insight: UK fund can't operate from UTC+7.
+
+# Known entity expected timezones (for validation)
+KNOWN_ENTITY_TIMEZONES = {
+    'Abraxas Capital': ['UTC+0', 'UTC+1'],  # UK-based
+    'Celsius Network': ['UTC-5', 'UTC-4', 'UTC-3', 'UTC-6'],  # US-based (NJ)
+    'Trend Research': ['UTC+8', 'UTC+7'],  # Asia-Pacific (Jack Yi)
+    'Coinbase': ['UTC-8', 'UTC-7', 'UTC-5'],  # US-based
+    'Binance': ['UTC+8', 'UTC+0'],  # Global, HQ in various locations
+    'FTX': ['UTC-5', 'UTC-4'],  # Was Bahamas-based
+}
+
+# Timezone tolerance for validation (hours)
+# Based on cluster contamination audit: UTC+7 addresses wrongly labeled as UK funds
+# Tightened to prevent regional mismatches (UK fund can't operate from South America)
+TIMEZONE_TOLERANCE_STRICT = 1   # Same region (UK/EU, East Coast US, etc.)
+TIMEZONE_TOLERANCE_LOOSE = 2    # Adjacent regions (still likely same operator)
+
+
+def parse_timezone_offset(tz_str: str) -> Optional[int]:
+    """Parse timezone string like 'UTC+8' or 'UTC-5' to integer offset."""
+    if not tz_str:
+        return None
+    match = re.match(r'UTC([+-]?\d+)', tz_str)
+    if match:
+        return int(match.group(1))
+    return None
+
+
+def get_timezone_from_evidence(kg: 'KnowledgeGraph', address: str) -> Optional[str]:
+    """Get timezone from behavioral evidence in knowledge graph."""
+    conn = kg.connect()
+    # Don't limit to 1 - iterate through all behavioral evidence to find timezone
+    cursor = conn.execute(
+        """SELECT claim, raw_data FROM evidence
+           WHERE entity_address = ?
+           AND (source = 'Behavioral' OR source LIKE '%timezone%' OR source LIKE '%fingerprint%')
+           ORDER BY confidence DESC LIMIT 10""",
+        (address.lower(),)
+    )
+
+    for row in cursor.fetchall():
+        claim, raw_data = row
+
+        # Try to extract from raw_data JSON first (most reliable)
+        if raw_data:
+            try:
+                data = json.loads(raw_data)
+                if 'timing' in data and 'timezone_signal' in data['timing']:
+                    return data['timing']['timezone_signal']
+                if 'timezone_signal' in data:
+                    return data['timezone_signal']
+            except (json.JSONDecodeError, TypeError):
+                pass
+
+        # Try to extract from claim text as fallback
+        if claim:
+            # Match "Timezone: UTC+X" or "UTC-X timezone"
+            match = re.search(r'Timezone:\s*(UTC[+-]?\d+)', claim)
+            if match:
+                return match.group(1)
+            match = re.search(r'(UTC[+-]?\d+)\s+timezone', claim)
+            if match:
+                return match.group(1)
+
+    return None
+
+
+def get_expected_timezone_for_identity(identity: str) -> Optional[List[str]]:
+    """Get expected timezone(s) for a known entity identity."""
+    if not identity:
+        return None
+
+    # Check exact matches first
+    for entity, timezones in KNOWN_ENTITY_TIMEZONES.items():
+        if entity.lower() in identity.lower():
+            return timezones
+
+    # Check for region hints in identity
+    identity_lower = identity.lower()
+    if 'uk' in identity_lower or 'british' in identity_lower or 'london' in identity_lower:
+        return ['UTC+0', 'UTC+1']
+    if 'asia' in identity_lower or 'singapore' in identity_lower or 'hong kong' in identity_lower:
+        return ['UTC+8', 'UTC+7', 'UTC+9']
+    if 'europe' in identity_lower or 'eu' in identity_lower:
+        return ['UTC+0', 'UTC+1', 'UTC+2']
+    if 'us' in identity_lower or 'america' in identity_lower or 'new york' in identity_lower:
+        return ['UTC-5', 'UTC-4', 'UTC-6', 'UTC-7', 'UTC-8']
+
+    return None
+
+
+def calculate_timezone_difference(tz1: str, tz2: str) -> int:
+    """Calculate absolute hour difference between two timezones."""
+    offset1 = parse_timezone_offset(tz1)
+    offset2 = parse_timezone_offset(tz2)
+
+    if offset1 is None or offset2 is None:
+        return 999  # Unknown - assume incompatible
+
+    diff = abs(offset1 - offset2)
+    # Handle wraparound (e.g., UTC+12 and UTC-12 are close)
+    if diff > 12:
+        diff = 24 - diff
+    return diff
+
+
+def validate_timezone_compatibility(
+    source_identity: str,
+    source_timezone: Optional[str],
+    target_timezone: Optional[str],
+    relationship_type: str
+) -> Tuple[bool, float, str]:
+    """
+    Validate if target timezone is compatible with source identity.
+
+    Returns:
+        (is_valid, confidence_multiplier, warning_message)
+
+    Confidence multipliers:
+        1.0 = timezone matches expected
+        0.7 = timezone close (within tolerance)
+        0.3 = timezone mismatch (contamination risk)
+        0.0 = reject propagation
+    """
+    # If we can't determine timezones, allow with reduced confidence
+    if not target_timezone or target_timezone == 'unknown':
+        return True, 0.6, "Target timezone unknown - reduced confidence"
+
+    # Get expected timezones for the source identity
+    expected_timezones = get_expected_timezone_for_identity(source_identity)
+
+    if not expected_timezones:
+        # No expected timezone for this identity - use source timezone if available
+        if source_timezone:
+            diff = calculate_timezone_difference(source_timezone, target_timezone)
+            if diff <= TIMEZONE_TOLERANCE_STRICT:
+                return True, 1.0, ""
+            elif diff <= TIMEZONE_TOLERANCE_LOOSE:
+                return True, 0.7, f"Timezone {target_timezone} is {diff}h from source {source_timezone}"
+            else:
+                return False, 0.3, f"TIMEZONE MISMATCH: {target_timezone} vs expected {source_timezone} (diff={diff}h)"
+        else:
+            return True, 0.8, "No timezone validation possible"
+
+    # Check if target timezone matches any expected
+    target_offset = parse_timezone_offset(target_timezone)
+    if target_offset is None:
+        return True, 0.6, "Cannot parse target timezone"
+
+    # Check against all expected timezones
+    min_diff = 999
+    for expected_tz in expected_timezones:
+        diff = calculate_timezone_difference(expected_tz, target_timezone)
+        min_diff = min(min_diff, diff)
+
+    if min_diff <= TIMEZONE_TOLERANCE_STRICT:
+        return True, 1.0, ""
+    elif min_diff <= TIMEZONE_TOLERANCE_LOOSE:
+        return True, 0.7, f"Timezone {target_timezone} close to expected {expected_timezones}"
+    else:
+        # TIMEZONE MISMATCH - this is likely contamination
+        warning = f"TIMEZONE MISMATCH: {target_timezone} vs expected {expected_timezones} for {source_identity}"
+        return False, 0.3, warning
 
 
 @dataclass
@@ -98,6 +271,7 @@ class PropagationStats:
     seed_confidence: float
     addresses_reached: int
     labels_applied: int
+    labels_rejected_timezone: int  # NEW: labels rejected due to timezone mismatch
     max_hops_used: int
     propagation_paths: List[PropagationResult] = field(default_factory=list)
 
@@ -114,12 +288,14 @@ def propagate_identity(
     max_hops: int = MAX_HOPS,
     min_confidence: float = MIN_PROPAGATION_CONFIDENCE,
     apply_labels: bool = True,
+    validate_timezone: bool = True,
     verbose: bool = True
 ) -> PropagationStats:
     """
     Propagate an identity from a seed address through the relationship graph.
 
     Uses BFS with confidence decay based on relationship type.
+    INCLUDES TIMEZONE VALIDATION GATE (Phase 2 improvement).
 
     Args:
         kg: Knowledge graph instance
@@ -129,6 +305,7 @@ def propagate_identity(
         max_hops: Maximum hops from seed
         min_confidence: Stop propagating when confidence drops below this
         apply_labels: Whether to actually apply labels to the knowledge graph
+        validate_timezone: Whether to validate timezone compatibility (default True)
         verbose: Print progress
 
     Returns:
@@ -139,6 +316,11 @@ def propagate_identity(
     if verbose:
         print(f"\n  Propagating '{identity}' from {seed_address[:16]}...")
         print(f"  Seed confidence: {seed_confidence:.0%}, Max hops: {max_hops}")
+        if validate_timezone:
+            print(f"  Timezone validation: ENABLED")
+
+    # Get seed timezone for validation
+    seed_timezone = get_timezone_from_evidence(kg, seed_address) if validate_timezone else None
 
     # BFS queue: (address, confidence, hops, path, relationship_chain)
     queue = deque([(seed_address, seed_confidence, 0, [seed_address], [])])
@@ -149,6 +331,7 @@ def propagate_identity(
     # Results
     results: List[PropagationResult] = []
     labels_applied = 0
+    labels_rejected_timezone = 0
     max_hops_used = 0
 
     conn = kg.connect()
@@ -192,6 +375,44 @@ def propagate_identity(
             if new_confidence < min_confidence:
                 continue
 
+            # ================================================================
+            # TIMEZONE VALIDATION GATE (Phase 2 Improvement)
+            # ================================================================
+            # Before applying a label, validate timezone compatibility.
+            # This prevents cluster contamination (e.g., UK fund labeled on UTC+7 address)
+
+            timezone_warning = ""
+            if validate_timezone and new_confidence >= MIN_LABEL_CONFIDENCE:
+                target_timezone = get_timezone_from_evidence(kg, other)
+
+                is_valid, tz_multiplier, tz_warning = validate_timezone_compatibility(
+                    source_identity=identity,
+                    source_timezone=seed_timezone,
+                    target_timezone=target_timezone,
+                    relationship_type=rel_type
+                )
+
+                if not is_valid:
+                    # TIMEZONE MISMATCH - reduce confidence significantly
+                    new_confidence *= tz_multiplier
+                    timezone_warning = tz_warning
+                    labels_rejected_timezone += 1
+
+                    if verbose:
+                        print(f"    ⚠️  {other[:16]}... TIMEZONE REJECTED: {tz_warning}")
+
+                    # Don't apply label, but still add to visited and continue propagation
+                    # (in case there are other paths)
+                    visited[other] = new_confidence
+                    continue
+
+                elif tz_multiplier < 1.0:
+                    # Timezone close but not exact - apply multiplier
+                    new_confidence *= tz_multiplier
+                    timezone_warning = tz_warning
+
+            # ================================================================
+
             # Update visited
             visited[other] = new_confidence
 
@@ -221,21 +442,26 @@ def propagate_identity(
                     labels_applied += 1
 
                     if verbose:
-                        print(f"    → {other[:16]}... = '{propagated_identity}' ({new_confidence:.0%})")
+                        tz_note = f" [{timezone_warning}]" if timezone_warning else ""
+                        print(f"    → {other[:16]}... = '{propagated_identity}' ({new_confidence:.0%}){tz_note}")
 
                 # Add evidence regardless
+                evidence_data = {
+                    'source_identity': identity,
+                    'source_address': seed_address,
+                    'hops': hops + 1,
+                    'path': path + [other],
+                    'relationship_chain': rel_chain + [rel_type]
+                }
+                if timezone_warning:
+                    evidence_data['timezone_warning'] = timezone_warning
+
                 kg.add_evidence(
                     other,
                     source='Propagation',
                     claim=f"Connected to {identity} via {' → '.join(rel_chain + [rel_type])}",
                     confidence=new_confidence,
-                    raw_data={
-                        'source_identity': identity,
-                        'source_address': seed_address,
-                        'hops': hops + 1,
-                        'path': path + [other],
-                        'relationship_chain': rel_chain + [rel_type]
-                    }
+                    raw_data=evidence_data
                 )
 
             # Add to queue for further propagation
@@ -247,6 +473,7 @@ def propagate_identity(
         seed_confidence=seed_confidence,
         addresses_reached=len(visited) - 1,  # Exclude seed
         labels_applied=labels_applied,
+        labels_rejected_timezone=labels_rejected_timezone,
         max_hops_used=max_hops_used,
         propagation_paths=results
     )
@@ -255,6 +482,8 @@ def propagate_identity(
         print(f"\n  Propagation complete:")
         print(f"    Addresses reached: {stats.addresses_reached}")
         print(f"    Labels applied: {stats.labels_applied}")
+        if stats.labels_rejected_timezone > 0:
+            print(f"    Labels rejected (timezone): {stats.labels_rejected_timezone}")
         print(f"    Max hops used: {stats.max_hops_used}")
 
     return stats
@@ -412,6 +641,7 @@ def run_full_propagation(
 
     all_stats: Dict[str, PropagationStats] = {}
     total_labels_applied = 0
+    total_labels_rejected_tz = 0
 
     for address, identity, confidence in identified:
         confidence = confidence if confidence else 0.7
@@ -424,20 +654,25 @@ def run_full_propagation(
             max_hops=max_hops,
             min_confidence=min_confidence,
             apply_labels=True,
+            validate_timezone=True,
             verbose=False  # Suppress individual output
         )
 
         all_stats[address] = stats
         total_labels_applied += stats.labels_applied
+        total_labels_rejected_tz += stats.labels_rejected_timezone
 
         if verbose and stats.labels_applied > 0:
-            print(f"  {identity[:30]}: propagated to {stats.labels_applied} addresses")
+            tz_note = f" ({stats.labels_rejected_timezone} tz rejected)" if stats.labels_rejected_timezone > 0 else ""
+            print(f"  {identity[:30]}: propagated to {stats.labels_applied} addresses{tz_note}")
 
     if verbose:
         print(f"\n" + "="*60)
         print(f"PROPAGATION COMPLETE")
         print(f"  Seeds processed: {len(identified)}")
         print(f"  Labels applied: {total_labels_applied}")
+        if total_labels_rejected_tz > 0:
+            print(f"  Labels rejected (timezone): {total_labels_rejected_tz}")
         print("="*60)
 
     return all_stats
