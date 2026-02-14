@@ -37,9 +37,13 @@ Usage:
     # Check what identities an unknown might inherit
     python3 label_propagation.py --check 0x5678...
 
+    # Show confidence tier for an address
+    python3 label_propagation.py --tier 0x5678...
+
     # Integration with knowledge graph
-    from label_propagation import propagate_identity, run_full_propagation
+    from label_propagation import propagate_identity, run_full_propagation, calculate_confidence_tier
     propagate_identity(kg, seed_address, identity, confidence)
+    tier_name, score = calculate_confidence_tier(address, kg)
 """
 
 import argparse
@@ -761,6 +765,264 @@ def suggest_identity(
 
 
 # ============================================================================
+# Confidence Tier System (Improvement #3 from Cluster Contamination Retrospective)
+# ============================================================================
+# Replaces binary HIGH/MEDIUM/LOW with a 5-tier system that accounts for:
+# 1. Source quality (Arkham/Nansen = highest trust)
+# 2. Timezone consistency (prevents cross-region contamination)
+# 3. Cross-cluster conflicts (detects label collisions)
+#
+# Tiers:
+#   VERIFIED   (90-100%): Arkham/Nansen confirmed + behavioral match
+#   VALIDATED  (70-89%):  Propagated + timezone match + no cross-cluster conflicts
+#   CANDIDATE  (50-69%):  CIO/temporal link only, needs validation
+#   UNVERIFIED (30-49%):  Propagated but timezone mismatch or conflicts
+#   UNKNOWN    (0-29%):   No signals
+
+# Trusted external verification sources
+VERIFIED_SOURCES = {'Arkham', 'Nansen', 'arkham', 'nansen'}
+
+
+def _has_verified_source(kg: 'KnowledgeGraph', address: str) -> bool:
+    """Check if address has evidence from a trusted external source (Arkham/Nansen)."""
+    conn = kg.connect()
+    rows = conn.execute(
+        """SELECT source FROM evidence
+           WHERE entity_address = ?""",
+        (address.lower(),)
+    ).fetchall()
+
+    for row in rows:
+        source = row[0] if row[0] else ''
+        # Match exact source or source containing the name (e.g., "Arkham Intelligence")
+        for verified in VERIFIED_SOURCES:
+            if verified.lower() in source.lower():
+                return True
+    return False
+
+
+def _has_behavioral_match(kg: 'KnowledgeGraph', address: str) -> bool:
+    """Check if address has behavioral evidence (timezone, fingerprint, etc.)."""
+    conn = kg.connect()
+    row = conn.execute(
+        """SELECT COUNT(*) FROM evidence
+           WHERE entity_address = ?
+           AND (source = 'Behavioral' OR source LIKE '%fingerprint%'
+                OR source LIKE '%timezone%')""",
+        (address.lower(),)
+    ).fetchone()
+    return row[0] > 0 if row else False
+
+
+def _check_cross_cluster_conflicts(kg: 'KnowledgeGraph', address: str) -> bool:
+    """
+    Check if an address has relationships to entities in different identity clusters.
+
+    A conflict exists when an address is connected (via temporal correlation or
+    other strong links) to entities that have different non-propagated identities.
+    This is a strong signal of label contamination.
+
+    Returns True if conflicts exist, False otherwise.
+    """
+    address = address.lower()
+    conn = kg.connect()
+
+    # Get all addresses related to this one via strong relationship types
+    strong_types = ('temporal_correlation', 'same_cluster', 'same_entity',
+                    'same_signer', 'shared_deposits')
+    placeholders = ','.join(['?'] * len(strong_types))
+
+    related = conn.execute(
+        f"""SELECT DISTINCT
+                CASE WHEN source = ? THEN target ELSE source END as other_addr
+            FROM relationships
+            WHERE (source = ? OR target = ?)
+              AND relationship_type IN ({placeholders})
+              AND confidence >= 0.7""",
+        (address, address, address, *strong_types)
+    ).fetchall()
+
+    # Collect non-propagated identities from related addresses
+    identities = set()
+    for row in related:
+        other = row[0]
+        entity = conn.execute(
+            """SELECT identity FROM entities
+               WHERE address = ?
+               AND identity IS NOT NULL
+               AND identity != ''
+               AND identity NOT LIKE '%(propagated)%'""",
+            (other,)
+        ).fetchone()
+        if entity and entity[0]:
+            # Normalize: strip suffixes like " (cluster member)" for comparison
+            base_identity = entity[0].split(' (')[0].strip()
+            identities.add(base_identity)
+
+    # Also check the address's own identity
+    own_entity = conn.execute(
+        """SELECT identity FROM entities
+           WHERE address = ?
+           AND identity IS NOT NULL
+           AND identity != ''
+           AND identity NOT LIKE '%(propagated)%'""",
+        (address,)
+    ).fetchone()
+    if own_entity and own_entity[0]:
+        base_identity = own_entity[0].split(' (')[0].strip()
+        identities.add(base_identity)
+
+    # More than one distinct identity in the cluster = conflict
+    return len(identities) > 1
+
+
+def _check_timezone_consistency(kg: 'KnowledgeGraph', address: str) -> Optional[bool]:
+    """
+    Check if the address's timezone is consistent with its assigned identity.
+
+    Returns:
+        True  - timezone matches expected for identity
+        False - timezone mismatch detected
+        None  - cannot determine (no timezone data or no identity)
+    """
+    address = address.lower()
+    conn = kg.connect()
+
+    # Get the address's identity
+    entity = conn.execute(
+        "SELECT identity FROM entities WHERE address = ?",
+        (address,)
+    ).fetchone()
+
+    if not entity or not entity[0]:
+        return None
+
+    identity = entity[0]
+    # Strip propagated suffix for lookup
+    base_identity = identity.replace(' (propagated)', '').strip()
+
+    # Get the address's timezone
+    target_tz = get_timezone_from_evidence(kg, address)
+    if not target_tz:
+        return None  # Can't validate without timezone data
+
+    # Get expected timezone for the identity
+    expected_timezones = get_expected_timezone_for_identity(base_identity)
+    if not expected_timezones:
+        return None  # Can't validate without expected timezone
+
+    # Check if target timezone is within tolerance of any expected timezone
+    target_offset = parse_timezone_offset(target_tz)
+    if target_offset is None:
+        return None
+
+    for expected_tz in expected_timezones:
+        diff = calculate_timezone_difference(expected_tz, target_tz)
+        if diff <= TIMEZONE_TOLERANCE_LOOSE:
+            return True
+
+    return False
+
+
+def calculate_confidence_tier(
+    address: str,
+    kg: 'KnowledgeGraph'
+) -> Tuple[str, float]:
+    """
+    Calculate the confidence tier for an address based on multi-signal analysis.
+
+    Replaces binary HIGH/MEDIUM/LOW with a 5-tier system:
+
+    | Tier       | Confidence | Requirements                                     |
+    |------------|------------|--------------------------------------------------|
+    | VERIFIED   | 90-100%    | Arkham/Nansen confirmed + behavioral match        |
+    | VALIDATED  | 70-89%     | Propagated + timezone match + no cross-cluster    |
+    | CANDIDATE  | 50-69%     | CIO/temporal link only, needs validation           |
+    | UNVERIFIED | 30-49%     | Propagated but timezone mismatch or conflicts      |
+    | UNKNOWN    | 0-29%      | No signals                                         |
+
+    Args:
+        address: The Ethereum address to evaluate
+        kg: KnowledgeGraph instance (must be connected)
+
+    Returns:
+        Tuple of (tier_name, confidence_score) e.g. ("VERIFIED", 0.95)
+    """
+    address = address.lower()
+    conn = kg.connect()
+
+    # Step 1: Check if entity exists and has any identity
+    entity = conn.execute(
+        "SELECT identity, confidence FROM entities WHERE address = ?",
+        (address,)
+    ).fetchone()
+
+    has_identity = entity is not None and entity[0] is not None and entity[0] != ''
+    existing_confidence = entity[1] if entity and entity[1] else 0.0
+
+    if not has_identity:
+        # No identity at all - check if there are any signals
+        evidence_count = conn.execute(
+            "SELECT COUNT(*) FROM evidence WHERE entity_address = ?",
+            (address,)
+        ).fetchone()[0]
+
+        if evidence_count == 0:
+            return ("UNKNOWN", 0.0)
+        else:
+            # Has evidence but no identity assigned yet
+            return ("UNKNOWN", min(0.29, existing_confidence))
+
+    # Step 2: Check for Arkham/Nansen verification
+    has_verified_source = _has_verified_source(kg, address)
+
+    # Step 3: Check behavioral match
+    has_behavioral = _has_behavioral_match(kg, address)
+
+    # Step 4: Check timezone consistency
+    tz_consistent = _check_timezone_consistency(kg, address)
+
+    # Step 5: Check for cross-cluster conflicts
+    has_conflicts = _check_cross_cluster_conflicts(kg, address)
+
+    # ================================================================
+    # Tier Assignment Logic
+    # ================================================================
+
+    # VERIFIED (90-100%): Arkham/Nansen confirmed + behavioral match
+    if has_verified_source and has_behavioral:
+        score = max(0.90, min(1.0, existing_confidence))
+        return ("VERIFIED", score)
+
+    # VERIFIED (90-95%): Arkham/Nansen confirmed even without behavioral
+    # (Arkham alone is highly reliable)
+    if has_verified_source:
+        score = max(0.90, min(0.95, existing_confidence))
+        return ("VERIFIED", score)
+
+    # UNVERIFIED (30-49%): Any conflicts detected - demote regardless of other signals
+    if has_conflicts:
+        score = max(0.30, min(0.49, existing_confidence * 0.5))
+        return ("UNVERIFIED", score)
+
+    # UNVERIFIED (30-49%): Timezone mismatch detected
+    if tz_consistent is False:  # Explicitly False, not None
+        score = max(0.30, min(0.49, existing_confidence * 0.6))
+        return ("UNVERIFIED", score)
+
+    # VALIDATED (70-89%): Timezone matches + no conflicts
+    if tz_consistent is True and not has_conflicts:
+        score = max(0.70, min(0.89, existing_confidence))
+        return ("VALIDATED", score)
+
+    # CANDIDATE (50-69%): Has identity but can't fully validate
+    # This covers: propagated labels without timezone data, CIO/temporal links
+    # where timezone is unknown
+    score = max(0.50, min(0.69, existing_confidence))
+    return ("CANDIDATE", score)
+
+
+# ============================================================================
 # Knowledge Graph Integration
 # ============================================================================
 
@@ -810,6 +1072,9 @@ Examples:
 
     # Suggest identity for unknown
     python3 label_propagation.py --suggest 0x5678...
+
+    # Show confidence tier for an address
+    python3 label_propagation.py --tier 0x5678...
         """
     )
 
@@ -821,6 +1086,7 @@ Examples:
                         help="Run full propagation from all identified entities")
     parser.add_argument("--check", help="Check what identities an address might inherit")
     parser.add_argument("--suggest", help="Suggest identity for an unknown address")
+    parser.add_argument("--tier", help="Show confidence tier for an address")
     parser.add_argument("--max-hops", type=int, default=MAX_HOPS,
                         help=f"Maximum hops for propagation (default: {MAX_HOPS})")
     parser.add_argument("--min-confidence", type=float, default=MIN_PROPAGATION_CONFIDENCE,
@@ -922,6 +1188,65 @@ Examples:
                     print(f"\nAlternatives:")
                     for alt in suggestion['alternative_identities']:
                         print(f"  - '{alt['identity']}' ({alt['confidence']:.0%})")
+
+        elif args.tier:
+            tier_name, tier_score = calculate_confidence_tier(args.tier, kg)
+
+            # Tier display colors/indicators
+            tier_indicators = {
+                'VERIFIED':   '[++++]',
+                'VALIDATED':  '[+++ ]',
+                'CANDIDATE':  '[++  ]',
+                'UNVERIFIED': '[+   ]',
+                'UNKNOWN':    '[    ]',
+            }
+            indicator = tier_indicators.get(tier_name, '[    ]')
+
+            print(f"\n{'='*60}")
+            print("CONFIDENCE TIER ASSESSMENT")
+            print("="*60)
+            print(f"\nAddress: {args.tier.lower()}")
+
+            # Show identity if available
+            entity = kg.get_entity(args.tier)
+            if entity and entity.get('identity'):
+                print(f"Identity: {entity['identity']}")
+                print(f"Stored confidence: {entity.get('confidence', 0.0):.0%}")
+
+            print(f"\n{indicator} Tier: {tier_name}")
+            print(f"     Score: {tier_score:.0%}")
+
+            # Show tier explanation
+            tier_explanations = {
+                'VERIFIED':   'Confirmed by Arkham/Nansen with behavioral match',
+                'VALIDATED':  'Propagated label with timezone match, no cross-cluster conflicts',
+                'CANDIDATE':  'CIO/temporal link only - needs further validation',
+                'UNVERIFIED': 'Timezone mismatch or cross-cluster conflicts detected',
+                'UNKNOWN':    'No identity signals found',
+            }
+            print(f"     Basis: {tier_explanations.get(tier_name, 'N/A')}")
+
+            # Show signal details
+            print(f"\nSignal Details:")
+            has_verified = _has_verified_source(kg, args.tier)
+            has_behavioral = _has_behavioral_match(kg, args.tier)
+            tz_consistent = _check_timezone_consistency(kg, args.tier)
+            has_conflicts = _check_cross_cluster_conflicts(kg, args.tier)
+
+            tz_display = {True: 'MATCH', False: 'MISMATCH', None: 'Unknown'}
+
+            print(f"  Arkham/Nansen source: {'Yes' if has_verified else 'No'}")
+            print(f"  Behavioral evidence:  {'Yes' if has_behavioral else 'No'}")
+            print(f"  Timezone consistency: {tz_display[tz_consistent]}")
+            print(f"  Cross-cluster conflicts: {'YES (contamination risk)' if has_conflicts else 'None'}")
+
+            # Show tier table for reference
+            print(f"\nTier Reference:")
+            print(f"  VERIFIED   (90-100%): Arkham/Nansen confirmed + behavioral match")
+            print(f"  VALIDATED  (70-89%):  Propagated + timezone match + no conflicts")
+            print(f"  CANDIDATE  (50-69%):  CIO/temporal link only, needs validation")
+            print(f"  UNVERIFIED (30-49%):  Timezone mismatch or conflicts")
+            print(f"  UNKNOWN    (0-29%):   No signals")
 
         else:
             parser.print_help()

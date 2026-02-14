@@ -1105,6 +1105,282 @@ def print_stats(kg: KnowledgeGraph):
 
 
 # ============================================================================
+# Health Check Functions
+# ============================================================================
+
+def check_cross_cluster_correlations(kg: KnowledgeGraph) -> List[dict]:
+    """Alert when temporal correlations exist between addresses in different clusters/identities.
+
+    Detects potential cluster contamination by finding high-confidence temporal
+    correlations between addresses that belong to different clusters or have
+    different identity labels. This is a key signal that label propagation
+    may have incorrectly assigned labels.
+
+    Returns a list of alert dicts with keys:
+        type, severity, source, target, source_label, target_label, confidence, action
+    """
+    conn = kg.connect()
+
+    # Build a mapping of address -> cluster/identity label.
+    # We use identity first (more specific), falling back to cluster name.
+    rows = conn.execute("""
+        SELECT e.address, e.identity, e.cluster_id, c.name as cluster_name
+        FROM entities e
+        LEFT JOIN clusters c ON e.cluster_id = c.id
+        WHERE e.identity IS NOT NULL AND e.identity != ''
+           OR e.cluster_id IS NOT NULL
+    """).fetchall()
+
+    label_map: Dict[str, str] = {}
+    for row in rows:
+        address = row['address']
+        identity = row['identity']
+        cluster_name = row['cluster_name']
+        # Prefer identity over cluster name
+        if identity:
+            label_map[address] = identity
+        elif cluster_name:
+            label_map[address] = cluster_name
+
+    if not label_map:
+        return []
+
+    # Get all temporal_correlation relationships with confidence > 0.8
+    correlations = conn.execute("""
+        SELECT source, target, confidence, evidence
+        FROM relationships
+        WHERE relationship_type = 'temporal_correlation'
+          AND confidence > 0.8
+    """).fetchall()
+
+    alerts: List[dict] = []
+
+    for corr in correlations:
+        source = corr['source']
+        target = corr['target']
+        source_label = label_map.get(source)
+        target_label = label_map.get(target)
+
+        # Skip if either address has no label
+        if not source_label or not target_label:
+            continue
+
+        # Normalize labels for comparison: strip " (propagated)" and
+        # " (cluster member)" suffixes so we compare base identities
+        def normalize_label(label: str) -> str:
+            for suffix in [' (propagated)', ' (cluster member)', ' (unverified)']:
+                if label.endswith(suffix):
+                    label = label[:-len(suffix)]
+            return label.strip()
+
+        source_base = normalize_label(source_label)
+        target_base = normalize_label(target_label)
+
+        if source_base != target_base:
+            confidence = corr['confidence']
+            severity = 'HIGH' if confidence > 0.9 else 'MEDIUM'
+
+            alert = {
+                'type': 'CROSS_CLUSTER_CORRELATION',
+                'severity': severity,
+                'source': source,
+                'target': target,
+                'source_label': source_label,
+                'target_label': target_label,
+                'confidence': confidence,
+                'action': 'Review cluster assignments - likely contamination'
+            }
+            alerts.append(alert)
+
+            # Print warning immediately
+            icon = '!!' if severity == 'HIGH' else '! '
+            print(f"  [{icon}] {severity}: {source[:16]}... ({source_label}) "
+                  f"<-> {target[:16]}... ({target_label}) "
+                  f"[correlation: {confidence:.0%}]")
+
+    return alerts
+
+
+def cluster_health_check(kg: KnowledgeGraph) -> List[dict]:
+    """Run comprehensive cluster health checks.
+
+    Checks performed:
+    1. Timezone consistency per cluster (warn if >3 different timezones)
+    2. Cross-cluster correlations (via check_cross_cluster_correlations)
+    3. Propagation explosion detection (propagated > 10x original labels)
+
+    Returns a list of issue dicts with keys: cluster, issue, detail, severity
+    """
+    conn = kg.connect()
+    issues: List[dict] = []
+
+    # Get all clusters
+    clusters = conn.execute("SELECT * FROM clusters").fetchall()
+
+    if not clusters:
+        print("No clusters found in knowledge graph.")
+        return issues
+
+    print(f"\nChecking {len(clusters)} clusters...\n")
+
+    # ---- Check 1: Timezone consistency per cluster ----
+    print("--- Timezone Consistency ---")
+    for cluster in clusters:
+        cluster_id = cluster['id']
+        cluster_name = cluster['name'] or f'Cluster #{cluster_id}'
+
+        # Get all member addresses and their timezone signals
+        members_with_tz = conn.execute("""
+            SELECT e.address, bf.timezone_signal
+            FROM entities e
+            LEFT JOIN behavioral_fingerprints bf ON e.address = bf.address
+            WHERE e.cluster_id = ?
+        """, (cluster_id,)).fetchall()
+
+        # Collect non-null timezones
+        timezones = set()
+        for m in members_with_tz:
+            tz = m['timezone_signal']
+            if tz:
+                timezones.add(tz)
+
+        member_count = len(members_with_tz)
+
+        if len(timezones) > 3:
+            issue = {
+                'cluster': cluster_name,
+                'issue': 'TIMEZONE_SPREAD',
+                'detail': (f"{len(timezones)} different timezones across "
+                           f"{member_count} members: {', '.join(sorted(timezones))}"),
+                'severity': 'HIGH' if len(timezones) > 5 else 'MEDIUM'
+            }
+            issues.append(issue)
+            print(f"  [!!] {cluster_name}: {issue['detail']}")
+        elif timezones:
+            print(f"  [OK] {cluster_name}: {len(timezones)} timezone(s) "
+                  f"across {member_count} members")
+        else:
+            print(f"  [--] {cluster_name}: No timezone data ({member_count} members)")
+
+    # ---- Check 2: Cross-cluster correlations ----
+    print("\n--- Cross-Cluster Correlations ---")
+    cross_alerts = check_cross_cluster_correlations(kg)
+
+    if cross_alerts:
+        # Group by cluster pair for summary
+        cluster_pairs: Dict[str, int] = {}
+        for alert in cross_alerts:
+            pair_key = ' <-> '.join(sorted([alert['source_label'], alert['target_label']]))
+            cluster_pairs[pair_key] = cluster_pairs.get(pair_key, 0) + 1
+
+        for pair, count in cluster_pairs.items():
+            issue = {
+                'cluster': pair,
+                'issue': 'CROSS_CLUSTER_CORRELATIONS',
+                'detail': f"{count} temporal correlation(s) between clusters",
+                'severity': 'HIGH' if any(
+                    a['severity'] == 'HIGH' for a in cross_alerts
+                    if ' <-> '.join(sorted([a['source_label'], a['target_label']])) == pair
+                ) else 'MEDIUM'
+            }
+            issues.append(issue)
+    else:
+        print("  [OK] No cross-cluster correlations detected")
+
+    # ---- Check 3: Propagation explosion detection ----
+    print("\n--- Propagation Explosion ---")
+
+    # Count original labels (from evidence sources like Arkham, Etherscan, etc.)
+    # vs propagated labels (identity containing "(propagated)" or "(cluster member)")
+    identity_rows = conn.execute("""
+        SELECT identity, COUNT(*) as cnt
+        FROM entities
+        WHERE identity IS NOT NULL AND identity != ''
+        GROUP BY identity
+    """).fetchall()
+
+    # Group by base identity (strip suffixes)
+    base_identity_counts: Dict[str, Dict[str, int]] = {}
+    for row in identity_rows:
+        identity = row['identity']
+        count = row['cnt']
+
+        is_propagated = any(
+            identity.endswith(suffix)
+            for suffix in [' (propagated)', ' (cluster member)', ' (unverified)']
+        )
+
+        # Extract base identity
+        base = identity
+        for suffix in [' (propagated)', ' (cluster member)', ' (unverified)']:
+            if base.endswith(suffix):
+                base = base[:-len(suffix)].strip()
+                break
+
+        if base not in base_identity_counts:
+            base_identity_counts[base] = {'original': 0, 'propagated': 0}
+
+        if is_propagated:
+            base_identity_counts[base]['propagated'] += count
+        else:
+            base_identity_counts[base]['original'] += count
+
+    for base_identity, counts in base_identity_counts.items():
+        original = counts['original']
+        propagated = counts['propagated']
+
+        if original > 0 and propagated > original * 10:
+            issue = {
+                'cluster': base_identity,
+                'issue': 'PROPAGATION_EXPLOSION',
+                'detail': (f"{propagated} propagated labels from "
+                           f"{original} original(s) ({propagated / original:.0f}x ratio)"),
+                'severity': 'HIGH' if propagated > original * 20 else 'MEDIUM'
+            }
+            issues.append(issue)
+            print(f"  [!!] {base_identity}: {issue['detail']}")
+        elif propagated > 0:
+            ratio = propagated / original if original > 0 else float('inf')
+            print(f"  [OK] {base_identity}: {original} original, "
+                  f"{propagated} propagated ({ratio:.1f}x)")
+        # Skip identities with no propagated labels (nothing to check)
+
+    # If no propagation data at all
+    if not any(c['propagated'] > 0 for c in base_identity_counts.values()):
+        print("  [--] No propagated labels found")
+
+    return issues
+
+
+def print_health_report(issues: List[dict]):
+    """Print a summary health report from cluster_health_check results."""
+    print(f"\n{'='*60}")
+    print("HEALTH CHECK SUMMARY")
+    print(f"{'='*60}")
+
+    if not issues:
+        print("\n  All checks passed. No issues detected.")
+        return
+
+    high = [i for i in issues if i.get('severity') == 'HIGH']
+    medium = [i for i in issues if i.get('severity') == 'MEDIUM']
+
+    print(f"\n  Total issues: {len(issues)}")
+    print(f"  HIGH severity: {len(high)}")
+    print(f"  MEDIUM severity: {len(medium)}")
+
+    if high:
+        print(f"\n  HIGH severity issues requiring immediate attention:")
+        for i, issue in enumerate(high, 1):
+            print(f"    {i}. [{issue['issue']}] {issue['cluster']}: {issue['detail']}")
+
+    if medium:
+        print(f"\n  MEDIUM severity issues to review:")
+        for i, issue in enumerate(medium, 1):
+            print(f"    {i}. [{issue['issue']}] {issue['cluster']}: {issue['detail']}")
+
+
+# ============================================================================
 # Main
 # ============================================================================
 
@@ -1143,6 +1419,16 @@ def main():
 
     # stats command
     subparsers.add_parser('stats', help='Show database statistics')
+
+    # health command
+    health_parser = subparsers.add_parser(
+        'health',
+        help='Run cluster health checks (timezone, cross-cluster correlations, propagation)'
+    )
+    health_parser.add_argument(
+        '--json', action='store_true',
+        help='Output results as JSON'
+    )
 
     # import command (for adding more addresses)
     import_parser = subparsers.add_parser('import', help='Import additional addresses')
@@ -1203,6 +1489,17 @@ def main():
         elif args.command == 'stats':
             kg.connect()
             print_stats(kg)
+
+        elif args.command == 'health':
+            kg.connect()
+            print(f"\n{'='*60}")
+            print("CLUSTER HEALTH CHECK")
+            print(f"{'='*60}")
+            issues = cluster_health_check(kg)
+            if args.json:
+                print(json.dumps(issues, indent=2))
+            else:
+                print_health_report(issues)
 
         elif args.command == 'import':
             kg.connect()
