@@ -2,19 +2,27 @@
 
 Current status of lending whale identification effort.
 
-## Summary (2026-02-14, Post-Phase 2)
+## Summary (2026-02-15, Post-Cleanup)
 
 | Metric | Value |
 |--------|-------|
-| Total addresses analyzed | 2,040 |
-| Identified (validated) | 514 (22.3%) |
-| Unidentified | 1,526 (77.7%) |
-| Borrowed amount coverage | 70.6% |
+| Total addresses analyzed | 2,058 |
+| Identified (validated) | 395 (19.2%) |
+| High confidence (>70%) | 223 |
+| Unidentified | 1,663 (80.8%) |
 | Ground truth verified | 210 entities (≥70% confidence, ≥2 sources) |
-| High-confidence pairs identified | 3 (1 institutional pair + 2 temporal clusters) |
+| Temporal correlation pairs | 370 relationships |
+| Change address relationships | 15 (new) |
+| Bot deployer traces | 6 contracts → 6 deployers |
 | ML classifier predictions | 1,301 unknowns classified (102 at >80% confidence) |
+| KG relationships total | 464 |
+| KG evidence items total | 10,208 |
 
-**Note**: Previous 81% identification rate was inflated by clustering contamination. Previous 14.9% was validated-only count before Phase 2 expansion. Current 22.3% (514 entities) represents the clean, consolidated knowledge graph after CSV/KG reconciliation -- 1,353 CSV-only identities were rejected as contaminated CIO clusters. New Phase 2 methods (temporal correlation, counterparty graph, behavioral fingerprinting, bot operator tracing, ML classification) added 208 new identifications.
+**Note**: Current 19.2% (395 entities) represents the clean knowledge graph after aggressive contamination cleanup. Previous 22.3% (514) included propagated labels that were later demoted/stripped during timezone validation and cluster conflict resolution. The 223 high-confidence (>70%) identifications are the most reliable set. New Phase 2.5 additions: 15 change_address relationships, 47 new temporal correlations from top-50 unknown analysis, 6 contract deployer traces.
+
+### Key Change: few.com Link Discovery
+
+Change detector found `0xf42bcfd3...` ($330M, previously "Unknown (cluster conflict)") splits funds to `0xd007058e9b58...` which is identified as **few.com** at 85% confidence. This address also has 12 temporal correlations with other addresses, forming part of a larger cluster.
 
 ## Top Identified Entities
 
@@ -432,20 +440,24 @@ The original CIO clustering algorithm had severe contamination issues:
 
 10. ~~**Confidence Calibration**~~ **DONE** - Ground truth set of 210 entities at 76.4% avg confidence
 11. **Evidence Provenance** - Store full reasoning chain, allow rollback
-12. **Incremental Updates** - Add addresses without full rebuild
-13. **NEW: Automated Pipeline** - `scripts/run_investigation.sh` (631 lines, 7 steps with checkpointing)
+12. ~~**Incremental Updates**~~ **DONE 2026-02-14** - `scripts/incremental_update.py` with diff/apply/investigate modes
+13. ~~**Automated Pipeline**~~ **DONE 2026-02-14** - `scripts/run_investigation.sh` (631 lines, 7 steps with checkpointing)
+14. **NEW (2026-02-15): Change address ingestion** - 15 change_address relationships added to KG
+15. **NEW (2026-02-15): Top-50 temporal analysis** - 47 new temporal correlations, 52 pairs found (26 HIGH confidence)
+16. **NEW (2026-02-15): Contract deployer tracing** - 6 unknown contracts traced to deployers at 85% confidence
 
 ---
 
 ## Target Metrics
 
-| Metric | Phase 1 (Pre-fix) | Phase 2 (Current) | With Nansen | Target |
-|--------|-------------------|-------------------|-------------|--------|
-| Identification rate | 14.9% | **22.3%** | ~52-62% | 70%+ |
-| Borrowed coverage | 50.3% | **70.6%** | ~85% | 85%+ |
-| False positive rate | ~0% | ~0% | ~0% | <5% |
-| Ground truth entities | 0 | **210** | 300+ | 500+ |
-| ML predictions (>80%) | 0 | **102** | N/A | N/A |
+| Metric | Phase 1 (Pre-fix) | Phase 2 (Current) | Post-Cleanup | With Nansen | Target |
+|--------|-------------------|-------------------|--------------|-------------|--------|
+| Identification rate | 14.9% | 22.3% | **19.2%** | ~49-59% | 70%+ |
+| Borrowed coverage | 50.3% | 70.6% | **~70%** | ~85% | 85%+ |
+| False positive rate | ~0% | ~0% | **~0%** | ~0% | <5% |
+| Ground truth entities | 0 | 210 | **210** | 300+ | 500+ |
+| ML predictions (>80%) | 0 | 102 | **102** | N/A | N/A |
+| KG relationships | 0 | 396 | **464** | N/A | N/A |
 
 ---
 
@@ -461,6 +473,22 @@ The original CIO clustering algorithm had severe contamination issues:
 ---
 
 ## Historical Findings
+
+### Phase 2.5 Cleanup & Expansion (2026-02-15)
+
+**Change detector ingestion**: 15 change_address relationships added to KG from v2 analysis. Key discovery: `0xf42bcfd3...` ($330M) has change-address link to `0xd007058e9b58...` (few.com, 85% conf). This address has 12 temporal correlations forming part of a larger cluster.
+
+**Top-50 temporal analysis**: Analyzed 1,225 address pairs from the 50 largest unknown borrowers ($10.4B total). Found 52 correlated pairs (26 HIGH ≥85%, 26 MEDIUM 70-84%). Most connected hub addresses (6 correlations each): `0x4ed0b4...` and `0x94def8...`.
+
+**Contract deployer tracing**: 6 additional unknown contracts ($868M total) traced to unique deployers at 85% confidence:
+- `0xe84a06...` ($206M) → deployer `0x5add41...`
+- `0x3edc84...` ($175M) → deployer `0x6f7318...`
+- `0xa923b1...` ($128M) → deployer `0x362208...`
+- `0x7ee293...` ($125M) → deployer `0x266bf5...`
+- `0x1cebd1...` ($121M) → deployer `0x6859da...`
+- `0x068527...` ($112M) → deployer `0xa8c180...`
+
+**Label propagation re-run**: 0 new labels applied (timezone gate rejected 135 candidates). No new contamination per health check. Conservative behavior is correct given contamination history.
 
 ### Phase 2 Temporal Clusters (2026-02-14)
 
@@ -567,4 +595,4 @@ Scripts are free with 40-50% combined hit rate. WebSearch costs tokens with 10% 
 
 ## Last Updated
 
-2026-02-14 — Phase 2 complete: 514 identified (22.3%), 70.6% borrowed coverage, 2 temporal clusters ($1.03B), ML classifier (F1=0.833), 210 ground truth entities, automated pipeline
+2026-02-15 — Post-cleanup: 395 identified (19.2%), 223 high-confidence. Ingested 15 change_address leads (few.com link found), traced 6 contract deployers, added 47 new temporal correlations from top-50 unknowns. Label propagation re-run (0 new labels, timezone gate working correctly). No new contamination per health check.
