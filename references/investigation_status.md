@@ -2,23 +2,23 @@
 
 Current status of lending whale identification effort.
 
-## Summary (2026-02-15, Post-Cleanup)
+## Summary (2026-02-16)
 
 | Metric | Value |
 |--------|-------|
-| Total addresses analyzed | 2,058 |
-| Identified (validated) | 395 (19.2%) |
-| High confidence (>70%) | 223 |
-| Unidentified | 1,663 (80.8%) |
+| Total addresses analyzed | 2,081 |
+| Identified (validated) | 464 (22.3%) |
+| High confidence (>70%) | 273 |
+| Unidentified | 1,617 (77.7%) |
 | Ground truth verified | 210 entities (≥70% confidence, ≥2 sources) |
-| Temporal correlation pairs | 370 relationships |
-| Change address relationships | 15 (new) |
+| Temporal correlation pairs | 394 relationships |
+| Change address relationships | 15 |
 | Bot deployer traces | 6 contracts → 6 deployers |
-| ML classifier predictions | 1,301 unknowns classified (102 at >80% confidence) |
-| KG relationships total | 464 |
-| KG evidence items total | 10,208 |
+| KG relationships total | 488+ |
+| KG evidence items total | 14,052 |
+| BD contact list | 13 actionable entities ($1.93B) |
 
-**Note**: Current 19.2% (395 entities) represents the clean knowledge graph after aggressive contamination cleanup. Previous 22.3% (514) included propagated labels that were later demoted/stripped during timezone validation and cluster conflict resolution. The 223 high-confidence (>70%) identifications are the most reliable set. New Phase 2.5 additions: 15 change_address relationships, 47 new temporal correlations from top-50 unknown analysis, 6 contract deployer traces.
+**Note**: Identification rate recovered to 22.3% (464 entities) after resolving the few.com cluster conflict and running new temporal correlations on top 50 unknowns. Key session results: few.com cluster expanded to 17 addresses ($5B cumulative), 24 new temporal correlations ingested, 10 new labels propagated, label_propagation.py updated with change_address (0.80) and deployed_by (0.90) weights, 4 misclassified "contract" types corrected to EOA.
 
 ### Key Change: few.com Link Discovery
 
@@ -450,14 +450,14 @@ The original CIO clustering algorithm had severe contamination issues:
 
 ## Target Metrics
 
-| Metric | Phase 1 (Pre-fix) | Phase 2 (Current) | Post-Cleanup | With Nansen | Target |
-|--------|-------------------|-------------------|--------------|-------------|--------|
-| Identification rate | 14.9% | 22.3% | **19.2%** | ~49-59% | 70%+ |
-| Borrowed coverage | 50.3% | 70.6% | **~70%** | ~85% | 85%+ |
-| False positive rate | ~0% | ~0% | **~0%** | ~0% | <5% |
-| Ground truth entities | 0 | 210 | **210** | 300+ | 500+ |
-| ML predictions (>80%) | 0 | 102 | **102** | N/A | N/A |
-| KG relationships | 0 | 396 | **464** | N/A | N/A |
+| Metric | Phase 1 (Pre-fix) | Phase 2 | Post-Cleanup | Phase 3 (Current) | With Nansen | Target |
+|--------|-------------------|---------|--------------|-------------------|-------------|--------|
+| Identification rate | 14.9% | 22.3% | 19.2% | **22.3%** | ~49-59% | 70%+ |
+| Borrowed coverage | 50.3% | 70.6% | ~70% | **~70%** | ~85% | 85%+ |
+| False positive rate | ~0% | ~0% | ~0% | **~0%** | ~0% | <5% |
+| High confidence (>70%) | 0 | 223 | 223 | **273** | 400+ | 500+ |
+| KG relationships | 0 | 396 | 464 | **488+** | N/A | N/A |
+| BD contacts | 0 | 0 | 0 | **13 ($1.93B)** | 30+ | 50+ |
 
 ---
 
@@ -595,4 +595,12 @@ Scripts are free with 40-50% combined hit rate. WebSearch costs tokens with 10% 
 
 ## Last Updated
 
-2026-02-15 — Post-cleanup: 395 identified (19.2%), 223 high-confidence. Ingested 15 change_address leads (few.com link found), traced 6 contract deployers, added 47 new temporal correlations from top-50 unknowns. Label propagation re-run (0 new labels, timezone gate working correctly). No new contamination per health check.
+2026-02-16 — 464 identified (22.3%), 273 high-confidence. Session work:
+- Resolved few.com cluster conflict: 17 addresses ($5B cumulative) identified via change_address link + temporal propagation
+- Added change_address (0.80) and deployed_by (0.90) weights to label_propagation.py
+- Ran temporal correlation on top 50 unknowns: 63 pairs found (30 HIGH ≥85%), 24 new relationships ingested
+- Full label propagation: 10 new labels applied
+- Fixed 4 misclassified contract types → EOA
+- BD contact list: 13 actionable entities ($1.93B) across 4 tiers
+- Health check: No new contamination, propagation explosion flagged for few.com (expected, 14:1 ratio)
+- Committed cleanup: removed 13 ineffective scripts/references (-9,467 lines)

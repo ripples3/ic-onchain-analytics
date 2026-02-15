@@ -73,6 +73,8 @@ RELATIONSHIP_WEIGHTS = {
     'funded_by': 0.50,          # Funding relationship (reduced from 0.75)
     'delegated_to': 0.70,       # Governance delegation
     'traded_with': 0.40,        # Just transacted (weak)
+    'change_address': 0.80,     # Change address pattern (same operator splitting funds)
+    'deployed_by': 0.90,        # Contract deployer (very strong - same operator)
 }
 
 # Minimum confidence to continue propagation
