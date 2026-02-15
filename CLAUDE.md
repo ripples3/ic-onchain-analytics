@@ -14,7 +14,7 @@ dune-analytics/
 │   ├── cio_detector.py        # Common Input Ownership clustering (94.85%)
 │   ├── governance_scraper.py  # Snapshot voting analysis
 │   ├── verify_identity.py     # Multi-source verification
-│   └── [17 more scripts]      # See scripts/README.md
+│   └── [19 more scripts]      # See scripts/README.md
 ├── data/
 │   └── knowledge_graph.db     # SQLite knowledge graph database
 ├── references/
@@ -111,11 +111,7 @@ left join prices p on s.address = p.token_address and s.blockchain = p.blockchai
 | `temporal_correlation.py` | 25% | **85%** | **85%** | Use when partners exist |
 | `cio_detector.py` | ❌ 0% | ❌ 0% | **80%** | Skip for sophisticated |
 | `counterparty_graph.py` | ❌ 0% | ❌ 0% | 57% | Skip for sophisticated |
-| `ens_resolver.py` | ❌ 0% | ❌ 0% | 40% | Skip for sophisticated |
-| `whale_tracker.py` | ❌ 0% | ❌ 0% | 20% | Skip for sophisticated |
 | `governance_scraper.py` | ❌ 0% | 50% | 70% | Use when active |
-| `nft_tracker.py` | ❌ 0% | ❌ 0% | ❌ 0% | Skip for DeFi |
-| `bridge_tracker.py` | ❌ 0% | ❌ 0% | ❌ 0% | Skip for DeFi |
 
 ### Smart Investigation Routing (NEW)
 
@@ -132,7 +128,7 @@ python3 scripts/smart_investigator.py addresses.csv -o results.csv
 
 **Routing logic:**
 1. **Contracts** → bot_operator_tracer (100%) + behavioral + funding
-2. **$500M+ EOAs** → behavioral + funding + temporal (skip CIO/counterparty/ENS)
+2. **$500M+ EOAs** → behavioral + funding + temporal (skip CIO/counterparty)
 3. **Standard EOAs** → full pipeline
 
 ### Phase 2 Results (2026-02-14)
@@ -326,7 +322,7 @@ python3 scripts/verify_identity.py enriched.csv -o verified.csv --report
    └── No → continue
 
 2. CHECK SOPHISTICATION ($500M+)
-   └── Yes → Skip CIO/counterparty/ENS/whale_tracker (0% hit rate)
+   └── Yes → Skip CIO/counterparty (0% hit rate)
    └── No → continue with full pipeline
 
 3. RUN UNIVERSAL METHODS (always work)
@@ -506,8 +502,6 @@ Discovered during investigation:
 
 **Prevention**: Keep BUG_REPORT.md in sync. Tests should fail when bug exists, pass when fixed.
 
-See `references/bug_fix_retrospective.md` for full analysis.
-
 ### 2026-02-05: Skills = Methodology, References = Data
 
 Skills became bloated with addresses. Now: methodology in skills, changing data in references.
@@ -519,12 +513,7 @@ Skills became bloated with addresses. Now: methodology in skills, changing data 
 **Results**:
 - Temporal correlation: 85.8% avg confidence (best method)
 - CIO clustering: 80.2% avg confidence (second best)
-- NFT tracker: **0/100 hit rate** (complete failure)
-- Bridge tracker: **0/100 hit rate** (complete failure)
-- Change detector: **0/100 hit rate** (not applicable)
-- DEX analyzer: **0/100 trading activity** (position holders, not traders)
-
-**Root cause**: Scripts designed for general wallets, not DeFi lending whales specifically.
+- NFT/Bridge/Change/DEX methods: **0/100 hit rate** (removed — not applicable to DeFi lending whales)
 
 **Key learnings**:
 
@@ -544,11 +533,7 @@ Skills became bloated with addresses. Now: methodology in skills, changing data 
 3. PROPAGATE: Use hub identities to label spoke addresses
 ```
 
-**Scripts to skip for DeFi whale research**: `nft_tracker.py`, `bridge_tracker.py`, `change_detector.py`
-
-**Scripts that work**: `temporal_correlation.py`, `cio_detector.py`, `trace_funding.py`, `behavioral_fingerprint.py`
-
-See `references/phase2_retrospective.md` for full analysis.
+**Active scripts**: `temporal_correlation.py`, `cio_detector.py`, `trace_funding.py`, `behavioral_fingerprint.py`, `bot_operator_tracer.py`, `counterparty_graph.py`, `label_propagation.py`
 
 ## Resources
 
