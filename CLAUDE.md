@@ -218,9 +218,11 @@ When you identify one wallet, automatically propagate that identity through the 
 | Relationship | Weight | Rationale |
 |--------------|--------|-----------|
 | same_entity | 0.95 | Verified same entity |
+| deployed_by | 0.90 | Contract deployer (same operator) |
 | same_cluster | 0.90 | Detected cluster membership |
 | shared_deposits | 0.90 | Same exchange user |
 | temporal_correlation | 0.85 | Same operator timing |
+| change_address | 0.80 | Change address pattern (same operator splitting funds) |
 | counterparty_overlap | 0.80 | Similar counterparties |
 | funded_by | 0.75 | Funding relationship |
 
@@ -534,6 +536,48 @@ Skills became bloated with addresses. Now: methodology in skills, changing data 
 ```
 
 **Active scripts**: `temporal_correlation.py`, `cio_detector.py`, `trace_funding.py`, `behavioral_fingerprint.py`, `bot_operator_tracer.py`, `counterparty_graph.py`, `label_propagation.py`
+
+### 2026-02-16: Phase 3 — Free On-Chain Methods Exhausted
+
+**Context**: Ran full propagation, temporal correlation on top 50 unknowns, contract investigation, change detector ingestion.
+
+**Results**:
+- 464/2,081 identified (22.3%) — up from 21.6%
+- Full propagation: 0 new labels (graph saturated)
+- Temporal correlation on top 50: 63 pairs found, 24 new relationships, 10 new propagated labels
+- Contract investigation: 0 new IDs (4/6 "contracts" were misclassified EOAs)
+- few.com cluster: 17 addresses linked via change_address + temporal
+
+**Critical learning — "Identified" is misleading for BD:**
+
+| Tier | Count | Value | BD Usability |
+|------|-------|-------|-------------|
+| Named entities (contactable) | ~100 | $94B | Direct outreach possible |
+| ENS names (pseudonymous) | ~200 | $15B | Need OSINT to find real identity |
+| Generic behavioral labels | ~80 | $26B | Region/timezone only |
+| Propagated labels | ~73 | $21B | Low confidence, inherited |
+
+**Methods exhausted** (diminishing returns on all free tools):
+- Label propagation: Saturated — 0 new labels on full run
+- Temporal correlation: Finds connections, not identities
+- CIO/counterparty/ENS/governance: 0% on sophisticated ($500M+) whales
+- NFT/bridge/DEX: 0% hit rate on DeFi lending whales
+- Profile classifier: Misclassified 4/6 EOAs as contracts — needs accuracy audit
+
+**$100M-500M bracket is the real gap**: 48% identified (111 unknowns). $1B+ and $500M-1B are ~90% covered.
+
+**Cluster conflict resolution pattern**: When address has competing propagated labels, use:
+1. Direct evidence (change_address, deployer) > multi-hop propagation
+2. Behavioral timezone as tiebreaker
+3. Document conflict and resolution in evidence table
+
+**Next lever**: Nansen API ($49/mo) — single highest-ROI action. Would query all 1,549 isolated unknowns in one batch.
+
+### 2026-02-16: KG Schema Gotchas
+
+- Evidence table uses `created_at` column, NOT `timestamp`
+- `temporal_correlation.py` output CSV columns: `addr1`, `addr2` (not `address_1`, `address_2`)
+- Entity update + evidence insert should be in single transaction (rollback risk)
 
 ## Resources
 

@@ -1,9 +1,26 @@
 # Whale Investigation — Next Steps
 
 **Last updated:** 2026-02-16
-**Current state:** 524/2,328 rows identified (22.5%), $153B/$221B borrowed (69.1%)
-**Remaining:** 1,659 unknown addresses, ~$64B borrowed
+**Current state:** 464/2,081 identified (22.3%), $175B/$221B borrowed (79.0%)
+**Remaining:** 1,617 unknown addresses, ~$46B borrowed
 **Isolated unknowns:** 1,549 (no graph edges — local scripts exhausted)
+
+## Honest BD Assessment
+
+Not all "identified" addresses are actionable for BD outreach:
+
+| Tier | Addresses | Borrowed | Notes |
+|------|-----------|----------|-------|
+| Named entities (contactable) | ~100 | $94B | Real companies/persons — Abraxas, Trend Research, Justin Sun, etc. |
+| ENS names (pseudonymous) | ~200 | $15B | Can message via Blockscan Chat, but no real-world identity |
+| Generic behavioral labels | ~80 | $26B | "Asia-Pacific VC", "European Fund" — region only |
+| Propagated labels | ~73 | $21B | Inherited via graph, low confidence (35-74%) |
+| **Total "identified"** | **~453** | **$156B** | |
+| Unknown | ~1,617 | $46B | No graph edges, need external data |
+
+**BD contact list**: 13 entities across 4 tiers, $1.93B total. Only Tier 1 (3 entities, $369M) is directly contactable today.
+
+**Key gap**: $100M-500M bracket — 48% identified (111 unknowns). This is where most BD-actionable entities live.
 
 ---
 
@@ -150,13 +167,20 @@ cd ~/Projects/IndexCoop/dune-analytics
 - [x] Removed 13 dead scripts and 12 orphaned docs
 - [x] Updated CLAUDE.md, README.md, on-chain-query skill
 - [x] Regenerated CSV: 503 → 524 identified rows (22.5%)
+- [x] **few.com cluster resolved**: Set to "few.com (change_address linked)" at 55%, propagated to 17 addresses ($5.0B)
+- [x] Added `change_address` (0.80) and `deployed_by` (0.90) weights to label_propagation.py
+- [x] Ran full propagation post-cleanup: confirmed saturated (0 new labels)
+- [x] Fixed 4 misclassified EOAs in KG (were labeled as contracts)
+- [x] Ran temporal correlation on top 50 unknowns: 63 pairs, 24 new relationships, 10 new labels
+- [x] Updated investigation_status.md with Phase 3 numbers
+- [x] Completed honest BD value assessment with identity quality tiers
 
 ## Improvements Needed
 
 - [ ] **Super-cluster validation:** Cross-cluster temporal correlations (90-98%) suggest "Asia-Pacific VC", "Atlantic/Brazil DeFi Fund", "European Institutional Fund" may be the SAME operator — needs manual validation
 - [ ] **Pattern Match cleanup:** 888 evidence items at 1.6% hit rate — audit entity_templates in pattern_matcher.py, tighten or remove low-signal templates
-- [ ] **few.com link resolution:** `0xf42bcfd3...` ($330M) has both change_address link to few.com (85%) and propagated "Asia-Pacific VC" label — needs manual resolution
 - [ ] **Dead-end graph components:** 25 components with 56 addresses ($2.7B) have no seed identity — only external data (Nansen/Arkham) can unlock these
-- [ ] **27 unknowns adjacent to identified:** Label propagation should have caught these — investigate why it didn't
+- [ ] **Profile classifier accuracy:** Misclassified 4/6 EOAs as contracts — audit `is_contract` check in profile_classifier.py
 - [ ] **Refresh Dune data:** CSV is from 2026-02-13 — borrowed amounts may have changed
 - [ ] **Script consolidation:** `enrich_addresses.py` still tries to import deleted `cluster_addresses.py` (falls back gracefully, but should clean the import)
+- [ ] **ENS→social pipeline:** 202 ENS names have no real-world identity — build automated OSINT flow (DeBank profiles, Etherscan comments, Twitter search)
