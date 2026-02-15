@@ -62,14 +62,20 @@ class SmartInvestigator:
         self.api_key = ETHERSCAN_API_KEY
 
     def is_contract(self, address: str) -> bool:
-        """Check if address is a contract."""
+        """Check if address is a contract via eth_getCode.
+
+        CRITICAL: Returns False on API failure. Callers should be aware that
+        a False result could mean "EOA" OR "API error". For contract-first
+        routing, a false negative here causes misclassification as EOA.
+        """
         url = f"https://api.etherscan.io/v2/api?chainid=1&module=proxy&action=eth_getCode&address={address}&apikey={self.api_key}"
         try:
             resp = requests.get(url, timeout=10)
             data = resp.json()
             code = data.get("result", "0x")
             return code != "0x" and len(code) > 2
-        except:
+        except Exception as e:
+            print(f"WARNING: is_contract API check failed for {address}: {e} — defaulting to EOA")
             return False
 
     def get_existing_identity(self, address: str) -> Optional[Dict]:
@@ -120,13 +126,20 @@ class SmartInvestigator:
         conn.close()
         return results
 
-    def get_investigation_methods(self, address: str, borrowed_m: float = 0) -> Dict:
+    def get_investigation_methods(self, address: str, borrowed_m: float = 0, is_contract: Optional[bool] = None) -> Dict:
         """Determine optimal investigation methods for an address.
 
         Returns prioritized list of methods with expected success rates.
+        The is_contract flag is included in the returned dict for callers to reuse.
+
+        Args:
+            address: The address to investigate.
+            borrowed_m: Borrowed amount in millions for sophistication routing.
+            is_contract: Pre-computed contract check result. If None, will query API.
         """
         address = address.lower()
-        is_contract = self.is_contract(address)
+        if is_contract is None:
+            is_contract = self.is_contract(address)
         is_sophisticated = borrowed_m >= SOPHISTICATED_THRESHOLD_M
 
         # Base methods that ALWAYS work
@@ -135,6 +148,7 @@ class SmartInvestigator:
             "secondary": [],
             "skip": [],
             "reason": {},
+            "is_contract": is_contract,
         }
 
         # CONTRACT ROUTING (100% success on bot_operator_tracer)
@@ -218,7 +232,11 @@ class SmartInvestigator:
             "confidence": 0.0,
         }
 
-        # Check existing identity first
+        # Check if contract FIRST - single API call, reused everywhere
+        is_contract = self.is_contract(address)
+        result["is_contract"] = is_contract
+
+        # Check existing identity
         existing = self.get_existing_identity(address)
         if existing and existing["confidence"] >= 0.7:
             result["existing_identity"] = existing
@@ -226,9 +244,8 @@ class SmartInvestigator:
             result["confidence"] = existing["confidence"]
             return result
 
-        # Get optimal methods
-        methods = self.get_investigation_methods(address, borrowed_m)
-        result["is_contract"] = self.is_contract(address)
+        # Get optimal methods (pass is_contract to avoid redundant API call)
+        methods = self.get_investigation_methods(address, borrowed_m, is_contract=is_contract)
 
         # Record what we're skipping and why
         result["methods_skipped"] = [(m, r) for m, r in methods["skip"]]

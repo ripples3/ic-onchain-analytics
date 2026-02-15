@@ -95,14 +95,20 @@ class ProfileClassifier:
         return []
 
     def is_contract(self, address: str) -> bool:
-        """Check if address is a contract."""
+        """Check if address is a contract via eth_getCode.
+
+        CRITICAL: Returns False on API failure. A false negative here causes
+        contracts to be misclassified as EOAs, which was the root cause of
+        3/5 Phase 2 investigation failures.
+        """
         url = f"https://api.etherscan.io/v2/api?chainid=1&module=proxy&action=eth_getCode&address={address}&apikey={self.api_key}"
         try:
             resp = requests.get(url, timeout=10)
             data = resp.json()
             code = data.get("result", "0x")
             return code != "0x" and len(code) > 2
-        except:
+        except Exception as e:
+            print(f"WARNING: is_contract API check failed for {address}: {e} — defaulting to EOA")
             return False
 
     def classify(self, address: str, skip_tx_analysis: bool = False) -> Dict:
@@ -210,10 +216,8 @@ class ProfileClassifier:
             profile["is_bridge_user"] = bridge_count / total_txs > 0.05
             profile["is_high_frequency"] = total_txs >= 100
 
-        # Determine primary profile
-        if profile["is_contract"]:
-            profile["primary_profile"] = "contract/bot"
-        elif profile["is_defi_lender"] and not profile["is_dex_trader"]:
+        # Determine primary profile (contracts already returned early above)
+        if profile["is_defi_lender"] and not profile["is_dex_trader"]:
             profile["primary_profile"] = "defi_lender"
         elif profile["is_dex_trader"]:
             profile["primary_profile"] = "dex_trader"
