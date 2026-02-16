@@ -27,6 +27,7 @@ data/intermediate/
 # Data - KG database (binary, changes constantly)
 data/kg/*.db
 data/kg/*.db-*
+data/knowledge_graph.db
 
 # Data - final exports (COMMITTED - small, curated for consumption)
 # data/final/ is tracked
