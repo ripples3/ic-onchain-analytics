@@ -258,6 +258,8 @@ class InvestigationClient:
         """Compute EIP-55 checksum address using keccak256."""
         import subprocess
         addr = address.lower().replace('0x', '')
+        if not re.match(r'^[a-fA-F0-9]{40}$', addr):
+            raise ValueError(f"Invalid Ethereum address: {address}")
 
         # Use cast for reliable checksum (requires foundry)
         try:

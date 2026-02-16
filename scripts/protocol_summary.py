@@ -22,6 +22,7 @@ import argparse
 import csv
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -85,8 +86,12 @@ class ProtocolSummary:
             rpc = os.getenv(config["rpc_env"], DEFAULT_RPCS.get(chain, ""))
             self.rpcs[chain] = rpc
 
+    _ADDRESS_RE = re.compile(r'^0x[a-fA-F0-9]{40}$')
+
     def _call_contract(self, chain: str, contract: str, signature: str, args: list = None) -> Optional[str]:
         """Make a contract call using cast."""
+        if not self._ADDRESS_RE.match(contract):
+            raise ValueError(f"Invalid contract address: {contract}")
         rpc = self.rpcs.get(chain)
         if not rpc:
             return None

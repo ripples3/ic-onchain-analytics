@@ -39,6 +39,7 @@ import argparse
 import csv
 import json
 import os
+import re
 import sqlite3
 import sys
 import time
@@ -206,10 +207,35 @@ class KnowledgeGraph:
         self.initialize()
         print("Database reset complete")
 
+    # ---- Validation ----
+
+    _VALID_ENTITY_COLUMNS = frozenset({
+        'identity', 'entity_type', 'confidence', 'cluster_id',
+        'contract_type', 'ens_name', 'notes',
+    })
+
+    _VALID_FINGERPRINT_COLUMNS = frozenset({
+        'timezone_signal', 'gas_strategy', 'trading_style',
+        'protocol_preferences', 'activity_pattern', 'risk_profile',
+    })
+
+    _ADDRESS_RE = re.compile(r'^0x[a-fA-F0-9]{40}$')
+
+    def _validate_columns(self, kwargs: dict, valid: frozenset):
+        invalid = set(kwargs.keys()) - valid
+        if invalid:
+            raise ValueError(f"Invalid column names: {invalid}")
+
+    def _validate_address(self, address: str):
+        if not self._ADDRESS_RE.match(address):
+            raise ValueError(f"Invalid Ethereum address: {address}")
+
     # ---- Entity Operations ----
 
     def add_entity(self, address: str, **kwargs) -> bool:
         """Add or update an entity."""
+        self._validate_address(address)
+        self._validate_columns(kwargs, self._VALID_ENTITY_COLUMNS)
         conn = self.connect()
         address = address.lower()
 
@@ -288,7 +314,7 @@ class KnowledgeGraph:
         if conditions:
             query += " WHERE " + " AND ".join(conditions)
 
-        query += f" ORDER BY confidence DESC LIMIT {limit}"
+        query += f" ORDER BY confidence DESC LIMIT {int(limit)}"
 
         rows = conn.execute(query, values).fetchall()
         return [dict(row) for row in rows]
@@ -504,6 +530,8 @@ class KnowledgeGraph:
 
     def set_fingerprint(self, address: str, **kwargs):
         """Set or update behavioral fingerprint."""
+        self._validate_address(address)
+        self._validate_columns(kwargs, self._VALID_FINGERPRINT_COLUMNS)
         conn = self.connect()
         address = address.lower()
         now = datetime.now(timezone.utc).isoformat()

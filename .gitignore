@@ -40,3 +40,6 @@ data/kg/*.db-*
 /*.csv
 /*.json
 /*.txt
+
+# Claude Code local settings (may contain API keys in permission strings)
+.claude/settings.local.json
