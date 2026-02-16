@@ -456,6 +456,23 @@
     margin-right: 4px;
   }
 
+  .src-tag {
+    display: inline-block;
+    padding: 1px 5px;
+    background: rgba(98, 113, 113, 0.15);
+    border: 1px solid rgba(98, 113, 113, 0.2);
+    border-radius: 3px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    cursor: help;
+    transition: all 0.2s ease;
+  }
+  .src-tag:hover {
+    background: rgba(0, 190, 194, 0.12);
+    border-color: rgba(0, 190, 194, 0.3);
+    color: var(--accent-bright);
+  }
+
   .table-footer {
     display: flex;
     justify-content: space-between;
@@ -692,16 +709,6 @@
         <span id="bd-page-info" style="padding:4px 8px"></span>
         <button class="page-btn" id="bd-next" onclick="bdPage(1)">Next</button>
       </div>
-    </div>
-    <div class="note" style="margin-top:12px;font-size:11px;line-height:1.7">
-      <strong>Source key:</strong>
-      CIO = Common Input Ownership clustering &middot;
-      OSINT = Open Source Intelligence &middot;
-      Behavioral = Timezone/activity fingerprinting &middot;
-      Propagation = Label inherited from related address &middot;
-      FundingAnalysis = Funding chain trace &middot;
-      Pattern Match = Entity template matching &middot;
-      knowledge_graph = Direct KG evidence
     </div>
   </div>
 </div>
@@ -1003,6 +1010,26 @@ function renderBdTable() {
       contactHtml = '<span class="contact-pill">' + tierLabel + '</span>' + contact.replace(/</g,'&lt;');
     }
     var src = r[6];
+    var srcTip = {
+      'CIO':'Common Input Ownership clustering',
+      'OSINT':'Open Source Intelligence',
+      'Behavioral':'Timezone & activity fingerprinting',
+      'Propagation':'Label inherited from related address',
+      'FundingAnalysis':'Funding chain trace',
+      'Pattern Match':'Entity template matching',
+      'knowledge_graph':'Direct KG evidence',
+      'safe_investigation':'Safe multisig signer analysis',
+      'strategy_fingerprint':'DeFi strategy pattern matching',
+      'dune_custody':'Dune Analytics custody labels',
+      'governance_snapshot':'Snapshot governance voting',
+      'outflow_analysis':'Outflow destination analysis',
+      'ens':'ENS reverse resolution'
+    };
+    var srcHtml = src.split(',').map(function(s) {
+      s = s.trim();
+      var tip = srcTip[s] || s;
+      return '<span class="src-tag" title="' + tip + '">' + s + '</span>';
+    }).join(' ');
     html += '<tr' + cls + '>' +
       '<td title="' + (notes||'').replace(/"/g,'&quot;').replace(/</g,'&lt;') + '">' + r[1] + '</td>' +
       '<td><a class="addr-link" href="https://etherscan.io/address/' + r[0] + '" target="_blank" rel="noopener" title="' + r[0] + '">' + trunc(r[0]) + '</a></td>' +
@@ -1010,7 +1037,7 @@ function renderBdTable() {
       '<td>' + confBadge(r[2]) + '</td>' +
       '<td>' + typeBadge(r[3]) + '</td>' +
       '<td style="font-size:11px;color:var(--text-tertiary)">' + (r[5]||'-') + '</td>' +
-      '<td style="font-size:11px">' + src + '</td>' +
+      '<td style="font-size:11px">' + srcHtml + '</td>' +
       '<td style="font-size:11px">' + contactHtml + '</td></tr>';
   }
   document.getElementById('bd-tbody').innerHTML = html;
