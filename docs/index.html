@@ -826,8 +826,17 @@ function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.nav button').forEach(b => { if (b.getAttribute('onclick').indexOf("'" + id + "'") !== -1) b.classList.add('active'); });
+  history.replaceState(null, '', '#' + id);
 }
+
+// Load page from URL hash on first visit
+(function() {
+  var hash = location.hash.replace('#', '');
+  var valid = ['overview', 'contacts', 'tools'];
+  if (hash && valid.indexOf(hash) !== -1) showPage(hash);
+})();
 
 // Chart defaults - IC themed
 Chart.defaults.color = '#627171';
