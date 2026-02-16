@@ -466,11 +466,34 @@
     color: var(--text-secondary);
     cursor: help;
     transition: all 0.2s ease;
+    position: relative;
   }
   .src-tag:hover {
     background: rgba(0, 190, 194, 0.12);
     border-color: rgba(0, 190, 194, 0.3);
     color: var(--accent-bright);
+  }
+  .src-tag::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 190, 194, 0.3);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--accent-bright);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .src-tag:hover::after {
+    opacity: 1;
   }
 
   .table-footer {
@@ -1028,7 +1051,7 @@ function renderBdTable() {
     var srcHtml = src.split(',').map(function(s) {
       s = s.trim();
       var tip = srcTip[s] || s;
-      return '<span class="src-tag" title="' + tip + '">' + s + '</span>';
+      return '<span class="src-tag" data-tip="' + tip + '">' + s + '</span>';
     }).join(' ');
     html += '<tr' + cls + '>' +
       '<td title="' + (notes||'').replace(/"/g,'&quot;').replace(/</g,'&lt;') + '">' + r[1] + '</td>' +
