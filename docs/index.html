@@ -567,9 +567,9 @@
       <div class="card-sub">Top lending borrowers ($10M+)</div>
     </div>
     <div class="card">
-      <div class="card-label">Total Borrowed</div>
+      <div class="card-label">Total Borrowed (cumul.)</div>
       <div class="card-value accent">$221B</div>
-      <div class="card-sub">Across Aave, Compound, Spark, Morpho</div>
+      <div class="card-sub">Cumulative volume across Aave, Compound, Spark, Morpho</div>
     </div>
     <div class="card">
       <div class="card-label">Identified</div>
@@ -661,7 +661,7 @@
     <h2>Top Identified Entities</h2>
     <table>
       <thead>
-        <tr><th>Entity</th><th>Addresses</th><th>Borrowed</th><th>Confidence</th><th>Status</th></tr>
+        <tr><th>Entity</th><th>Addresses</th><th>Borrowed (cumul.)</th><th>Confidence</th><th>Status</th></tr>
       </thead>
       <tbody>
         <tr><td>Trend Research (Jack Yi / LD Capital)</td><td>54</td><td>$25.8B</td><td><span class="badge badge-green">75%</span></td><td><span class="badge badge-red">Closed</span></td></tr>
@@ -715,7 +715,7 @@
         <tr>
           <th class="sort-header" onclick="sortBd(0, this)">Entity</th>
           <th>Address</th>
-          <th class="sort-header desc" onclick="sortBd(1, this)">Borrowed</th>
+          <th class="sort-header desc" onclick="sortBd(1, this)"><span data-tip="Total cumulative borrow volume, not current outstanding debt" class="src-tag" style="background:none;border:none;font-size:inherit;color:inherit;padding:0;font-weight:inherit">Borrowed (cumul.) &#9432;</span></th>
           <th class="sort-header" onclick="sortBd(2, this)">Confidence</th>
           <th class="sort-header" onclick="sortBd(3, this)">Type</th>
           <th>Protocols</th>
@@ -1009,7 +1009,7 @@ function renderBdStats() {
   var uniqueIds = new Set(d.map(function(r){ return r[1]; })).size;
   document.getElementById('bd-stats').innerHTML =
     '<div class="card"><div class="card-label">Identified Addresses</div><div class="card-value accent">' + total + '</div><div class="card-sub">' + uniqueIds + ' unique entities</div></div>' +
-    '<div class="card"><div class="card-label">Total Borrowed</div><div class="card-value green">$' + (borrowed/1000).toFixed(0) + 'B</div><div class="card-sub">Across all identified</div></div>' +
+    '<div class="card"><div class="card-label">Total Borrowed (cumul.)</div><div class="card-value green">$' + (borrowed/1000).toFixed(0) + 'B</div><div class="card-sub">Cumulative volume, all identified</div></div>' +
     '<div class="card"><div class="card-label">High Confidence (70%+)</div><div class="card-value blue">' + highConf + '</div><div class="card-sub">Validated identities</div></div>' +
     '<div class="card"><div class="card-label">Funds / Institutions</div><div class="card-value">' + funds + '</div><div class="card-sub">Entity type: fund</div></div>';
 }
