@@ -704,7 +704,7 @@
     <button class="filter-btn" onclick="setBdFilter('bd')">BD Contacts</button>
     <button class="filter-btn" onclick="setBdFilter('fund')">Funds</button>
     <button class="filter-btn" onclick="setBdFilter('individual')">Individuals</button>
-    <button class="filter-btn" onclick="setBdFilter('bot')">Bots</button>
+    <button class="filter-btn" onclick="setBdFilter('ens')">ENS</button>
     <button class="filter-btn" onclick="setBdFilter('borrowed')">$100M+</button>
     <button class="filter-btn" onclick="setBdFilter('high-conf')">High Conf</button>
   </div>
@@ -714,7 +714,7 @@
       <thead>
         <tr>
           <th class="sort-header" onclick="sortBd(0, this)">Entity</th>
-          <th>ENS / Address</th>
+          <th>Address</th>
           <th class="sort-header desc" onclick="sortBd(1, this)"><span data-tip="Total cumulative borrow volume, not current outstanding debt" class="src-tag" style="background:none;border:none;font-size:inherit;color:inherit;padding:0;font-weight:inherit">Borrowed (cumul.) &#9432;</span></th>
           <th class="sort-header" onclick="sortBd(2, this)">Confidence</th>
           <th class="sort-header" onclick="sortBd(3, this)">Type</th>
@@ -1056,7 +1056,7 @@ function renderBdTable() {
     }).join(' ');
     html += '<tr' + cls + '>' +
       '<td title="' + (notes||'').replace(/"/g,'&quot;').replace(/</g,'&lt;') + '">' + r[1] + '</td>' +
-      '<td><a class="addr-link" href="https://etherscan.io/address/' + r[0] + '" target="_blank" rel="noopener" title="' + r[0] + '">' + (ens || trunc(r[0])) + '</a></td>' +
+      '<td><a class="addr-link" href="https://etherscan.io/address/' + r[0] + '" target="_blank" rel="noopener" title="' + r[0] + '">' + trunc(r[0]) + '</a></td>' +
       '<td>' + fmtB(r[4]) + '</td>' +
       '<td>' + confBadge(r[2]) + '</td>' +
       '<td>' + typeBadge(r[3]) + '</td>' +
@@ -1091,7 +1091,7 @@ function applyBdFilters() {
       case 'bd': return r.length > 8 && r[8];
       case 'fund': return r[3] === 'fund';
       case 'individual': return r[3] === 'individual';
-      case 'bot': return r[3] === 'bot';
+      case 'ens': return r[7] && r[7].length > 0;
       case 'borrowed': return r[4] >= 100;
       case 'high-conf': return r[2] >= 70;
       default: return true;
