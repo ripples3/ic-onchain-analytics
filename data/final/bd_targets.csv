@@ -1,0 +1,188 @@
+priority,address,entity_type,confidence,borrowed_m,protocols,assets,governance,reasons
+1,0xaaf5feaa9e5694b2b293e67558e2da8ea4b1fb13,likely_fund,60,148.3,aave|compound|aave_lido,USDC|WETH|weETH|wstETH|DAI|rETH|YFI|USDT,,"Uses 3 protocols: aave, aave_lido, compound | High leverage: 1.2x (borrowed/net) | Borrows 8 different assets | Whale: $235M borrowed"
+1,0xdf2609ec3d2e07a79d2e25e52960e75250bd9aaa,likely_fund,60,113.7,aave|compound|aave_lido|spark,USDC|WETH|USDe|GHO|PYUSD|wstETH|USDtb|USDS,,"Uses 4 protocols: aave, aave_lido, compound, spark | High leverage: 1.2x (borrowed/net) | Borrows 10 different assets | Borrows GHO (Aave-native stablecoin)"
+1,0x54e324219979c0d1e9a895122edaaaa3c02cb6b4,likely_fund,60,87.8,aave|compound|aave_lido|spark,USDC|WETH|wstETH|WBTC|USDT,,"Uses 4 protocols: aave, aave_lido, compound, spark | Borrows 5 different assets | Whale: $152M borrowed | Uses Spark (MakerDAO ecosystem)"
+1,0x31078100f05988e15407aac745fcd141f9440475,likely_fund,60,75.5,aave|aave_lido|spark,USDC|USDe|USDS|WBTC|USDT,,"Uses 3 protocols: aave, aave_lido, spark | High leverage: 1.1x (borrowed/net) | Borrows 5 different assets | Whale: $163M borrowed"
+2,0xe40d278afd00e6187db21ff8c96d572359ef03bf,institutional_safe,65,255.6,aave,EURC|USDC|USDT,,Contract address (Safe/multisig/bot) | Whale: $256M borrowed
+2,0x40e93a52f6af9fcd3b476aedadd7feabd9f7aba8,institutional_safe,65,238.0,aave,wstETH|WETH,,"Borrows only volatile: WETH, wstETH | Contract address (Safe/multisig/bot) | Whale: $238M borrowed"
+2,0xe84a061897afc2e7ff5fb7e3686717c528617487,institutional_safe,65,206.4,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: DAI, USDC, USDT | Contract address (Safe/multisig/bot) | Whale: $285M borrowed"
+2,0x3edc842766cb19644f7181709a243e523be29c4c,institutional_safe,65,174.6,aave,WETH,,High leverage: 1.0x (borrowed/net) | Borrows only volatile: WETH | Contract address (Safe/multisig/bot) | Whale: $175M borrowed
+2,0xa923b13270f8622b5d5960634200dc4302b7611e,institutional_safe,65,127.6,aave,USDC,,Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot) | Whale: $128M borrowed
+2,0x7ee29373f075ee1d83b1b93b4fe94ae242df5178,institutional_safe,65,125.1,aave,USDC|USDT,,"Conservative: 0.2x leverage | Borrows only stablecoins: USDC, USDT | Contract address (Safe/multisig/bot) | Whale: $125M borrowed"
+2,0x1cebd13797636b94c5cad7108cebe42d2fce7732,institutional_safe,65,120.6,aave|aave_lido,USDC|WETH|wstETH|PYUSD|USDS|DAI|cbBTC|USDT,,"Uses 2 protocols: aave, aave_lido | Borrows 8 different assets | Contract address (Safe/multisig/bot) | Whale: $139M borrowed"
+2,0x0685279840527e5c6fb73f7b3b4aaab8db5141cf,institutional_safe,65,111.6,aave,USDC|USDe|USDT,,"Borrows only stablecoins: USDC, USDT, USDe | Contract address (Safe/multisig/bot) | Whale: $112M borrowed"
+2,0xd46b96d15fff9b2b17e9c788086f3159bd0e8355,institutional_safe,65,87.6,aave|aave_lido,wstETH,,"Uses 2 protocols: aave, aave_lido | High leverage: 0.9x (borrowed/net) | Borrows only volatile: wstETH | Contract address (Safe/multisig/bot)"
+2,0xeaa7723633cf598e872d611f5ec50a45b65cbc72,institutional_safe,65,86.7,aave|spark,USDC|DAI,,"Uses 2 protocols: aave, spark | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, USDC | Contract address (Safe/multisig/bot)"
+3,0x3b3bdaa4462851621818d2cebc835e077587147a,likely_institutional,55,108.3,aave|morpho,USDT,,"Uses 2 protocols: aave, morpho | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Whale: $190M borrowed"
+3,0x96307abd00708aecc8f555fdc1ede96e9d3a2aa0,likely_institutional,55,46.7,morpho,USDC|WETH|USDA,,Contract address (Safe/multisig/bot) | Uses Morpho (institutional-grade)
+3,0x4f0eeb8d7797bd005fdf88fcc85b47aacc59cf36,likely_institutional,55,45.0,aave|morpho,USDC|WETH,,"Uses 2 protocols: aave, morpho | Uses Morpho (institutional-grade)"
+3,0xe3efe389b8a40dbc16a92e88c34534ddf82d8be4,likely_institutional,55,35.5,aave|morpho,WETH,,"Uses 2 protocols: aave, morpho | High leverage: 1.0x (borrowed/net) | Borrows only volatile: WETH | Contract address (Safe/multisig/bot)"
+3,0x95db48cbfe79af3ea982eca5b9d78bc783fc06cc,likely_institutional,55,27.3,aave|aave_lido|morpho,WETH,,"Uses 3 protocols: aave, aave_lido, morpho | High leverage: 1.3x (borrowed/net) | Borrows only volatile: WETH | Contract address (Safe/multisig/bot)"
+3,0x6a1fac6b3466e29421f70d6eaa91a0de0f627ea2,likely_institutional,55,13.4,aave|morpho,USDC|DAI|USDT,,"Uses 2 protocols: aave, morpho | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT | Contract address (Safe/multisig/bot)"
+3,0x687f584fd1f4a4d9eb277c03a24fe28f4b0675b7,likely_institutional,55,12.7,morpho,USDC|USDS|DAI|USDT,,"Borrows only stablecoins: DAI, USDC, USDS, USDT | Uses Morpho (institutional-grade)"
+3,0xb9fd5a298581586fd7b7c365ca5f1c10aef0b8a8,likely_institutional,55,10.8,morpho,WETH|DAI|USDT,,Contract address (Safe/multisig/bot) | Uses Morpho (institutional-grade)
+3,0x21971c9b17425141a1dac54f9abf1ad1489d8b90,likely_institutional,55,10.5,morpho,USDC|WETH,,Contract address (Safe/multisig/bot) | Uses Morpho (institutional-grade)
+3,0x03ff6729de579e60c5a3289be0bea42aff69be93,likely_institutional,55,10.4,morpho,DAI,,Borrows only stablecoins: DAI | Contract address (Safe/multisig/bot) | Uses Morpho (institutional-grade)
+4,0x54dda22ae140edb605c73073eabb6f4aea2fc237,likely_treasury,50,119.7,aave,USDC|USDT,,"Conservative: 0.3x leverage | Borrows only stablecoins: USDC, USDT | Whale: $120M borrowed"
+5,0xe051fb91ec09eefb77e7f7a599291bf921eb504d,likely_yield_fund,50,502.4,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Mega whale: $502M borrowed
+5,0x8af700ba841f30e0a3fcb0ee4c4a9d223e1efa05,likely_yield_fund,50,273.4,aave|spark,USDC|USDT|DAI|GHO,,"Uses 2 protocols: aave, spark | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, GHO, USDC, USDT | Borrows GHO (Aave-native stablecoin)"
+5,0xdb7030beb1c07668aa49ea32fbe0282fe8e9d12f,likely_yield_fund,50,265.2,aave|compound,USDC|DAI,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, USDC | Whale: $436M borrowed"
+5,0xd4584bf988c9e8994688b56484e2f74ceaeefb20,likely_yield_fund,50,167.5,aave,USDC|USDT,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT | Whale: $167M borrowed"
+5,0xa2e3d7e8bbcbeac6d07cfc972b3bee6d1e2b2c24,likely_yield_fund,50,162.0,aave,USDe,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDe | Whale: $162M borrowed
+5,0xc26b5977c42c4fa2dd41750f8658f6bd2b67869c,likely_yield_fund,50,142.6,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT | Whale: $235M borrowed"
+5,0x9ffe77146cc1da3edb87af163c6c32bab474b464,likely_yield_fund,50,107.5,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Whale: $108M borrowed
+5,0x5732b9f8c80a8fa48879bbfd0f51344e94fc532c,likely_yield_fund,50,102.8,aave,USDC|USDT,,"High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT | Whale: $103M borrowed"
+5,0xdb802c7c6b7cc1c0e8474bb7eb80bbc569763de5,likely_yield_fund,50,95.0,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xf8587bfb4d3e0b31029efa09d595ee6179ddfeaa,likely_yield_fund,50,90.5,aave|compound,USDC|PYUSD|DAI|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, PYUSD, USDC, USDT | Whale: $150M borrowed"
+5,0xedcdf2e84f2a6ba94b557b03bdfb7d10eca5aa50,likely_yield_fund,50,70.6,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT | Whale: $126M borrowed"
+5,0x4116812b89749563d40b0ffc187db7ce668711cb,likely_yield_fund,50,70.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0xa740c1d26d690a34223b06d41b1268b2d0d7b5b6,likely_yield_fund,50,65.9,aave,USDC|USDT,,"High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0xdc3abf85e090528669cf1b44ef4082b269c21a95,likely_yield_fund,50,62.0,aave,GHO|USDT,,"High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: GHO, USDT | Borrows GHO (Aave-native stablecoin)"
+5,0x0591926d5d3b9cc48ae6efb8db68025ddc3adfa5,likely_yield_fund,50,61.4,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot)
+5,0xf744f66621df59861fe621444e473b595bb83ad4,likely_yield_fund,50,60.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x3d10ed16c911cd22d100cbc00165c918a2df66bc,likely_yield_fund,50,59.3,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT"
+5,0x1cd14801537a3d1550b7e30a9ed59bf68d8cbc84,likely_yield_fund,50,58.5,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT | Whale: $103M borrowed"
+5,0xc3fe8b63ea05e8e27b3f3358d646915d7ed931e4,likely_yield_fund,50,58.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x8fb388696010edc0c5d574b2f25b9629724acfe8,likely_yield_fund,50,55.9,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x34d1231f15da58762a84ead35242896e7fec4ac1,likely_yield_fund,50,54.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x6ba9c7d86ebd6a20817d482c42c9de2806eefb7e,likely_yield_fund,50,53.6,aave|compound,USDC|USDS|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDS, USDT"
+5,0xffefa70b6deaab975ef15a6474ce9c4214d82b02,likely_yield_fund,50,50.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x42c8e43048f6ff3586945a1fd23e0bec540dcd07,likely_yield_fund,50,49.1,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x015cc48cc8bc37d80aaff4e43061dbaf94192308,likely_yield_fund,50,46.8,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x4093f559f38c4c87c280d64c85396f649c0d9987,likely_yield_fund,50,39.3,compound,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot)
+5,0x685a76306aa3e81f3096c7db225cf19fa4794e96,likely_yield_fund,50,39.1,aave|aave_lido|spark,USDC|USDS|DAI,,"Uses 3 protocols: aave, aave_lido, spark | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDS | Uses Spark (MakerDAO ecosystem)"
+5,0xee6a16d8c3f33d920865a69508339174aba98f05,likely_yield_fund,50,38.6,aave|spark,USDC|DAI|USDT,,"Uses 2 protocols: aave, spark | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT | Uses Spark (MakerDAO ecosystem)"
+5,0xfd595c310de371a66e7701fb4e7b250c924c7907,likely_yield_fund,50,38.2,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xb0898b883de7f7f49ab8622f2185f5d0ca25b2ad,likely_yield_fund,50,37.8,aave,USDC|USDT|DAI|GHO,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI, GHO, USDC, USDT | Borrows GHO (Aave-native stablecoin)"
+5,0xb801f83c0212a714660469e62903057aea18e386,likely_yield_fund,50,36.6,aave|spark,USDC|DAI|USDT,,"Uses 2 protocols: aave, spark | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT | Uses Spark (MakerDAO ecosystem)"
+5,0xe6d0ca9844f4c079e6e732f396ef3b9f98a2dac8,likely_yield_fund,50,34.8,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0xc9db4e8d3d940c16b800d433d168d2f651025642,likely_yield_fund,50,34.1,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x51eb428f6ec3940cc12d81e5b51cf42ff8e18e49,likely_yield_fund,50,32.2,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x4d43aadee75419a4535400dee43690b5fe8c64e9,likely_yield_fund,50,31.9,aave,USDC|USDT,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x3207363359ca0c11d11073ad48301e8c958b7910,likely_yield_fund,50,30.5,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x5cd7f9ee3be46c94ce51729e803a96566aa6668a,likely_yield_fund,50,29.4,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x77a56647fba0eb60abb7395574cded565f6f94f6,likely_yield_fund,50,29.3,aave,USDC,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x9cc65c0560acdb03c4e7cef83e02fbe413920f98,likely_yield_fund,50,27.7,spark,USDS|USDT,,"High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDS, USDT | Uses Spark (MakerDAO ecosystem)"
+5,0x26a58af72eff53ddaa064a9df86e8ec3184bee95,likely_yield_fund,50,26.9,aave,USDC|USDT,,"High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0xe6395145c839dac68d4f4c006101f88614d359f0,likely_yield_fund,50,25.7,aave|compound,USDC,,"Uses 2 protocols: aave, compound | High leverage: 1.3x (borrowed/net) | Borrows only stablecoins: USDC"
+5,0x25d2477f89fb29f6956c45d4dfda9d29eb187f4e,likely_yield_fund,50,24.5,aave,USDC|USDT,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0xc94a3ff0bac12eeb9ff0cc4e08511e1ffad6ba94,likely_yield_fund,50,23.8,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x85220e6aa75238ba9c80353c6330ebee5142230e,likely_yield_fund,50,23.5,aave,USDe,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDe
+5,0x834bd54eae7edd442637375b9be9ba2a9ad28389,likely_yield_fund,50,22.2,aave,USDC,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xf2427ea3afd9a64983c7077e9adf3e0cc0db29d1,likely_yield_fund,50,22.0,compound,USDC,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x2f8d4e7b1d771932e1367ee46f4c7be11cd94ac3,likely_yield_fund,50,21.0,aave,USDC|DAI|USDT,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT"
+5,0x70bf67b9ed51d034c727a0b14460b39a3fc169a3,likely_yield_fund,50,20.0,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x8429eaa03f90bd6dfccc64863d02a9c34ae81187,likely_yield_fund,50,19.9,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT"
+5,0x0221b322ad36bbdf872a15c6010301b261ac097a,likely_yield_fund,50,19.5,aave,PYUSD,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: PYUSD
+5,0xa3bcf996fd1cdd1f357b5a1eed0a39ceaaebd422,likely_yield_fund,50,19.4,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot)
+5,0x5f8e50be79880b16bd75ebdab8638170511a0b5f,likely_yield_fund,50,19.4,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x6ac1108461189f1569e1d4dedc9940a0395d3423,likely_yield_fund,50,19.1,aave|spark,USDT,,"Uses 2 protocols: aave, spark | High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Uses Spark (MakerDAO ecosystem)"
+5,0x282b49d33ef1962ebe758f5cd1d9c59d35919dbc,likely_yield_fund,50,18.0,aave|compound,USDC,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC"
+5,0xb2c763b898a246d6562d7566fab4fd1dad586934,likely_yield_fund,50,17.9,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xda1d41fbc625282eb09744efc8da1a66a494a298,likely_yield_fund,50,17.8,compound,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xdaf585a5869ca7c1c0b1b9896ecdf314668d3f55,likely_yield_fund,50,17.6,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 1.5x (borrowed/net) | Borrows only stablecoins: USDC, USDT | Contract address (Safe/multisig/bot)"
+5,0x855904de035c9d86a301af364159e7237b2536c0,likely_yield_fund,50,17.0,aave,USDC,,High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x6b2563826bc176fda2099c47567f447fc32cc5b7,likely_yield_fund,50,16.7,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x6bc241d88994c48f8af241b7f36d07dae902eafc,likely_yield_fund,50,16.3,compound,USDC,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xe1f3f93a108c36368f6f2c7cda267d3a32bc5071,likely_yield_fund,50,16.2,aave,USDT,,High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x70e1b384fe335222529f5e685b371ff2e658cbd7,likely_yield_fund,50,15.1,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC
+5,0xb213531aa8113f455c626a305feaef82da605e08,likely_yield_fund,50,15.0,spark,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Uses Spark (MakerDAO ecosystem)
+5,0x219de81f5d9b30f4759459c81c3cf47abaa0ded1,likely_yield_fund,50,15.0,spark,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Uses Spark (MakerDAO ecosystem)
+5,0xb20fb60e27a1be799b5e04159ec2024cc3734ed7,likely_yield_fund,50,14.9,aave,USDC,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: USDC
+5,0x47cede04e99b1cc4d7cf1935c3eb7d2729e72969,likely_yield_fund,50,14.3,aave,USDC|USDe|USDT,,"High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC, USDT, USDe | Contract address (Safe/multisig/bot)"
+5,0xcb4a7b790edb7fa3e2731efd7ed85275f92fc74a,likely_yield_fund,50,14.2,aave|compound,USDC|GHO|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: GHO, USDC, USDT | Borrows GHO (Aave-native stablecoin)"
+5,0x858b71e1d6e421fee400994bfd918da26dfd33af,likely_yield_fund,50,13.8,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0xfcd091e1207e467a5b23ac3bc0105e2742309d9f,likely_yield_fund,50,13.6,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x51ab7dfcd47283dfbcee6f0a15d25053825f4eaf,likely_yield_fund,50,13.5,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0xbf7ea95ab6f509b3b446c4d96a06d68a5c6e35ee,likely_yield_fund,50,13.4,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0xfcba81c19b20d2f2d7cea6e10647803ede7697c0,likely_yield_fund,50,13.2,aave,USDC|USDT,,"High leverage: 0.8x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x941ad3ebd8321797b9b53a87ade232e5d85973d1,likely_yield_fund,50,13.2,aave,DAI,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: DAI
+5,0x457c3dc0323a7736b69a483dcadd4b44cdc1d380,likely_yield_fund,50,13.0,aave,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot)
+5,0x678fc4dbd2ea3c76a808160259cf1acbeb4a4954,likely_yield_fund,50,12.8,aave,DAI,,High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI
+5,0x6b9ee75dbffd6b7d5706991ac7e7ae5363b484af,likely_yield_fund,50,12.7,aave,USDC|USDT,,"High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC, USDT"
+5,0x554035a12da3f1f3621489018c9376f3a3df47ed,likely_yield_fund,50,12.3,compound,USDC,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDC | Contract address (Safe/multisig/bot)
+5,0x399b610e64cfc26988b3a476b438a5f73976ca70,likely_yield_fund,50,11.6,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x5f23d9789dd2cd64512f8c40fd50be0c2a6927b4,likely_yield_fund,50,11.2,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT | Contract address (Safe/multisig/bot)
+5,0x36aab712e7e6820608d5c974d6f9a615ecfd46db,likely_yield_fund,50,11.0,aave,USDT,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDT
+5,0x7a79969a0b9d51d922c4810d2950560360f6f234,likely_yield_fund,50,10.8,aave,USDC|DAI|USDT,,"High leverage: 0.9x (borrowed/net) | Borrows only stablecoins: DAI, USDC, USDT"
+5,0xf11f844bc13e7912b78f0ee8b8168f8ef32be22d,likely_yield_fund,50,10.5,aave,DAI,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: DAI
+5,0x62b1bbda8a2c1a6b9cdf72d6ca22e6506d1f2746,likely_yield_fund,50,10.5,aave,USDe,,High leverage: 1.0x (borrowed/net) | Borrows only stablecoins: USDe
+6,0xa9ed0db00e5c29e7e18a55db159ea33fb5fea60a,likely_sophisticated,45,334.8,aave|aave_lido,USDC|USDe|GHO|USDS|cbBTC|USDT,,"Uses 2 protocols: aave, aave_lido | Borrows 6 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $346M borrowed"
+6,0x3ee505ba316879d246a8fd2b3d7ee63b51b44fab,likely_sophisticated,45,299.5,aave|compound,TUSD|YFI|USDT|USDC|BUSD|WBTC|WETH|CRV,,"Uses 2 protocols: aave, compound | Borrows 20 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $322M borrowed"
+6,0x3f3e305c4ad49271ebda489dd43d2c8f027d2d41,likely_sophisticated,45,223.8,aave|compound,FRAX|USDC|USDe|GHO|DAI|sUSD|USDT,,"Uses 2 protocols: aave, compound | Borrows 7 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $239M borrowed"
+6,0xce9d00377edc72ddfbf0c9e0f007b614e9257c69,likely_sophisticated,45,197.7,aave|spark,USDC|WETH|weETH|USDS|USDT,,"Uses 2 protocols: aave, spark | Borrows 5 different assets | Whale: $269M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x51e49ce1f4ace38ac815cfe2cef14397cd9932fb,likely_sophisticated,45,177.3,aave|spark,USDC|WETH|USDe|tBTC|wstETH|USDtb|USDS|WBTC,,"Uses 2 protocols: aave, spark | Borrows 11 different assets | Whale: $189M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x2de640a18fe3480aa802aca91f70177ada103391,likely_sophisticated,45,167.1,aave|compound,USDC|WETH|TUSD|wstETH|MKR|CRV|DAI|WBTC,1 votes in ens.eth,"Uses 2 protocols: aave, compound | Borrows 10 different assets | Whale: $186M borrowed"
+6,0x81ebde24453b8e40454616579ea79c79a197699d,likely_sophisticated,45,166.1,aave|spark,USDC|WETH|USDe|USDG|PYUSD|USDS|DAI|EURC,,"Uses 2 protocols: aave, spark | Borrows 12 different assets | Whale: $227M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x78b58e4197c04d320a33c582ecc3e7e885f26a58,likely_sophisticated,45,140.6,aave|compound,USDC|WETH|LINK|MANA|SNX|MKR|CRV|KNC,,"Uses 2 protocols: aave, compound | Borrows 16 different assets | Whale: $183M borrowed"
+6,0x5cfd0cddf989959a6a6c3ad985ce324460d46dfd,likely_sophisticated,45,129.9,aave|compound,USDC|TUSD|BUSD|YFI|LINK,,"Uses 2 protocols: aave, compound | Borrows 5 different assets | Whale: $195M borrowed"
+6,0x08b6470e62235947b766ac63f584a52d25cb14e6,likely_sophisticated,45,128.0,aave|spark,USDC|WETH|USDS|USDT,,"Uses 2 protocols: aave, spark | Whale: $147M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x51346d389ec7adf11c5b96695ef003dbb849af9a,likely_sophisticated,45,115.9,aave|compound,USDC|WETH|UNI|DAI|YFI|LINK|USDT,,"Uses 2 protocols: aave, compound | Borrows 7 different assets | Whale: $134M borrowed"
+6,0x6fc6f371763371f0fd66e65b157017eb7ce7e1a1,likely_sophisticated,45,111.1,aave|compound,USDC|WETH|DAI|WBTC|USDT,,"Uses 2 protocols: aave, compound | Borrows 5 different assets | Whale: $125M borrowed"
+6,0xa937f63ba1d69fd7e022fd50628b6d8fcfbde52d,likely_sophisticated,45,108.3,aave|compound,USDC|WETH|TUSD|DAI|BUSD|WBTC|cbBTC|LINK,,"Uses 2 protocols: aave, compound | Borrows 9 different assets | Whale: $128M borrowed"
+6,0x930af7923b8b5f8d3461ad1999ceeb8a62884b19,likely_sophisticated,45,105.2,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT | Whale: $122M borrowed"
+6,0x8ec6671cf4b8099b8008a512b03fd2ee4d5f2626,likely_sophisticated,45,101.6,aave|compound,WETH,,"Uses 2 protocols: aave, compound | High leverage: 1.1x (borrowed/net) | Borrows only volatile: WETH | Whale: $112M borrowed"
+6,0x2035593de597f8efa3d2ce7a214c93274b4c9fda,likely_sophisticated,45,100.1,aave|compound,USDC|GHO|wstETH|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows 5 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $116M borrowed"
+6,0x5de64f9503064344db3202d95ceb73c420dccd57,likely_sophisticated,45,100.1,aave|compound,USDC|GHO|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: DAI, GHO, USDC, USDT | Borrows GHO (Aave-native stablecoin) | Whale: $132M borrowed"
+6,0xab92fca834aac2afe16cf6a2fc60cc7a864a77a5,likely_sophisticated,45,100.0,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT | Whale: $126M borrowed"
+6,0x058bbff7be9d3cb50cdb9e6f6929f023f2763b98,likely_sophisticated,45,99.8,aave|spark,USDC|USDe|GHO|wstETH|USDtb|DAI|EURC|USDS,,"Uses 2 protocols: aave, spark | Borrows 10 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $152M borrowed"
+6,0x68e7e72938db36a5cbbca7b52c71dbbaadfb8264,likely_sophisticated,45,99.7,aave|aave_horizon,USDC|USDe|GHO|RLUSD|USDT,,"Uses 2 protocols: aave, aave_horizon | Borrows 5 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $113M borrowed"
+6,0x79d93cbf3583e62dd3edbddd1ee1121f8b07af81,likely_sophisticated,45,93.3,aave|compound,USDC|WETH|TUSD|SNX|KNC|DAI|BUSD|WBTC,,"Uses 2 protocols: aave, compound | Borrows 10 different assets | Whale: $108M borrowed"
+6,0x10098de28ba6928186954fcc18ad919040600af3,likely_sophisticated,45,92.0,aave|spark,USDC|WBTC|WETH|USDT,,"Uses 2 protocols: aave, spark | High leverage: 0.9x (borrowed/net) | Whale: $169M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x236f233dbf78341d25fb0f1bd14cb2ba4b8a777c,likely_sophisticated,45,88.2,aave|spark,USDC|WETH|TUSD|DAI|WBTC|USDT,,"Uses 2 protocols: aave, spark | Borrows 6 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x790c9422839fd93a3a4e31e531f96cc87f397c00,likely_sophisticated,45,87.5,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT | Whale: $117M borrowed"
+6,0x702a39a9d7d84c6b269efaa024dff4037499bba9,likely_sophisticated,45,81.9,aave|compound,USDC|WETH|DAI|WBTC|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows 5 different assets | Whale: $136M borrowed"
+6,0x9fb1750da6266a05601855bb62767ebc742707b1,likely_sophisticated,45,80.5,aave|compound,USDC|WETH|USDe|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows 5 different assets"
+6,0x72a916702bd97923e55d78ea5a3f413dec7f7f85,likely_sophisticated,45,77.5,aave|compound,USDC|WETH|DAI|WBTC|ENJ|renFIL|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows 7 different assets | Whale: $135M borrowed"
+6,0xa489e9daf10ced86811d59e4d00ce1b0dec95f5e,likely_sophisticated,45,76.1,aave|compound,USDC|WETH|DAI|USDT,,"Uses 2 protocols: aave, compound | Whale: $116M borrowed"
+6,0xf276d10b388e00b8a04b1362f66c6e2aad8a1960,likely_sophisticated,45,75.5,aave|compound,USDC|wstETH|WETH|USDe,,"Uses 2 protocols: aave, compound"
+6,0xc79b6416bd17446f930d32a7b78cf60d35a12be7,likely_sophisticated,45,74.5,aave|compound,USDC|WBTC|USDS|USDT,,"Uses 2 protocols: aave, compound | Whale: $108M borrowed"
+6,0x940df59ba33f3387deff3c2400fecf1286fcce4c,likely_sophisticated,45,72.5,aave|spark,USDC|WETH|DAI|USDT,,"Uses 2 protocols: aave, spark | Whale: $102M borrowed | Uses Spark (MakerDAO ecosystem)"
+6,0x64471d103a7f77262529383d53bdd28b260b1ae8,likely_sophisticated,45,72.1,aave|aave_horizon,USDC|RLUSD|USDT,,"Uses 2 protocols: aave, aave_horizon | High leverage: 1.5x (borrowed/net) | Whale: $122M borrowed"
+6,0xeadc152ac1014ace57c6b353f89adf5faffe9d55,likely_sophisticated,45,71.0,aave|compound,USDC,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC"
+6,0x459b6dd8eafa6ada530380b9bb0c56b2ea34ec9f,likely_sophisticated,45,70.3,aave|aave_lido,wstETH|WETH,,"Uses 2 protocols: aave, aave_lido | High leverage: 0.9x (borrowed/net) | Borrows only volatile: WETH, wstETH | Whale: $122M borrowed"
+6,0x7fd18d518f70df5f1691591ab34ecbeff4ea8084,likely_sophisticated,45,69.9,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT"
+6,0x75c0c0591cdf9af7cb826a65ac213cff31916668,likely_sophisticated,45,69.7,aave|compound,USDC|WETH|BAT|DAI|LINK|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Borrows 6 different assets | Whale: $126M borrowed"
+6,0x26ad4f84cd20102c4a7fb9d14bd2661a0d66f96d,likely_sophisticated,45,68.2,compound|spark,WETH,,"Uses 2 protocols: compound, spark | Borrows only volatile: WETH | Uses Spark (MakerDAO ecosystem)"
+6,0xb5c98c0d2861d39c538aff4e87cee946ffa1adf4,likely_sophisticated,45,66.2,aave|spark,USDe|DAI|USDT,,"Uses 2 protocols: aave, spark | Borrows only stablecoins: DAI, USDT, USDe | Uses Spark (MakerDAO ecosystem)"
+6,0x86aee25955af3e6f750bbc921b7f258b462c9cf3,likely_sophisticated,45,66.2,aave|spark,USDC|wstETH|SNX|DAI|rETH|USDT,,"Uses 2 protocols: aave, spark | Borrows 6 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0xe2bb94210b41ce4c01b9b97f3ac62e728e472f9c,likely_sophisticated,45,65.7,aave|compound,USDC|WETH|xSUSHI|TUSD|CRV|SNX|MKR|DAI,,"Uses 2 protocols: aave, compound | Borrows 13 different assets"
+6,0xa8c18057c5aaaaff6000d28a057a6994b2e09bfb,likely_sophisticated,45,65.7,aave|aave_lido,USDC|USDe|USDS|USDT,,"Uses 2 protocols: aave, aave_lido | Borrows only stablecoins: USDC, USDS, USDT, USDe"
+6,0xfb94d3404c1d3d9d6f08f79e58041d5ea95accfa,likely_sophisticated,45,64.7,aave|spark,USDC|WETH|USDS|DAI|USDT,,"Uses 2 protocols: aave, spark | Borrows 5 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x2bd7d71390ed6946159b1cb49bc270cbe3ef1a53,likely_sophisticated,45,63.5,aave|compound,USDC|DAI,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: DAI, USDC"
+6,0x42ad05d4f56456230c023cd023ddbc9935903ab4,likely_sophisticated,45,63.1,aave|compound,USDC|USDT|GUSD,,"Uses 2 protocols: aave, compound | High leverage: 0.9x (borrowed/net) | Whale: $109M borrowed"
+6,0x1dff1e9968222aa6c66bf402bac2c3fe5ed13f76,likely_sophisticated,45,58.5,aave|spark,USDC|PYUSD|USDe|USDT,,"Uses 2 protocols: aave, spark | Borrows only stablecoins: PYUSD, USDC, USDT, USDe | Uses Spark (MakerDAO ecosystem)"
+6,0xc441b9a1ca36b774898f3d7c76792dc468a404ce,likely_sophisticated,45,57.1,aave|compound,USDC|WETH,,"Uses 2 protocols: aave, compound"
+6,0x78bc49be7bae5e0eec08780c86f0e8278b8b035b,likely_sophisticated,45,57.0,aave|compound,USDC|WETH|BAT|DAI|WBTC|LINK|USDT,,"Uses 2 protocols: aave, compound | Borrows 7 different assets"
+6,0xc77c6375e9fd581701425a6fb70bf371fb1cba28,likely_sophisticated,45,56.0,aave|spark,USDC|WETH|GHO|USDS|DAI|USDT,,"Uses 2 protocols: aave, spark | Borrows 6 different assets | Borrows GHO (Aave-native stablecoin) | Uses Spark (MakerDAO ecosystem)"
+6,0x1cac5f5733eaa98b64500eeb79891e5cb2cd46a1,likely_sophisticated,45,55.2,aave|spark,wstETH|cbBTC|USDT,,"Uses 2 protocols: aave, spark | Uses Spark (MakerDAO ecosystem)"
+6,0xc35bc7e918bb4c0159296d9749dc59de605b4b93,likely_sophisticated,45,54.3,aave|spark,wstETH|WETH,,"Uses 2 protocols: aave, spark | Borrows only volatile: WETH, wstETH | Uses Spark (MakerDAO ecosystem)"
+6,0x8a25d8c9fa8c7a726137f2d618d85cbc2c083f78,likely_sophisticated,45,53.0,aave|spark,USDC|WETH|GHO|wstETH|PYUSD|DAI|USDS|WBTC,,"Uses 2 protocols: aave, spark | High leverage: 1.0x (borrowed/net) | Borrows 9 different assets | Borrows GHO (Aave-native stablecoin)"
+6,0x06b50641cc4c6e3a08903052ec86d4d770f60c36,likely_sophisticated,45,51.6,aave|spark,USDC|WETH|USDe|PYUSD|wstETH|DAI|USDS|WBTC,,"Uses 2 protocols: aave, spark | Borrows 10 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x057518153ed7f25dd237a0d0052ae8cc5c428ee3,likely_sophisticated,45,50.6,aave|compound,USDC|WETH|TUSD|DAI|sUSD|LINK|USDT,,"Uses 2 protocols: aave, compound | Borrows 7 different assets"
+6,0xc3f89f829ca23e85c59e9ec44a0c79e483d58be2,likely_sophisticated,45,49.6,aave|spark,weETH|DAI|USDT,,"Uses 2 protocols: aave, spark | Uses Spark (MakerDAO ecosystem)"
+6,0x16674814ea6a7aac3decb877ea8fd01deb5c333d,likely_sophisticated,45,49.0,aave|spark,USDC|DAI|USDT,,"Uses 2 protocols: aave, spark | Borrows only stablecoins: DAI, USDC, USDT | Uses Spark (MakerDAO ecosystem)"
+6,0x485c07c5516315881c732c90122ba4de3f356180,likely_sophisticated,45,48.4,aave|spark,USDC|USDe|tBTC|PYUSD|DAI|USDtb|EURC|USDS,,"Uses 2 protocols: aave, spark | High leverage: 0.9x (borrowed/net) | Borrows 11 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x06c05fbac28826fa24b5fe806f239277d8b5a9fd,likely_sophisticated,45,48.0,aave|spark,WETH|wstETH|USDS|WBTC|cbBTC,,"Uses 2 protocols: aave, spark | Borrows 5 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x77e19de48f43af1d150aaef2de7e7ab8f3e55360,likely_sophisticated,45,47.2,aave|spark,USDC|USDe|PYUSD|wstETH|USDS|DAI|RLUSD|USDT,,"Uses 2 protocols: aave, spark | Borrows 8 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x160f6ef9fcdde6ff3febc7a57edbfd476a8aab5b,likely_sophisticated,45,47.2,aave|compound,USDC|WETH|USDS|WBTC|cbBTC|crvUSD|USDT,,"Uses 2 protocols: aave, compound | Borrows 7 different assets"
+6,0x4aa29d0aec8c80cad432cc2e272ab2351b72b745,likely_sophisticated,45,45.4,aave|aave_lido,USDC|wstETH|USDT,,"Uses 2 protocols: aave, aave_lido | High leverage: 0.9x (borrowed/net)"
+6,0x051d091b254ecdbbb4eb8e6311b7939829380b27,likely_sophisticated,45,45.1,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT"
+6,0x9ac60bd825eb8fd0240e4daf2646c1050830013e,likely_sophisticated,45,44.5,aave|compound,USDC|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: USDC, USDT"
+6,0xc03d7825d2b3ec9d73d581802ab49301c4ebb4d5,likely_sophisticated,45,43.6,aave|compound,USDC|WETH|USDe|wstETH|rETH|USDT,,"Uses 2 protocols: aave, compound | Borrows 6 different assets"
+6,0xb8270b5ba91cb365d51855a968a9a8f829a0e855,likely_sophisticated,45,41.3,aave|compound,ETHx|USDC|LUSD|WETH|UNI|GHO|osETH|LDO,,"Uses 2 protocols: aave, compound | Borrows 13 different assets | Borrows GHO (Aave-native stablecoin)"
+6,0x30480168582c2bf43eaf97bfce186e8d25866e96,likely_sophisticated,45,41.3,aave|spark,USDC|WETH|wstETH|cbBTC|USDT,,"Uses 2 protocols: aave, spark | Borrows 5 different assets | Uses Spark (MakerDAO ecosystem)"
+6,0x721096bcd32a2a653efa5633b9fa1e07359d9746,likely_sophisticated,45,41.0,aave|compound,USDC|TUSD|MANA|DAI|rETH|WBTC|YFI|sUSD,,"Uses 2 protocols: aave, compound | Borrows 10 different assets"
+6,0xbbbc35dfac3a00a03a8fde3540eca4f0e15c5e64,likely_sophisticated,45,37.3,aave|compound,USDC|ZRX|WETH|BAT|DAI|WBTC|YFI|USDT,,"Uses 2 protocols: aave, compound | High leverage: 0.8x (borrowed/net) | Borrows 8 different assets"
+6,0x6f652411609aca8370faf57b98b5b3a7c171723d,likely_sophisticated,45,36.5,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: DAI, USDC, USDT"
+6,0x907856bd487c405e48f96f45b451a7b6ddf801e3,likely_sophisticated,45,34.4,aave|spark,USDC|WETH|cbBTC|USDT,,"Uses 2 protocols: aave, spark | High leverage: 0.9x (borrowed/net) | Uses Spark (MakerDAO ecosystem)"
+6,0x3f3429d28438cc14133966820b8a9ea61cf1d4f0,likely_sophisticated,45,33.2,aave|compound,USDC|CRV|WETH|USDT,,"Uses 2 protocols: aave, compound"
+6,0xdc72bd8115311209270c453d52a031773372c52f,likely_sophisticated,45,32.4,aave|compound,USDC|DAI|USDT,,"Uses 2 protocols: aave, compound | Borrows only stablecoins: DAI, USDC, USDT"
+7,0x3ba21b6477f48273f41d241aa3722ffb9e07e247,governance_participant,55,330.8,compound,USDC|BAT,"2 votes in curve.eth, lido-snapshot.eth","Whale: $331M borrowed | Votes in: curve.eth, lido-snapshot.eth"
+7,0x4444ee1efbcfc7716754d4df119a1dbbe29934b3,governance_participant,55,254.9,aave,USDC|WETH|USDe|GHO|USDS|DAI|USDT,1 votes in cow.eth,Borrows 7 different assets | Borrows GHO (Aave-native stablecoin) | Whale: $255M borrowed | Votes in: cow.eth
+7,0xd12e276f76a55af8558e149b5efeb6aa3a64ee84,governance_participant,55,135.6,aave,USDC|USDT,1 votes in ens.eth,"Borrows only stablecoins: USDC, USDT | Whale: $136M borrowed | Votes in: ens.eth"
+7,0xc16414ac1fedfdac4f8a09674d994e1bbb9d7113,governance_participant,55,119.2,aave,USDC|WETH|TUSD|MKR|DAI|WBTC|RAI|sUSD,"6 votes in gearbox.eth, lido-snapshot.eth","Borrows 9 different assets | Whale: $119M borrowed | Votes in: gearbox.eth, lido-snapshot.eth"
+7,0x49e96e255ba418d08e66c35b588e2f2f3766e1d0,governance_participant,55,109.5,aave,USDC|WBTC|USDS|USDT,4 votes in morpho.eth,Whale: $110M borrowed | Votes in: morpho.eth
+7,0xd856007b58a97d2f96b558a49cd3e7d3b1e96c0e,governance_participant,55,93.4,compound,USDC|BAT|WETH,9 votes in balancer.eth,Votes in: balancer.eth
+7,0xa4fc81a7ab93360543eb1e814d0127f466012ced,governance_participant,55,80.7,aave,LINK|YFI,1 votes in gearbox.eth,"Borrows only volatile: LINK, YFI | Votes in: gearbox.eth"
+8,0x6c2a355929ee1262305e385ad49b84fe5f5a4777,mega_whale_unknown,40,1086.9,aave,WBTC|WETH|USDT,,Mega whale: $1087M borrowed

@@ -2,6 +2,8 @@
 
 DuneSQL queries and analytics for Index Coop products across Ethereum, Arbitrum, and Base.
 
+> **Questions are not requests.** If the user asks about the state of data, files, or the KG — answer the question. Don't run exports, scripts, or modifications unless explicitly asked.
+
 ## Project Structure
 
 ```
@@ -578,6 +580,13 @@ Skills became bloated with addresses. Now: methodology in skills, changing data 
 - Evidence table uses `created_at` column, NOT `timestamp`
 - `temporal_correlation.py` output CSV columns: `addr1`, `addr2` (not `address_1`, `address_2`)
 - Entity update + evidence insert should be in single transaction (rollback risk)
+
+## Scaling: When to Adopt DVC / Git LFS
+
+Current setup (simple gitignore) is fine. Switch when any of these happen:
+
+- **Git LFS**: Any file exceeds 50-100MB (GitHub hard limit: 100MB). Likely trigger: KG database growth.
+- **DVC**: Multiple people need the same data state, or you want reproducible pipelines (`dvc repro` to go from raw Dune export → final BD list). Likely trigger: weekly Nansen data pulls, or second investigator joins.
 
 ## Resources
 

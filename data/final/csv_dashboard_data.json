@@ -1,0 +1,432 @@
+{
+  "total_rows": 2328,
+  "unique_addresses": 2049,
+  "identified_count": 422,
+  "unknown_count": 1627,
+  "identified_value": 128953.0,
+  "unknown_value": 60181.7,
+  "total_value": 189134.7,
+  "sources": {
+    "knowledge_graph": 374,
+    "safe_investigation": 29,
+    "dune_custody": 18,
+    "ens": 1
+  },
+  "entity_types": {
+    "unknown": 2049
+  },
+  "addr_types": {
+    "EOA": 1918,
+    "Contract": 131
+  },
+  "confidence": {
+    "90-100%": 22,
+    "70-89%": 224,
+    "50-69%": 141,
+    "1-49%": 35,
+    "0/none": 0
+  },
+  "top_identified": [
+    {
+      "addr": "0xed0c6079229e...",
+      "identity": "Abraxas Capital",
+      "borrowed": 14449.9,
+      "confidence": "81"
+    },
+    {
+      "addr": "0xb99a2c4c1c4f...",
+      "identity": "Abraxas Capital",
+      "borrowed": 7267.2,
+      "confidence": "81"
+    },
+    {
+      "addr": "0xee55328d240d...",
+      "identity": "Flash Loan/MEV Bot",
+      "borrowed": 6791.8,
+      "confidence": "90"
+    },
+    {
+      "addr": "0x3ddfa8ec3052...",
+      "identity": "Justin Sun",
+      "borrowed": 4839.6,
+      "confidence": "79"
+    },
+    {
+      "addr": "0x7cd0b7ed790f...",
+      "identity": "Coinbase 2 Institutional",
+      "borrowed": 3707.8,
+      "confidence": "71"
+    },
+    {
+      "addr": "0xd275e5cb559d...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 3705.8,
+      "confidence": "78"
+    },
+    {
+      "addr": "0x8aceab8167c8...",
+      "identity": "Celsius",
+      "borrowed": 3581.7,
+      "confidence": "95"
+    },
+    {
+      "addr": "0x3c9ea5c4fec2...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 1837.3,
+      "confidence": "81"
+    },
+    {
+      "addr": "0x66b870ddf78c...",
+      "identity": "defunddao.eth",
+      "borrowed": 1770.1,
+      "confidence": "81"
+    },
+    {
+      "addr": "0xaaf9f14f2014...",
+      "identity": "Binance User",
+      "borrowed": 1696.2,
+      "confidence": "55"
+    },
+    {
+      "addr": "0x99fd1378ca79...",
+      "identity": "Asia-Pacific DeFi Fund (UTC+7)",
+      "borrowed": 1575.0,
+      "confidence": "70"
+    },
+    {
+      "addr": "0x1be45fef92c4...",
+      "identity": "Atlantic Region DeFi Fund (UTC-2)",
+      "borrowed": 1483.5,
+      "confidence": "65"
+    },
+    {
+      "addr": "0x2bdded18e2ca...",
+      "identity": "Multi-Regional DeFi Fund (S.America + Eu",
+      "borrowed": 1467.3,
+      "confidence": "75"
+    },
+    {
+      "addr": "0xc468315a2df5...",
+      "identity": "Asia-Pacific VC/Investment Fund",
+      "borrowed": 1459.2,
+      "confidence": "62"
+    },
+    {
+      "addr": "0xf72d6a06ea00...",
+      "identity": "MEV Bot (Titan/MEV Builder)",
+      "borrowed": 1446.2,
+      "confidence": "85"
+    },
+    {
+      "addr": "0x5814fc20f0e0...",
+      "identity": "MEV Bot (Titan/MEV Builder)",
+      "borrowed": 1415.6,
+      "confidence": "57"
+    },
+    {
+      "addr": "0xc37704a457b1...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 1353.1,
+      "confidence": "81"
+    },
+    {
+      "addr": "0x4deb3edd991c...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 1249.3,
+      "confidence": "81"
+    },
+    {
+      "addr": "0xeb2a1125f1e1...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 1245.7,
+      "confidence": "60"
+    },
+    {
+      "addr": "0x3aa39dff4964...",
+      "identity": "Inactive Compound User (2020-2021)",
+      "borrowed": 1163.9,
+      "confidence": "70"
+    },
+    {
+      "addr": "0xb1adceddb294...",
+      "identity": "notpunks.eth",
+      "borrowed": 1042.2,
+      "confidence": "77"
+    },
+    {
+      "addr": "0x517ce9b6d1fc...",
+      "identity": "FalconX Client",
+      "borrowed": 973.7,
+      "confidence": "60"
+    },
+    {
+      "addr": "0xcd40532686b9...",
+      "identity": "Trend Research (Jack Yi / LD Capital)",
+      "borrowed": 970.3,
+      "confidence": "81"
+    },
+    {
+      "addr": "0x59a661f1c909...",
+      "identity": "Binance User",
+      "borrowed": 927.7,
+      "confidence": "55"
+    },
+    {
+      "addr": "0x1f99aaa8b4fb...",
+      "identity": "FTX User",
+      "borrowed": 909.8,
+      "confidence": "55"
+    }
+  ],
+  "top_unknown": [
+    {
+      "addr": "0x6c2a355929ee...",
+      "borrowed": 1086.9,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x40d8c2d3f642...",
+      "borrowed": 548.6,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xe051fb91ec09...",
+      "borrowed": 502.4,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x9b4772e59385...",
+      "borrowed": 430.2,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x3ba21b6477f4...",
+      "borrowed": 330.8,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x3ee505ba3168...",
+      "borrowed": 299.5,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x6761826e71fa...",
+      "borrowed": 263.2,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x11b50686d398...",
+      "borrowed": 241.9,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x183c9077fb7b...",
+      "borrowed": 231.4,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x3f3e305c4ad4...",
+      "borrowed": 223.8,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x32dd0756316b...",
+      "borrowed": 190.3,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x08c14b32c8a4...",
+      "borrowed": 189.9,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xd72626b46c6a...",
+      "borrowed": 188.0,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xcaf1943ce973...",
+      "borrowed": 186.0,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xa25a9b7c7315...",
+      "borrowed": 179.0,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x3edc842766cb...",
+      "borrowed": 174.6,
+      "type": "Contract"
+    },
+    {
+      "addr": "0x6e26d91c264a...",
+      "borrowed": 170.9,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x7835b58a709f...",
+      "borrowed": 170.2,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xd4584bf988c9...",
+      "borrowed": 169.5,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x52185a2bbcfd...",
+      "borrowed": 168.2,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x2de640a18fe3...",
+      "borrowed": 167.1,
+      "type": "EOA"
+    },
+    {
+      "addr": "0xa2e3d7e8bbcb...",
+      "borrowed": 162.0,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x485773ab2c5b...",
+      "borrowed": 162.0,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x4ed0b41dff79...",
+      "borrowed": 159.5,
+      "type": "EOA"
+    },
+    {
+      "addr": "0x10bf1dcb5ab7...",
+      "borrowed": 157.5,
+      "type": "EOA"
+    }
+  ],
+  "top_entities": [
+    {
+      "name": "Trend Research",
+      "count": 54,
+      "value": 25763.5
+    },
+    {
+      "name": "Abraxas Capital",
+      "count": 2,
+      "value": 21717.1
+    },
+    {
+      "name": "Flash Loan/MEV Bot",
+      "count": 2,
+      "value": 7349.3
+    },
+    {
+      "name": "Asia-Pacific VC/Investment Fund",
+      "count": 20,
+      "value": 6368.9
+    },
+    {
+      "name": "Asia-Pacific DeFi Fund",
+      "count": 17,
+      "value": 6343.8
+    },
+    {
+      "name": "Justin Sun",
+      "count": 1,
+      "value": 4839.6
+    },
+    {
+      "name": "Binance User",
+      "count": 9,
+      "value": 4677.6
+    },
+    {
+      "name": "MEV Bot",
+      "count": 3,
+      "value": 3770.1
+    },
+    {
+      "name": "Coinbase 2 Institutional",
+      "count": 1,
+      "value": 3707.8
+    },
+    {
+      "name": "Celsius",
+      "count": 1,
+      "value": 3581.7
+    },
+    {
+      "name": "Institutional Fund",
+      "count": 11,
+      "value": 2767.7
+    },
+    {
+      "name": "Multi-Regional DeFi Fund",
+      "count": 4,
+      "value": 2348.5
+    },
+    {
+      "name": "FTX User",
+      "count": 3,
+      "value": 2059.5
+    },
+    {
+      "name": "Atlantic Region DeFi Fund",
+      "count": 3,
+      "value": 1976.5
+    },
+    {
+      "name": "Atlantic/Brazil DeFi Fund",
+      "count": 7,
+      "value": 1937.5
+    },
+    {
+      "name": "Central Asian DeFi Fund",
+      "count": 4,
+      "value": 1782.1
+    },
+    {
+      "name": "defunddao.eth",
+      "count": 1,
+      "value": 1770.1
+    },
+    {
+      "name": "Americas DeFi Fund",
+      "count": 3,
+      "value": 1345.6
+    },
+    {
+      "name": "Inactive Compound User",
+      "count": 1,
+      "value": 1163.9
+    },
+    {
+      "name": "European Institutional Fund",
+      "count": 4,
+      "value": 1149.0
+    }
+  ],
+  "protocols": {
+    "aave": 1770,
+    "compound": 337,
+    "spark": 158,
+    "aave_lido": 37,
+    "morpho": 13,
+    "aave_horizon": 13
+  },
+  "brackets": {
+    "$1B+": 22,
+    "$500M-1B": 31,
+    "$100M-500M": 259,
+    "$50M-100M": 255,
+    "$10M-50M": 1482
+  },
+  "brackets_id": {
+    "$1B+": 21,
+    "$500M-1B": 29,
+    "$100M-500M": 158,
+    "$50M-100M": 36,
+    "$10M-50M": 178
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "unique": 2049,
+  "id_count": 603,
+  "unk_count": 1446,
+  "id_value": 174619.85,
+  "unk_value": 46553.16,
+  "total_value": 221173.01,
+  "id_pct_count": 29.43,
+  "id_pct_value": 78.95,
+  "sources": {
+    "knowledge_graph": 375,
+    "strategy_fingerprint": 163,
+    "safe_investigation": 29,
+    "dune_custody": 18,
+    "outflow_analysis": 10,
+    "governance_snapshot": 7,
+    "ens": 1
+  },
+  "conf": {
+    "90-100%": 22,
+    "70-89%": 227,
+    "50-69%": 254,
+    "1-49%": 100
+  },
+  "brackets": {
+    "$1B+": [
+      28,
+      28
+    ],
+    "$500M-1B": [
+      31,
+      31
+    ],
+    "$100M-500M": [
+      275,
+      214
+    ],
+    "$50M-100M": [
+      266,
+      95
+    ],
+    "$10M-50M": [
+      1449,
+      235
+    ]
+  },
+  "protocols": {
+    "aave": 1770,
+    "compound": 337,
+    "spark": 158,
+    "aave_lido": 37,
+    "morpho": 13,
+    "aave_horizon": 13
+  }
+}
