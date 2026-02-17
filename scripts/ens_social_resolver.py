@@ -81,7 +81,7 @@ class SocialProfile:
     @property
     def has_identity(self) -> bool:
         return bool(self.twitter or self.farcaster or self.github
-                    or self.email or self.website or self.display_name)
+                    or self.email or self.website)
 
     @property
     def identity_summary(self) -> str:
