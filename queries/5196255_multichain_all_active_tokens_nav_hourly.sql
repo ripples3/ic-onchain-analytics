@@ -272,7 +272,19 @@ indexcoop_tokens as (
     and h.timestamp >= timestamp '2024-08-28 02:00'
 )
 
--- Apply component mapping for price lookup
+-- ============================================================================
+-- PASS 1: Price regular tokens (components have prices in prices.hour)
+-- Excludes wrapper tokens (ETH2XW, BTC2XW) whose components are other Index tokens
+-- ============================================================================
+, wrapper_tokens as (
+    select contract_address, blockchain
+    from (values
+        (0xBFb2E2b1790E98779CF78Ab0F045075BFd0A6be5, 'ethereum'),  -- ETH2XW
+        (0x35D782DAb840A64D22A8109d1CDe0936e7305858, 'ethereum')   -- BTC2XW
+    ) as t(contract_address, blockchain)
+)
+
+-- Apply component mapping for price lookup (pass 1: non-wrapper tokens only)
 , component_with_prices as (
     select
         ac.hour
@@ -292,9 +304,14 @@ indexcoop_tokens as (
         on ac.hour = p.hour
         and p.blockchain = ac.blockchain
         and p.contract_address = cm.price_address
+    where not exists (
+        select 1 from wrapper_tokens wt
+        where wt.contract_address = ac.token_address
+        and wt.blockchain = ac.blockchain
+    )
 )
 
--- Calculate token metrics
+-- Calculate token metrics (pass 1: includes ETH2X, BTC2X NAV)
 , token_metrics as (
     select
         hour
@@ -321,6 +338,66 @@ indexcoop_tokens as (
     group by 1, 2, 3, 4
 )
 
+-- ============================================================================
+-- PASS 2: Price wrapper tokens using pass 1 NAV as component price
+-- ETH2XW component = ETH2X, BTC2XW component = BTC2X
+-- ============================================================================
+, wrapper_component_with_prices as (
+    select
+        ac.hour
+        , ac.blockchain
+        , ac.token_address
+        , ac.token_symbol
+        , ac.component
+        , ac.component_symbol
+        , ac.unit_supply
+        , ac.component_balance
+        , ac.component_balance * tm.nav as component_value
+    from all_component ac
+    inner join wrapper_tokens wt
+        on wt.contract_address = ac.token_address
+        and wt.blockchain = ac.blockchain
+    inner join token_metrics tm
+        on tm.token_address = ac.component
+        and tm.blockchain = ac.blockchain
+        and tm.hour = ac.hour
+)
+
+, wrapper_token_metrics as (
+    select
+        hour
+        , blockchain
+        , token_address
+        , token_symbol
+        , max(unit_supply) as unit_supply
+        , case
+            when max(unit_supply) > 0 then
+                sum(case when component_value > 0 then component_value else 0 end) / max(unit_supply)
+            else null
+          end as collateral
+        , case
+            when max(unit_supply) > 0 then
+                sum(case when component_value < 0 then component_value else 0 end) / max(unit_supply)
+            else null
+          end as debt
+        , sum(component_value) as tvl
+        , case
+            when max(unit_supply) > 0 then sum(component_value) / max(unit_supply)
+            else null
+          end as nav
+    from wrapper_component_with_prices
+    group by 1, 2, 3, 4
+)
+
+-- ============================================================================
+-- FINAL: Combine pass 1 and pass 2 with leverage ratio
+-- ============================================================================
+, all_token_metrics as (
+    select * from token_metrics
+    union all
+    select * from wrapper_token_metrics
+)
+
 -- Final result with leverage ratio
 select
     hour
@@ -338,4 +415,4 @@ select
         when (collateral + debt) = 0 then null
         else collateral / (collateral + debt)
       end as leverage_ratio
-from token_metrics
+from all_token_metrics

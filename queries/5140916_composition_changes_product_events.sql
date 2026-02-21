@@ -495,6 +495,7 @@ multiplier_analysis as (
 -- ===== End of mm_part logic restoration =====
 
 -- Efficiently process transfers with strong filters and pre-aggregation
+-- Uses chain-specific tables instead of evms.erc20_transfers to avoid indexing lag
 supply_changes as (
     select
         et.blockchain,
@@ -505,7 +506,29 @@ supply_changes as (
             when et."to" = 0x0000000000000000000000000000000000000000 then -cast(et.value as double)
             else 0
         end) as supply_change
-    from evms.erc20_transfers et
+    from (
+        select 'ethereum' as blockchain, evt_block_time, contract_address, "from", "to", value
+        from erc20_ethereum.evt_transfer
+        where evt_block_time >= (select start_date from time_filter)
+        and ("from" = 0x0000000000000000000000000000000000000000
+             or "to" = 0x0000000000000000000000000000000000000000)
+
+        union all
+
+        select 'arbitrum' as blockchain, evt_block_time, contract_address, "from", "to", value
+        from erc20_arbitrum.evt_transfer
+        where evt_block_time >= (select start_date from time_filter)
+        and ("from" = 0x0000000000000000000000000000000000000000
+             or "to" = 0x0000000000000000000000000000000000000000)
+
+        union all
+
+        select 'base' as blockchain, evt_block_time, contract_address, "from", "to", value
+        from erc20_base.evt_transfer
+        where evt_block_time >= (select start_date from time_filter)
+        and ("from" = 0x0000000000000000000000000000000000000000
+             or "to" = 0x0000000000000000000000000000000000000000)
+    ) et
     inner join (
         select distinct
             blockchain,
@@ -514,10 +537,6 @@ supply_changes as (
     ) tt
     on et.blockchain = tt.blockchain and
        et.contract_address = tt.token_address
-    where et.blockchain in ('ethereum', 'arbitrum', 'base')
-      and (et."from" = 0x0000000000000000000000000000000000000000 or
-           et."to" = 0x0000000000000000000000000000000000000000)
-      and et.evt_block_time >= (select start_date from time_filter)
     group by 1, 2, 3
 ),
 

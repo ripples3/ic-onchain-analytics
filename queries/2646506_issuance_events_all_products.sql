@@ -5,7 +5,31 @@
 -- Parameters: none
 --
 -- Columns: blockchain, evt_block_time, contract_address, symbol, qty
--- Optimization: Single scan with CASE (verify row count matches original)
+-- Uses chain-specific tables instead of evms.erc20_transfers to avoid indexing lag
+
+with transfers as (
+    select 'ethereum' as blockchain, evt_block_time, contract_address, "from", "to", value
+    from erc20_ethereum.evt_transfer
+    where evt_block_time >= timestamp '2020-09-10'
+    and ("from" = 0x0000000000000000000000000000000000000000
+         or "to" = 0x0000000000000000000000000000000000000000)
+
+    union all
+
+    select 'arbitrum' as blockchain, evt_block_time, contract_address, "from", "to", value
+    from erc20_arbitrum.evt_transfer
+    where evt_block_time >= timestamp '2020-09-10'
+    and ("from" = 0x0000000000000000000000000000000000000000
+         or "to" = 0x0000000000000000000000000000000000000000)
+
+    union all
+
+    select 'base' as blockchain, evt_block_time, contract_address, "from", "to", value
+    from erc20_base.evt_transfer
+    where evt_block_time >= timestamp '2020-09-10'
+    and ("from" = 0x0000000000000000000000000000000000000000
+         or "to" = 0x0000000000000000000000000000000000000000)
+)
 
 select
     t.blockchain
@@ -16,14 +40,8 @@ select
         when e."from" = 0x0000000000000000000000000000000000000000 then cast(e.value as double)
         when e."to" = 0x0000000000000000000000000000000000000000 then -cast(e.value as double)
       end as qty
-from evms.erc20_transfers e
-inner join dune.index_coop.result_multichain_indexcoop_tokenlist t -- query_5140527
+from transfers e
+inner join dune.index_coop.result_multichain_indexcoop_tokenlist t
     on t.contract_address = e.contract_address
     and t.blockchain = e.blockchain
-where e.blockchain in ('ethereum', 'arbitrum', 'base')
-and e.evt_block_time >= timestamp '2020-09-10'
-and (
-    e."from" = 0x0000000000000000000000000000000000000000
-    or e."to" = 0x0000000000000000000000000000000000000000
-)
 order by blockchain, evt_block_time

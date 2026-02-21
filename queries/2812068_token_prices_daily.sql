@@ -5,6 +5,7 @@
 -- Parameters: none
 --
 -- Columns: day, blockchain, token_address, symbol, price
+-- Depends on: result_multichain_all_active_tokens_nav_hourly (5196255), result_multichain_indexcoop_tokenlist (5140527), result_allchain_lev_suite_tokens_nav_hourly (3713252), result_hy_eth_tvl, query_2457409, query_3006703, query_4891960
 
 with
 
@@ -20,7 +21,11 @@ from dune.index_coop.result_multichain_all_active_tokens_nav_hourly n
 inner join dune.index_coop.result_multichain_indexcoop_tokenlist t -- query_5140527
     on t.contract_address = n.token_address
     and t.blockchain = n.blockchain
-where t.leverage = false  -- exclude all leverage tokens
+where (t.leverage = false  -- exclude all leverage tokens
+       or t.contract_address in (
+           0xBFb2E2b1790E98779CF78Ab0F045075BFd0A6be5,  -- ETH2XW (wrapper, NAV from pass 2)
+           0x35D782DAb840A64D22A8109d1CDe0936e7305858   -- BTC2XW (wrapper, NAV from pass 2)
+       ))
 and n.token_address not in (
     0xcCdAE12162566E3f29fEfA7Bf7F5b24C644493b5  -- icRETH (low volume)
     , 0xc30fba978743a43e736fc32fbeed364b8a2039cd  -- icSMMT (no volume)
