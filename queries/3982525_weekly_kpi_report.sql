@@ -319,5 +319,5 @@ select
     , stream_share_pct
 from _7dayrevenue dr
 full outer join revenue_share sr on dr.symbol_chain = sr.symbol_chain
-where coalesce(dr.symbol, split_part(sr.symbol_chain, '|', 1)) not in ('BED', 'dsETH', 'ic21', 'gtcETH', 'cDETI', 'sPrtHyETH', 'prtHyETH', 'cdETI')
+where coalesce(dr.symbol, split_part(sr.symbol_chain, '|', 1)) not in ('BED', 'dsETH', 'ic21', 'gtcETH', 'cDETI', 'sPrtHyETH', 'prtHyETH', 'cdETI', 'ETH2x-FLI', 'BTC2x-FLI')
 order by total_rev desc nulls last
